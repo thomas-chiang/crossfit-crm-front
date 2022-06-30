@@ -1,0 +1,28 @@
+.container {
+  color: white;
+  display: flex;
+  background-color: black;
+  justify-content: space-between;
+  align-items: center;
+  height: 9.75vh;
+  padding: 20px;
+}
+
+.logo {  
+  font-size: 50px;
+  font-weight: bold;
+}
+
+.ul {
+  list-style: none;
+}
+
+.li {
+  display: inline-block;
+  margin: 0 20px
+}
+
+.a {
+  color: inherit;
+  text-decoration: inherit;
+}
