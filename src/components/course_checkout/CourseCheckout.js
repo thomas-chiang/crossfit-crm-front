@@ -23,7 +23,7 @@ function Component({id}) {
     Functions.getCourseEnrolledmembers(id, setMembers)
   },[update])
   
-  //console.log(email)
+  console.log(members)
 
   if (!auth) return <Navigate to='/login'/> // auth handler
   return (
@@ -34,7 +34,7 @@ function Component({id}) {
           <Typography  variant="subtitle2" >{courseInfo.title} </Typography>
           <Divider orientation="vertical" flexItem sx={{ mx: 1 }}/>
           <Typography  variant="subtitle2" >Coaches: </Typography> 
-          {courseInfo.coaches?.map((coach, index) => <Typography  variant="subtitle2">&nbsp;<i>{coach.name}{index !== courseInfo.coaches.length -1 ? ',' : ''}</i></Typography> )}
+          {courseInfo.coaches?.map((coach, index) => <Typography key={index} variant="subtitle2">&nbsp;<i>{coach.name}{index !== courseInfo.coaches.length -1 ? ',' : ''}</i></Typography> )}
           <Divider orientation="vertical" flexItem sx={{ mx: 1 }}/>
           <Typography variant="subtitle2" >Time: {moment(courseInfo.start).local().format('YYYY/MM/DD H:mm A')} - {moment(courseInfo.end).local().format('YYYY/MM/DD H:mm A')}</Typography>
           <Divider orientation="vertical" flexItem sx={{ mx: 1 }}/>
@@ -48,8 +48,15 @@ function Component({id}) {
           <Typography sx={{ m: 1}} variant="subtitle1" >{member.name}</Typography>
           <Typography sx={{ m: 1}} variant="subtitle1" >Status: <i>{member.enrollment == 1 ? 'enrolled' : member.enrollment > 1 ? 'waiting' : 'canceled'}</i></Typography>
           <Box sx={{display: 'flex', justifyContent: 'right'}}>
-            <Button sx={{ m: 1}} size='small' variant='contained' onClick={()=>{Functions.checkoutMemberById(id, member.id, member.enrollment, setUpdate, setAuth)}}>checkout</Button>
-            <Button sx={{ my: 1}} size='small' color='secondary' variant='contained' onClick={()=>{Functions.quitMemberById(id, member.id, member.enrollment, setUpdate, setAuth)}}>quit</Button>
+            {member.checkout === 0 
+            ? <>
+              <Button sx={{ m: 1}} size='small' variant='contained' onClick={()=>{Functions.checkoutMemberById(id, member.id, member.enrollment, setUpdate, setAuth)}}>checkout</Button>
+              <Button sx={{ my: 1}} size='small' color='secondary' variant='contained' onClick={()=>{Functions.quitMemberById(id, member.id, member.enrollment, setUpdate, setAuth)}}>quit</Button>
+            </>
+            : <>
+              <Button disabled={true} sx={{ m: 1}} size='small' variant='contained' >checked out</Button>
+            </>}
+            
           </Box>
         </Card>)}
         <Card sx={{ p: 1, mr: 2, my: 1, display: 'flex',flexDirection: 'column', justifyContent: 'space-between' }}>

@@ -1,9 +1,8 @@
-import styles from './profile.module.css'
 import { useContext, useEffect, useState } from 'react'
 import Functions from './personal_info_functions';
 import  { Navigate } from 'react-router-dom'
 import { AppContext } from '../../utils/reactContexts'
-import {Paper, Typography, Card, Button} from '@mui/material'
+import {Paper, Typography, Button} from '@mui/material'
 
 function Component() {
   

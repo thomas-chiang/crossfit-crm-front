@@ -18,7 +18,7 @@ function Component() {
 
   if (!auth) return <Navigate to='/login'/> // auth handler
   return (
-    <Box sx={{m: 3, display: 'flex', flexWrap: 'wrap', alignItems: 'start'}}>
+    <Box sx={{m: 3, display: 'flex', flexWrap: 'wrap', alignItems: 'start', alignContent: 'flex-start'}}>
       {members.map((member, index)=> 
         <MemberBox key={index} member={member} setUpdate={setUpdate} setAuth={setAuth} />
       )}

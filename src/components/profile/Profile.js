@@ -1,5 +1,4 @@
 import "react-pro-sidebar/dist/css/styles.css";
-import styles from './profile.module.css'
 import PersonalInfo from '../personal_info/PersonalInfo'
 import Sidebar from '../sidebar/Sidebar'
 import Gym from '../gym/Gym'
@@ -11,18 +10,26 @@ import Workout from '../workout/Workout'
 import CalendarCheck from '../calendar_checkout/CalendarCheckout'
 import CalendarCreation from '../calendar_creation/CalendarCreation'
 import Member from '../member/Member'
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
+import { Box } from '@mui/material'
+import Functions from './profile_functions'
+
 
 
 function Component() {
 
   const [section, setSection] = useState('personal info')
+  const [role, setRole] = useState(1)
+
+  useEffect(() => {
+    Functions.getRole(setRole)
+  })
 
   return (
-    <div className={styles.container}>
-      <div >
-        <Sidebar setSection={setSection} />
-      </div>
+    <Box sx={{display: 'flex', minHeight: '85vh'}}>
+      <Box >
+        <Sidebar setSection={setSection} role={role}/>
+      </Box>
       {section === 'personal info' ?  <PersonalInfo /> : <></>}
       {section === 'movement' ?  <Movement /> : <></>}
       {section === 'workout' ?  <Workout /> : <></>}
@@ -33,7 +40,7 @@ function Component() {
       {section === 'performance' ?  <CalendarCoach /> : <></>}
       {section === 'enroll and checkout' ?  <CalendarCheck /> : <></>}
       {section === 'create course' ?  <CalendarCreation /> : <></>}
-    </div>
+    </Box>
   );
 }
 
