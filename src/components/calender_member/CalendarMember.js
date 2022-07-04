@@ -8,6 +8,7 @@ import { useState, useEffect } from "react"
 import { CalendarContext } from '../../utils/reactContexts'
 import CourseMember from '../course_member/CourseMember'
 import Functions from './calender_member_functions'
+import {Paper, Typography, Card, Button, Box, Radio, TextField} from '@mui/material'
 
 
 
@@ -42,7 +43,8 @@ function Component () {
       gym_id: arg.event.extendedProps.gym_id,
       gym_name: arg.event.extendedProps.gym_name,
       gym: arg.event.extendedProps.gym,
-      size_enrolled: arg.event.extendedProps.size_enrolled
+      size_enrolled: arg.event.extendedProps.size_enrolled,
+      point: arg.event.extendedProps.point
     }
     let index = arr.findIndex(item => item.id == arg.event.id)
     if(index !== -1) {
@@ -55,7 +57,7 @@ function Component () {
   function renderEventContent(arg) { 
     return (
       <div >
-        <div>{arg.event.extendedProps.gym_name}:{arg.event.title} {arg.event.extendedProps.size_enrolled}/{arg.event.extendedProps.size}</div>   
+        <div>{arg.event.extendedProps.size_enrolled}/{arg.event.extendedProps.size}: {arg.event.title}</div>   
       </div>
     )
   }
@@ -69,11 +71,9 @@ function Component () {
 
 
   return (
-    <div className={styles.margin} >   
+    <Box sx={{m: 3}} >    
       <CalendarContext.Provider value={contextValue}>
-        <div className={styles.flex}>
-          {arr.length > 0 ? arr.map((item, index)=> <CourseMember key={index} id={item.id}/>) : <></>} 
-        </div>
+        {arr.length > 0 ? arr.map((item, index)=> <CourseMember key={index} id={item.id}/>) : <></>} 
         <FullCalendar
           dayMaxEventRows= {5}
           eventMaxStack= {5}
@@ -100,7 +100,7 @@ function Component () {
           height= {'auto'}
         />     
       </CalendarContext.Provider>
-    </div> 
+    </Box> 
   )
 }
 

@@ -7,6 +7,7 @@ const Functions = {
 export default Functions
 
 async function updateOwnedWorkoutMovement (updatedMovement, setUpdate, setPassDownUpdate, setAuth) {
+  console.log(updatedMovement)
   try{
     let token = localStorage.getItem('jwtToken')
     if(!await utilsFunctions.auth()) return setAuth(false)
@@ -39,6 +40,7 @@ async function updateOwnedWorkoutMovement (updatedMovement, setUpdate, setPassDo
 
 
 async function getWorkoutMovement (setUpdatedMovement, workout_movement_id) {
+  if(!workout_movement_id) return
   try{
     const response = await fetch (
       process.env.REACT_APP_API_URL+`workout/workoutmovement/${workout_movement_id}`,

@@ -27,35 +27,41 @@ function Component({id}) {
 
   if (!auth) return <Navigate to='/login'/> // auth handler
   return (
-    <Paper elevation={3} sx={{ p: 2, my: 2 }}>
+    <Paper elevation={3} sx={{ p: 2, mb: 2}}>
       <Box sx={{display: 'flex', justifyContent: 'space-between',  alignItems: 'baseline'}}>
-        <Typography sx={{ display: 'inline' }} variant="h4" >{courseInfo.title} </Typography>
+        <Typography sx={{ display: 'inline' }} variant="h5" >CHECKOUT COURSE </Typography>
         <Box sx={{display: 'inline-flex'}}>
-          <Typography  variant="subtitle2" >Course ID: {id} </Typography>
+          <Typography  variant="subtitle2" >{courseInfo.title} </Typography>
           <Divider orientation="vertical" flexItem sx={{ mx: 1 }}/>
           <Typography  variant="subtitle2" >Coaches: </Typography> 
-          {courseInfo.coaches?.map((coach, index) => <Card key={index} sx={{ px: 0.5, mx: 0.5 }}><Typography  variant="subtitle2">{coach.name}</Typography> </Card>)}
+          {courseInfo.coaches?.map((coach, index) => <Typography  variant="subtitle2">&nbsp;<i>{coach.name}{index !== courseInfo.coaches.length -1 ? ',' : ''}</i></Typography> )}
           <Divider orientation="vertical" flexItem sx={{ mx: 1 }}/>
-          <Typography variant="subtitle2" >Time: {moment(courseInfo.start).local().format('YYYY/MM/DD H:mm A')}</Typography>
+          <Typography variant="subtitle2" >Time: {moment(courseInfo.start).local().format('YYYY/MM/DD H:mm A')} - {moment(courseInfo.end).local().format('YYYY/MM/DD H:mm A')}</Typography>
           <Divider orientation="vertical" flexItem sx={{ mx: 1 }}/>
+          <Typography  variant="subtitle2" >Size: <i>{courseInfo.size_enrolled}/{courseInfo.size}</i></Typography>
+          <Divider orientation="vertical" flexItem sx={{ mx: 1 }}/>
+          <Typography  variant="subtitle2" >Point: <i>{courseInfo.point}</i></Typography>
+         {/*  <Divider orientation="vertical" flexItem sx={{ mx: 1 }}/>
           <Typography variant="subtitle2" >Point: {courseInfo.point}</Typography>
           <Divider orientation="vertical" flexItem sx={{ mx: 1 }}/>
           <Typography  variant="subtitle2" >Workouts:</Typography>
           {courseInfo.workouts?.map((workout, index) => <Card key={index} sx={{ px: 0.5, mx: 0.5 }}><Typography  variant="subtitle2">{workout.name}</Typography> </Card>)}
-          <Divider orientation="vertical" flexItem sx={{ mx: 1 }}/>
+          <Divider orientation="vertical" flexItem sx={{ mx: 1 }}/> */}
         </Box> 
       </Box> 
       <Box sx={{display: 'flex', alignItems: 'stretch', flexWrap: 'wrap'}}>
-        {members.map((member, index) => <Card key={index} sx={{ p: 1, m: 1 }}>
+        {members.map((member, index) => <Card key={index} sx={{ p: 1, mr: 2, my: 1 }}>
           <Typography sx={{ m: 1}} variant="subtitle1" >{member.name}</Typography>
-          <Typography sx={{ m: 1}} variant="subtitle1" >{member.enrollment == 1 ? 'enrolled' : 'canceled or waiting'}</Typography>
-          <Button sx={{ m: 1}} size='small' variant='contained' onClick={()=>{Functions.checkoutMemberById(id, member.id, member.enrollment, setUpdate, setAuth)}}>checkout</Button>
-          <Button sx={{ m: 1}} size='small' color='secondary' variant='contained' onClick={()=>{Functions.quitMemberById(id, member.id, member.enrollment, setUpdate, setAuth)}}>quit</Button>
+          <Typography sx={{ m: 1}} variant="subtitle1" >Status: <i>{member.enrollment == 1 ? 'enrolled' : member.enrollment > 1 ? 'waiting' : 'canceled'}</i></Typography>
+          <Box sx={{display: 'flex', justifyContent: 'right'}}>
+            <Button sx={{ m: 1}} size='small' variant='contained' onClick={()=>{Functions.checkoutMemberById(id, member.id, member.enrollment, setUpdate, setAuth)}}>checkout</Button>
+            <Button sx={{ my: 1}} size='small' color='secondary' variant='contained' onClick={()=>{Functions.quitMemberById(id, member.id, member.enrollment, setUpdate, setAuth)}}>quit</Button>
+          </Box>
         </Card>)}
-        <Card sx={{ p: 1, m: 1, display: 'flex',flexDirection: 'column', justifyContent: 'space-between' }}>
+        <Card sx={{ p: 1, mr: 2, my: 1, display: 'flex',flexDirection: 'column', justifyContent: 'space-between' }}>
           <TextField size='small' type='email' label="email" variant="outlined" value={email} onChange={e=>setEmail(e.target.value)}/>
           <Box sx={{display: 'flex', justifyContent: 'right'}}>
-            <Button sx={{ m: 1, bottom: 0}} size='small' variant='contained' onClick={()=>{Functions.enrollMemberByEmail(id, email, setUpdate, setAuth)}} >enroll</Button>
+            <Button sx={{ my: 1, bottom: 0}} size='small' variant='contained' onClick={()=>{Functions.enrollMemberByEmail(id, email, setUpdate, setAuth)}} >enroll</Button>
           </Box>
         </Card>
       </Box>

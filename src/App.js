@@ -11,7 +11,7 @@ import Header from './components/header/Header'
 import { AppContext } from './utils/reactContexts.js'
 import { useState } from 'react'
 
-import Test from './components/calendar_checkout/CalendarCheckout'
+import Test from './components/calendar_creation/CalendarCreation'
 
 
 

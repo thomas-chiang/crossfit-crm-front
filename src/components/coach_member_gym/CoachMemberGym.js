@@ -1,6 +1,6 @@
 import { useState, useEffect }  from 'react'
 import  { Navigate } from 'react-router-dom' // auth handler
-import Functions from './member_coach_functions'
+import Functions from './coach_member_gym_functions'
 import Select from 'react-select';
 
 

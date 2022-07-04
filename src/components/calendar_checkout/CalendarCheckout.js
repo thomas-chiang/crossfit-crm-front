@@ -3,11 +3,12 @@ import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid' 
 import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin from "@fullcalendar/interaction"
-import styles from './calender_checkout.module.css'
 import { useState, useEffect } from "react"
 import { CalendarContext } from '../../utils/reactContexts'
 import CourseCheckout from '../course_checkout/CourseCheckout'
 import Functions from './calender_checkout_functions'
+
+import {Paper, Typography, Card, Button, Box, Radio, TextField} from '@mui/material'
 
 
 function Component () {
@@ -26,7 +27,7 @@ function Component () {
 
 
   function eventSetter(arg) {
-    if(arr.length > 3) return alert ('open too many courses')
+    // if(arr.length > 3) return alert ('open too many courses')
     let obj = {
       id: arg.event.id,
       title: arg.event.title,
@@ -54,7 +55,7 @@ function Component () {
   function renderEventContent(arg) { 
     return (
       <div >
-        <div>{arg.event.extendedProps.gym_name}:{arg.event.title} {arg.event.extendedProps.size_enrolled}/{arg.event.extendedProps.size}</div>   
+        <div>{arg.event.extendedProps.size_enrolled}/{arg.event.extendedProps.size}: {arg.event.title}</div>   
       </div>
     )
   }
@@ -68,11 +69,9 @@ function Component () {
 
 
   return (
-    <div style={{margin: '10px 50px'}} >   
+    <Box sx={{m: 3}} >   
       <CalendarContext.Provider value={contextValue}>
-        <div className={styles.flex} >
           {arr.length > 0 ? arr.map((item, index)=> <CourseCheckout key={index} id={item.id}/>) : <></>} 
-        </div>
         <FullCalendar
           dayMaxEventRows= {5}
           eventMaxStack= {5}
@@ -81,13 +80,20 @@ function Component () {
           plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
           headerToolbar={{
             left: 'prev next today',
-            center: 'title',
+            center: 'customButton',
             right: 'timeGridDay timeGridWeek dayGridMonth'
+          }}
+          customButtons={{ 
+            customButton: {
+              text: 'Checkout Course',
+              click: function() {
+                alert('Click any white box below and start creating a course');
+              }
+            } 
           }}
           initialView="timeGridWeek"
           editable={true}
           selectable={true}
-          //events={arr}
           events={calendarEvents}
           //select={handleSelect}
           eventClick={eventSetter}
@@ -99,7 +105,7 @@ function Component () {
           height= {'auto'}
         />     
       </CalendarContext.Provider>
-    </div> 
+    </Box> 
   )
 }
 

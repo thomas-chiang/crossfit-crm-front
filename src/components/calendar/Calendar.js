@@ -9,6 +9,7 @@ import { CalendarContext } from '../../utils/reactContexts'
 import CourseCreation from '../course_creation/CourseCreation'
 import Course from '../course/Course'
 import Functions from './calendar_functions'
+import {Box} from '@mui/material'
 
 
 
@@ -23,17 +24,17 @@ function Component () {
     Functions.getCourses(setCalendarEvents)
   },[update])
 
-  //console.log(calendarEvents)
 
   function handleSelect (arg) {
+    if(arr.length > 3) return alert ('open too many courses')
     setNewCalendarEvent({
       start: arg.startStr,
       end: arg.endStr
     })
+   
   }
 
   function eventSetter(arg) {
-    if(arr.length > 3) return alert ('open too many courses')
     let obj = {
       id: arg.event.id,
       title: arg.event.title,
@@ -50,6 +51,7 @@ function Component () {
       size_enrolled: arg.event.extendedProps.size_enrolled,
       point: arg.event.extendedProps.point
     }
+
     let index = arr.findIndex(item => item.id === arg.event.id)
     if(index !== -1) {
       arr[index] = obj
@@ -61,7 +63,7 @@ function Component () {
   function renderEventContent(arg) { 
     return (
       <div >
-        <div>{arg.event.extendedProps.gym_name} {arg.event.extendedProps.size_enrolled}/{arg.event.extendedProps.size}</div>   
+        <div>{arg.event.extendedProps.size_enrolled}/{arg.event.extendedProps.size}: {arg.event.title}</div>   
       </div>
     )
   }
@@ -76,12 +78,9 @@ function Component () {
   }
 
   return (
-    <div className={styles.margin} >   
+    <Box sx={{m: 3}} >   
       <CalendarContext.Provider value={contextValue}>
-        <div className={styles.flex}>
-          {newCalendarEvent ? <CourseCreation /> : <></>}
           {arr.length > 0 ? arr.map(item => <Course key={item.id} id={item.id}/>) : <></>} 
-        </div>
         <FullCalendar
           dayMaxEventRows= {5}
           eventMaxStack= {5}
@@ -90,12 +89,20 @@ function Component () {
           plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
           headerToolbar={{
             left: 'prev next today',
-            center: 'title',
+            center: 'customButton',
             right: 'timeGridDay timeGridWeek dayGridMonth'
+          }}
+          customButtons={{ 
+            customButton: {
+              text: 'Update Course',
+              click: function() {
+                alert('Click a bule box below and start updating the course');
+              }
+            } 
           }}
           initialView="timeGridWeek"
           editable={true}
-          selectable={true}
+          //selectable={true}
           events={calendarEvents}
           select={handleSelect}
           eventClick={eventSetter}
@@ -107,7 +114,7 @@ function Component () {
           height= {'auto'}
         />     
       </CalendarContext.Provider>
-    </div> 
+    </Box> 
   )
 }
 

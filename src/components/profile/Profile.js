@@ -3,11 +3,14 @@ import styles from './profile.module.css'
 import PersonalInfo from '../personal_info/PersonalInfo'
 import Sidebar from '../sidebar/Sidebar'
 import Gym from '../gym/Gym'
-import Member from '../member_coach/MemberCoach'
+import Coach from '../coach/Coach'
 import Calendar from '../calendar/Calendar'
 import CalendarCoach from '../calendar_coach/CalendarCoach'
 import Movement from '../movement/Movement'
 import Workout from '../workout/Workout'
+import CalendarCheck from '../calendar_checkout/CalendarCheckout'
+import CalendarCreation from '../calendar_creation/CalendarCreation'
+import Member from '../member/Member'
 import {useState} from 'react'
 
 
@@ -24,9 +27,12 @@ function Component() {
       {section === 'movement' ?  <Movement /> : <></>}
       {section === 'workout' ?  <Workout /> : <></>}
       {section === 'gym' ?  <Gym /> : <></>}
+      {section === 'coach' ?  <Coach /> : <></>}
       {section === 'member' ?  <Member /> : <></>}
       {section === 'calendar' ?  <Calendar /> : <></>}
       {section === 'performance' ?  <CalendarCoach /> : <></>}
+      {section === 'checkout' ?  <CalendarCheck /> : <></>}
+      {section === 'create course' ?  <CalendarCreation /> : <></>}
     </div>
   );
 }

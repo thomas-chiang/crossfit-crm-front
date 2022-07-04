@@ -3,7 +3,9 @@ import moment from 'moment'
 
 const Functions = {
   getMovements,
-  getPerformanceByUserMovement
+  getPerformanceByUserMovement,
+  getPerformanceByMovement,
+  getUsersByRole
 }
 export default Functions
 
@@ -38,53 +40,83 @@ async function getPerformanceByUserMovement(movement_id, setLineDate, setAuth) {
       }
     )
     let data = await response.json()
-    let labels = []
-    let datasets = [
-      {
-        label: 'kg',
-        data: [],
-        borderColor: 'rgb(255, 99, 132)',
-        backgroundColor: 'rgba(255, 99, 132, 0.5)',
-      },
-      {
-        label: 'rep',
-        data: [],
-        borderColor: 'rgb(53, 162, 235)',
-        backgroundColor: 'rgba(53, 162, 235, 0.5)',
-      },
-      {
-        label: 'meter',
-        data: [],
-        borderColor: 'rgb(50,205,50)',
-        backgroundColor: 'rgba(50,205,50, 0.5)',
-      },
-      {
-        label: 'cal',
-        data: [],
-        borderColor: 'rgb(255,165,0)',
-        backgroundColor: 'rgba(255,165,0, 0.5)',
-      },
-      {
-        label: 'sec',
-        data: [],
-        borderColor: 'rgb(186,85,211)',
-        backgroundColor: 'rgb(186,85,211, 0.5)',
-      },
-    ]
-    for (let item of data) {
-      labels.push(`${moment(item.start).local().format('YYYY/MM/DD')}: ${item.workout_name}`)
-      datasets[0].data.push(item.kg)
-      datasets[1].data.push(item.rep)
-      datasets[2].data.push(item.meter)
-      datasets[3].data.push(item.cal)
-      datasets[4].data.push(item.sec)
-    }
-    let lineDate = {labels, datasets}
-    //console.log(labels)
-    //console.log(datasets[2].data)
-    if (response.ok) setLineDate(lineDate)
+    if (response.ok) setLineDate(generateLineData(data))
     else alert(response.status+': '+ data.error)
   }catch(e){
     alert(e.message)
   }
+}
+
+async function getPerformanceByMovement(user_id, movement_id, setLineDate, setAuth) {
+  try{
+    const response = await fetch (
+      process.env.REACT_APP_API_URL+`performance/movement?user_id=${user_id}&movement_id=${movement_id}`
+    )
+    let data = await response.json()
+    if (response.ok) setLineDate(generateLineData(data))
+    else alert(response.status+': '+ data.error)
+  }catch(e){
+    console.log(e)
+    alert(e.message)
+  }
+}
+
+
+async function getUsersByRole(role_level, setCoaches) {
+  try{
+    const response = await fetch (
+      process.env.REACT_APP_API_URL+`user/role/${role_level}`
+    )
+    let data = await response.json()
+    if (response.ok) setCoaches(data)
+    else alert(response.status+': '+ data.error)
+  }catch(e){
+    alert(e.message)
+  }
+}
+
+function generateLineData (data) {
+  let labels = []
+  let datasets = [
+    {
+      label: 'kg',
+      data: [],
+      borderColor: 'rgb(255, 99, 132)',
+      backgroundColor: 'rgba(255, 99, 132, 0.5)',
+    },
+    {
+      label: 'rep',
+      data: [],
+      borderColor: 'rgb(53, 162, 235)',
+      backgroundColor: 'rgba(53, 162, 235, 0.5)',
+    },
+    {
+      label: 'meter',
+      data: [],
+      borderColor: 'rgb(50,205,50)',
+      backgroundColor: 'rgba(50,205,50, 0.5)',
+    },
+    {
+      label: 'cal',
+      data: [],
+      borderColor: 'rgb(255,165,0)',
+      backgroundColor: 'rgba(255,165,0, 0.5)',
+    },
+    {
+      label: 'sec',
+      data: [],
+      borderColor: 'rgb(186,85,211)',
+      backgroundColor: 'rgb(186,85,211, 0.5)',
+    },
+  ]
+  for (let item of data) {
+    labels.push(`${moment(item.start).local().format('YYYY/MM/DD')}: ${item.workout_name}`)
+    datasets[0].data.push(item.kg)
+    datasets[1].data.push(item.rep)
+    datasets[2].data.push(item.meter)
+    datasets[3].data.push(item.cal)
+    datasets[4].data.push(item.sec)
+  }
+  let lineData = {labels, datasets}
+  return lineData
 }

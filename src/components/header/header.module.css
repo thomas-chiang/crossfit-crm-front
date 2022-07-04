@@ -1,4 +1,5 @@
 .container {
+  width: auto;
   color: white;
   display: flex;
   background-color: black;

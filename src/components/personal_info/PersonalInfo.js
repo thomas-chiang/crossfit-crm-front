@@ -16,7 +16,7 @@ function Component() {
 
   useEffect(() => {
     Functions.getUserProfile(setUser,setAuth, appContext)
-    Functions.getOwnedGyms(setOwnedGyms)
+    //Functions.getOwnedGyms(setOwnedGyms)
   },[])
 
 
@@ -29,7 +29,7 @@ function Component() {
         <Typography variant="h6"  sx={{margin: 0.5}}>Email: {user.email}</Typography>
         <Typography variant="h6"  sx={{margin: 0.5}}>Gender: {user.gender === 1 ? 'Male' : 'Female'}</Typography>
         <Typography variant="h6"  sx={{margin: 0.5}}>Role: {user.role === 1 ? 'Normal Member' : user.role === 2 ? 'Coach' : 'Gym Owner'}</Typography>
-        {user.role === 3 && ownedGyms.length > 0 
+        {/* {user.role === 3 && ownedGyms.length > 0 
           ? <> 
             <Typography variant="h6"  sx={{margin: 0.5}}>Gyms owned:</Typography>
             <div style={{display: 'flex'}}>
@@ -50,10 +50,10 @@ function Component() {
               )}
             </div> 
           </>
-        }
+        } */}
         {user.role === 1 
           ? <>
-            <Typography sx={{margin: 0.5}}variant="h6" >Points avaliable: {user.point}<i style={{color:'green'}}> - {user.point_to_be_deducted} (totaled according to courses enrolled)</i></Typography>
+            <Typography sx={{margin: 0.5}}variant="h6" >Points avaliable: {user.point}<i style={{color:'green'}}> - {user.point_to_be_deducted} (upcoming courses)</i></Typography>
           </> 
           : <></>}
         <div style={{display: 'flex', justifyContent: 'right', marginTop: 20}}>

@@ -1,32 +1,12 @@
 import utilsFunctions from '../../utils/functions'
 const Functions = {
   getMovements,
-  getOwnedMovements,
   createMovement,
   updateMovement,
   deleteMovement
 }
 export default Functions
 
-
-
- 
-async function getOwnedMovements(setOwnedMovements) {
-  try{
-    let token = localStorage.getItem('jwtToken')
-    let response = await fetch(
-      process.env.REACT_APP_API_URL+'movement/owned',
-      {
-        headers: {'Authorization': `Bearer ${token}`}
-      }
-    )
-    let data = await response.json()
-    if (response.ok) setOwnedMovements(data)
-    else console.log(response.status+': '+ data.error)
-  }catch(e){
-    console.log(e)
-  }
-}
 
 async function getMovements(setMovements) {
   try{
@@ -41,7 +21,7 @@ async function getMovements(setMovements) {
   }
 }
 
-async function createMovement (newMovement, newLink, update, setUpdate, setAuth) {
+async function createMovement (name, setUpdate, setAuth) {
   try{
     let token = localStorage.getItem('jwtToken')
 
@@ -55,16 +35,13 @@ async function createMovement (newMovement, newLink, update, setUpdate, setAuth)
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`
         },
-        body: JSON.stringify({
-          name: newMovement,
-          demo_link: newLink
-        })
+        body: JSON.stringify({name})
       }
     )
     let data = await response.json()
     if (response.ok) {
       alert('created successfully')
-      setUpdate(!update)
+      setUpdate(Date())
     }
     else alert(response.status+': '+ data.error)
   }catch(e){
@@ -72,7 +49,7 @@ async function createMovement (newMovement, newLink, update, setUpdate, setAuth)
   }
 }
 
-async function updateMovement (id, movementName, movementLink, update, setUpdate, setAuth) {
+async function updateMovement (id, movementName, setUpdate, setAuth) {
   try{
     let token = localStorage.getItem('jwtToken')
 
@@ -89,14 +66,13 @@ async function updateMovement (id, movementName, movementLink, update, setUpdate
         body: JSON.stringify({
           id: id,
           name: movementName,
-          demo_link: movementLink
         })
       }
     )
     let data = await response.json()
     if (response.ok) {
       alert('updated successfully')
-      setUpdate(!update)
+      setUpdate(Date())
     }
     else alert(response.status+': '+ data.error)
   }catch(e){
@@ -104,7 +80,7 @@ async function updateMovement (id, movementName, movementLink, update, setUpdate
   }
 }
 
-async function deleteMovement (id, update, setUpdate, setAuth) {
+async function deleteMovement (id, setUpdate, setAuth) {
   try{
     let token = localStorage.getItem('jwtToken')
 
@@ -122,7 +98,7 @@ async function deleteMovement (id, update, setUpdate, setAuth) {
     let data = await response.json()
     if (response.ok) {
       alert('deleted successfully')
-      setUpdate(!update)
+      setUpdate(Date())
     }
     else alert(response.status+': '+ data.error)
   }catch(e){

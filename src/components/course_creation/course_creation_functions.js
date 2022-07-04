@@ -1,13 +1,15 @@
 import utilsFunctions from '../../utils/functions'
 const Functions = {
   handleCreateButton,
+  cancel,
+  getWorkouts,
+  getValidCoaches
 }
 export default Functions
 
-async function handleCreateButton(course, calendarContext, setAuth) {
+async function handleCreateButton(course, courseFromCalendar, calendarContext, setAuth) {
+  delete course.id
   try {
-    // let user = await utilsFunctions.getUserData()
-    // if (!user) return setAuth(false)
     if(!await utilsFunctions.auth()) return setAuth(false)
     
     let token = localStorage.getItem('jwtToken') // auth
@@ -26,7 +28,9 @@ async function handleCreateButton(course, calendarContext, setAuth) {
     if (response.ok) {
       alert('created successfully')
       calendarContext.setUpdate(!calendarContext.update)
-      calendarContext.setNewCalendarEvent(null)
+      let oldArr = calendarContext.arr
+      let newArr = oldArr.filter(item => item.id !== courseFromCalendar.id)
+      calendarContext.setArr(newArr)
     } else {
       let data = await response.json()
       alert(response.status+': '+ data.error)
@@ -36,3 +40,47 @@ async function handleCreateButton(course, calendarContext, setAuth) {
   }  
 }
 
+
+
+
+
+
+
+async function getWorkouts(setWorkouts) {
+  try{
+    const response = await fetch (
+      process.env.REACT_APP_API_URL+'workout/'
+    )
+    let data = await response.json()
+    if (response.ok) setWorkouts(data)
+    else alert(response.status+': '+ data.error)
+  }catch(e){
+    console.log(e)
+    //alert(e.message)
+  }
+}
+
+async function getValidCoaches(setCoaches) {
+  try{
+    const response = await fetch (
+      process.env.REACT_APP_API_URL+'user/validcoaches'
+    )
+    let data = await response.json()
+    if (response.ok) setCoaches(data)
+    else alert(response.status+': '+ data.error)
+  }catch(e){
+    console.log(e)
+    //alert(e.message)
+  }
+}
+
+
+function cancel (id, calendarContext) {   
+  calendarContext.setUpdate(!calendarContext.update) 
+  let oldArr = calendarContext.arr
+  let newArr = oldArr.filter(item => item.id !== id)
+  calendarContext.setArr(newArr)
+
+  calendarContext.obj[id] = null
+  calendarContext.setObj(calendarContext.obj)
+}

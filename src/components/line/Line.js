@@ -1,7 +1,8 @@
-//import React from 'react';
+import React from 'react';
 import {Chart as ChartJS,CategoryScale,LinearScale,PointElement,LineElement,Title,Tooltip,Legend,} from 'chart.js';
 import { Line } from 'react-chartjs-2';
-ChartJS.register(CategoryScale,LinearScale,PointElement,LineElement,Title,Tooltip,Legend);
+import ChartDataLabels from "chartjs-plugin-datalabels";
+ChartJS.register(ChartDataLabels,CategoryScale,LinearScale,PointElement,LineElement,Title,Tooltip,Legend);
 
 export const options = {
   responsive: true,
@@ -9,14 +10,26 @@ export const options = {
     legend: {
       position: 'top',
     },
+    datalabels: {
+      backgroundColor: function(context) {
+        return context.dataset.backgroundColor;
+      },
+      borderRadius: 4,
+      color: 'white',
+      font: {
+        weight: 'bold'
+      },
+      formatter: Math.round,
+      padding: 6
+    }
     /* title: {
       display: true,
       text: 'Chart.js Line Chart',
     }, */
-  },
+  }
 };
 
-const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July','January', 'February', 'March', 'April', 'May', 'June', 'July','January', 'February', 'March', 'April', 'May', 'June', 'July','January', 'February', 'March', 'April', 'May', 'June', 'July','January', 'February', 'March', 'April', 'May', 'June', 'July','January', 'February', 'March', 'April', 'May', 'June', 'July']; //
+/* const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July','January', 'February', 'March', 'April', 'May', 'June', 'July','January', 'February', 'March', 'April', 'May', 'June', 'July','January', 'February', 'March', 'April', 'May', 'June', 'July','January', 'February', 'March', 'April', 'May', 'June', 'July','January', 'February', 'March', 'April', 'May', 'June', 'July']; //
 
 export const data = {
   labels,
@@ -34,7 +47,7 @@ export const data = {
       backgroundColor: 'rgba(53, 162, 235, 0.5)',
     },
   ],
-};
+}; */
 
 export default function Component({lineData}) {
   return <Line options={options} data={lineData} />;

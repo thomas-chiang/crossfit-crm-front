@@ -3,7 +3,9 @@ import utilsFunctions from '../../utils/functions'
 const Functions = {
   handleUpdateButton,
   handleDeleteButton,
-  handleCancelButton
+  handleCancelButton,
+  getWorkouts,
+  getValidCoaches
 }
 
 export default Functions
@@ -75,3 +77,30 @@ function handleCancelButton(id, calendarContext) {
 }
 
 
+async function getWorkouts(setWorkouts) {
+  try{
+    const response = await fetch (
+      process.env.REACT_APP_API_URL+'workout/'
+    )
+    let data = await response.json()
+    if (response.ok) setWorkouts(data)
+    else alert(response.status+': '+ data.error)
+  }catch(e){
+    console.log(e)
+    //alert(e.message)
+  }
+}
+
+async function getValidCoaches(setCoaches) {
+  try{
+    const response = await fetch (
+      process.env.REACT_APP_API_URL+'user/validcoaches'
+    )
+    let data = await response.json()
+    if (response.ok) setCoaches(data)
+    else alert(response.status+': '+ data.error)
+  }catch(e){
+    console.log(e)
+    //alert(e.message)
+  }
+}

@@ -3,48 +3,33 @@ import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid' 
 import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin from "@fullcalendar/interaction"
-import styles from './calender_coach.module.css'
 import { useState, useEffect } from "react"
 import { CalendarContext } from '../../utils/reactContexts'
-import Course_coach from '../course_coach/CourseCoach'
-import Functions from './calender_coach_functions'
-import {Paper, Typography, Card, Button, Box, Radio, TextField} from '@mui/material'
-
+import CourseCreation from '../course_creation/CourseCreation'
+import Course from '../course/Course'
+import Functions from './calendar_creation_functions'
+import {Box} from '@mui/material'
 
 
 function Component () {
 
   const [update, setUpdate] = useState(true)
   const [calendarEvents, setCalendarEvents] = useState(null)
+  const [newCalendarEvent, setNewCalendarEvent] = useState(null)
   const [arr, setArr] = useState([])
+  const [obj, setObj] = useState({})
 
   useEffect(()=>{
     Functions.getCourses(setCalendarEvents)
   },[update])
 
-  useEffect(()=>{
-    Functions.updateArr(calendarEvents, arr, setArr)
-  },[calendarEvents])
-
-
-  function eventSetter(arg) {
+  function handleSelect (arg) {
     let obj = {
-      id: parseInt(arg.event.id),
-      title: arg.event.title,
-      start: arg.event.startStr,
-      end: arg.event.endStr,
-      size: arg.event.extendedProps.size,
-      note: arg.event.extendedProps.note,
-      coaches: arg.event.extendedProps.coaches,
-      members: arg.event.extendedProps.members,
-      workouts: arg.event.extendedProps.workouts,
-      gym_id: arg.event.extendedProps.gym_id,
-      gym_name: arg.event.extendedProps.gym_name,
-      gym: arg.event.extendedProps.gym,
-      size_enrolled: arg.event.extendedProps.size_enrolled,
-      point: arg.event.extendedProps.point
+      id: arg.startStr+arg.endStr,
+      start: arg.startStr,
+      end: arg.endStr
     }
-    let index = arr.findIndex(item => item.id == arg.event.id)
+    let index = arr.findIndex(item => item.id == arg.startStr+arg.endStr)
     if(index !== -1) {
       arr[index] = obj
       setArr([...arr]) //must deep copy
@@ -60,18 +45,22 @@ function Component () {
     )
   }
 
-  const contextValue = {
+  let contextValue = {
+    newCalendarEvent, 
+    setNewCalendarEvent,
     update, 
     setUpdate,
     arr,
     setArr,
+    obj,
+    setObj
   }
-
 
   return (
     <Box sx={{m: 3}} >   
       <CalendarContext.Provider value={contextValue}>
-        {arr.length > 0 ? arr.map((item, index)=> <Course_coach key={index} id={item.id}/>) : <></>} 
+          {arr.length > 0 ? arr.map((courseFromCalendar, index)=> <CourseCreation key={index} obj={obj} id={courseFromCalendar.id} courseFromCalendar={courseFromCalendar} />) : <></>}
+          {/* {newCalendarEvent ? <CourseCreation setUpdateCalendar={setUpdateCalendar}/> : <></>} */} 
         <FullCalendar
           dayMaxEventRows= {5}
           eventMaxStack= {5}
@@ -85,9 +74,9 @@ function Component () {
           }}
           customButtons={{ 
             customButton: {
-              text: 'Record Performance',
+              text: 'Create Course',
               click: function() {
-                alert("Click a course below and start recording members' performances");
+                alert('Click any white box below and start creating a course');
               }
             } 
           }}
@@ -95,11 +84,8 @@ function Component () {
           editable={true}
           selectable={true}
           events={calendarEvents}
-          //select={handleSelect}
-          eventClick={eventSetter}
+          select={handleSelect}
           eventContent={renderEventContent}
-          eventDrop={eventSetter}
-          eventResize={eventSetter}
           allDaySlot={false}
           eventDisplay={'block'}
           height= {'auto'}

@@ -1,64 +1,52 @@
 import { useState, useEffect }  from 'react'
 import  { Navigate } from 'react-router-dom' // auth handler
 import Functions from './movement_functions'
+import {Card, Button, Box, TextField} from '@mui/material'
 
 
 function Component() {
  
-  const [update, setUpdate] = useState(true)
+  const [update, setUpdate] = useState(Date())
   const [auth, setAuth] = useState(true) // auth
   const [movements, setMovements] = useState([])
-  const [newMovement, setNewMovement] = useState('new movement name')
-  const [newLink, setNewLink] = useState('past link here')
-  const [ownedMovements, setOwnedMovements] = useState([])
+  const [newMovement, setNewMovement] = useState('')
+
+
 
 
   useEffect(() => {
     Functions.getMovements(setMovements)
-    Functions.getOwnedMovements(setOwnedMovements)
   },[update])
   
   if (!auth) return <Navigate to='/login'/> // auth handler
   return (
-    <div>
-      All movements: {movements.map(movement => 
-        <div key={movement.id}>
-          {movement.name} <a href={movement.demo_link} target="_blank" rel="noopener noreferrer">demo link</a>
-        </div>
+    <Box sx={{m: 3, display: 'flex', alignItems: 'center', flexWrap: 'wrap'}}>
+      <Card sx={{ p: 1, m: 1 }}>
+          <TextField sx={{m:1}} size='small' label="Movement name" variant="outlined" value={newMovement} onChange={e=>setNewMovement(e.target.value)}/>
+          <Box sx={{display: 'flex', justifyContent: 'right'}}>
+            <Button sx={{ m: 1, bottom: 0}} size='small' variant='contained' onClick={()=>{Functions.createMovement(newMovement, setUpdate, setAuth)}} >create</Button>
+          </Box>
+      </Card>
+      {movements.map((movement, index)=> 
+        <MovementBox key={index} id={movement.id} movement={movement} setUpdate={setUpdate} setAuth={setAuth} />
       )}
-      <br/>
-      <div>Create movement:</div>
-      <input value={newMovement} onChange={e => setNewMovement(e.target.value)}></input>
-      <input value={newLink} onChange={e => setNewLink(e.target.value)}></input>
-      <button onClick={() => Functions.createMovement(newMovement, newLink, update, setUpdate, setAuth)}>create</button>
-      <br/><br/>
-      {
-        ownedMovements.length > 0 
-        ? <> 
-            <div>Your movements: </div>
-            {ownedMovements.map(movement => 
-              <SubComponent key={movement.id} id={movement.id} movement={movement} update={update} setUpdate={setUpdate} setAuth={setAuth} />
-            )}
-          </> 
-        : <></>
-      }
-    </div>
+    </Box>
   );
 }
 
 export default Component;
 
-function SubComponent({id, movement, update, setUpdate, setAuth}) {
+function MovementBox({id, movement, setUpdate, setAuth}) {
 
   const [movementName, setMovementName] = useState(movement.name)
-  const [movementLink, setMovementLink] = useState(movement.demo_link)
 
   return (
-    <div>
-      <input type="text" value={movementName} onChange={e => setMovementName(e.target.value)}></input>
-      <input type="text" value={movementLink} onChange={e => setMovementLink(e.target.value)}></input>
-      <button  onClick={() => Functions.updateMovement(id, movementName, movementLink, update, setUpdate, setAuth)} >update</button>
-      <button  onClick={() => Functions.deleteMovement(id, update, setUpdate, setAuth)} >delete</button>
-    </div>
+    <Card sx={{ p: 1, m: 1 }}>
+      <TextField size='small' variant="outlined" value={movementName} sx={{m:1}} onChange={e=>setMovementName(e.target.value)}/>
+      <Box sx={{display: 'flex', justifyContent: 'right'}}>
+        <Button sx={{ m: 1, bottom: 0}} size='small' variant='contained' onClick={()=>Functions.updateMovement(id, movementName, setUpdate, setAuth)} >update</Button>
+        <Button sx={{ m: 1, bottom: 0}} size='small' variant='contained' onClick={()=>Functions.deleteMovement(id, setUpdate, setAuth)} color='secondary'>delete</Button>
+      </Box>
+    </Card>
   )
 }
