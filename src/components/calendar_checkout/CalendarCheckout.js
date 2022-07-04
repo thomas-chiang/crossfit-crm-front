@@ -85,9 +85,9 @@ function Component () {
           }}
           customButtons={{ 
             customButton: {
-              text: 'Checkout Course',
+              text: 'Enroll & Checkout Member',
               click: function() {
-                alert('Click any white box below and start creating a course');
+                alert('Click a blue box and start enrolling and checking out member');
               }
             } 
           }}

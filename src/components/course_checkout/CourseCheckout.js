@@ -29,7 +29,7 @@ function Component({id}) {
   return (
     <Paper elevation={3} sx={{ p: 2, mb: 2}}>
       <Box sx={{display: 'flex', justifyContent: 'space-between',  alignItems: 'baseline'}}>
-        <Typography sx={{ display: 'inline' }} variant="h5" >CHECKOUT COURSE </Typography>
+        <Typography sx={{ display: 'inline' }} variant="h5" >ENROLL & CHECKOUT </Typography>
         <Box sx={{display: 'inline-flex'}}>
           <Typography  variant="subtitle2" >{courseInfo.title} </Typography>
           <Divider orientation="vertical" flexItem sx={{ mx: 1 }}/>
@@ -41,12 +41,6 @@ function Component({id}) {
           <Typography  variant="subtitle2" >Size: <i>{courseInfo.size_enrolled}/{courseInfo.size}</i></Typography>
           <Divider orientation="vertical" flexItem sx={{ mx: 1 }}/>
           <Typography  variant="subtitle2" >Point: <i>{courseInfo.point}</i></Typography>
-         {/*  <Divider orientation="vertical" flexItem sx={{ mx: 1 }}/>
-          <Typography variant="subtitle2" >Point: {courseInfo.point}</Typography>
-          <Divider orientation="vertical" flexItem sx={{ mx: 1 }}/>
-          <Typography  variant="subtitle2" >Workouts:</Typography>
-          {courseInfo.workouts?.map((workout, index) => <Card key={index} sx={{ px: 0.5, mx: 0.5 }}><Typography  variant="subtitle2">{workout.name}</Typography> </Card>)}
-          <Divider orientation="vertical" flexItem sx={{ mx: 1 }}/> */}
         </Box> 
       </Box> 
       <Box sx={{display: 'flex', alignItems: 'stretch', flexWrap: 'wrap'}}>

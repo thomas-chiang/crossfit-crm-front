@@ -2,10 +2,7 @@ import { CalendarContext } from '../../utils/reactContexts'
 import { useContext, useState, useEffect }  from 'react'
 import Functions from './course_creation_functions'
 import  { Navigate } from 'react-router-dom' // auth handler
-import SelectParticipants from '../select_participants/SelectParticipants'
-import SelectWorkouts from '../select_workouts/SelectWorkouts'
-import {Paper, Typography, Card, Button, Divider, Box, TextField, TextareaAutosize} from '@mui/material'
-import {Input} from '@mui/material';
+import {Paper, Typography, Button, Divider, Box, TextField, TextareaAutosize} from '@mui/material'
 import Select from 'react-select';
 import moment from 'moment'
 
@@ -15,8 +12,6 @@ function Component({id ,courseFromCalendar, obj}) {
 
   const calendarContext = useContext(CalendarContext)
   const courseInfo = calendarContext.arr.find(item => item.id === id)
-
-  
 
   const [course, setCourse] = useState({
     id,
@@ -29,9 +24,7 @@ function Component({id ,courseFromCalendar, obj}) {
     coaches: obj[id]?.coaches || null,
     workouts: obj[id]?.workouts || null,
   }) 
-  const [selectedGym, setSelectedGym] = useState(null)
   const [selectedCoaches, setSelectedCoaches] = useState(obj[id]?.coaches || null)
-  const [selectedMembers, setSelectedMembers] = useState(null)
   const [selectedWorkouts, setSelectedWorkouts] = useState(obj[id]?.workouts || null)
   const [workouts, setWorkouts] = useState([])
   const [coaches, setCoaches] = useState([])
@@ -55,12 +48,10 @@ function Component({id ,courseFromCalendar, obj}) {
   useEffect(()=>{
     setCourse({
       ...course, 
-      gym_id: selectedGym?.id,
       coaches: selectedCoaches,
-      members: selectedMembers,
       workouts: selectedWorkouts
     })
-  },[selectedGym, selectedCoaches, selectedMembers, selectedWorkouts])
+  },[selectedCoaches, selectedWorkouts])
 
 
   useEffect(() => {
@@ -72,8 +63,6 @@ function Component({id ,courseFromCalendar, obj}) {
     calendarContext.obj[id] = course
     calendarContext.setObj(calendarContext.obj)
   },[course])
-
-  console.log(new Date(course.start).toUTCString())
   
   if (!auth) return <Navigate to='/login'/> // auth
   return (
@@ -102,55 +91,6 @@ function Component({id ,courseFromCalendar, obj}) {
         <Button sx={{mr:1}} variant='contained' onClick={()=>{ Functions.handleCreateButton(course, courseFromCalendar, calendarContext, setAuth)}}>Create</Button>
         <Button color='secondary' variant='contained' onClick={()=>Functions.cancel(id, calendarContext)}>Cancel</Button>
       </Box>
-    {/* <div className={styles.course_border}>
-      <div className={styles.course_item}>
-        Create course
-      </div>
-      <div className={styles.course_item}>
-        Course start time: <input type="datetime-local" value={course.start} onChange={e => setCourse({...course, start: e.target.value})} ></input>
-      </div>
-      <div className={styles.course_item}>
-        Course end time: <input type="datetime-local" value={course.end} onChange={e => setCourse({...course, end: e.target.value})} ></input>
-      </div>
-      <div className={styles.course_item}>
-        Course title: <input className={styles.input_text} type="text" value={course.title} onChange={e => setCourse({...course, title: e.target.value})} ></input>
-      </div>
-      <div className={styles.course_item}>
-        Course points: <Input size="small" type="number" sx={{ width: 30 }} value={course.point} onChange={e => setCourse({...course, point: e.target.value})} />
-      </div>
-      
-      <div className={styles.course_item}>
-        Course size: <input className={styles.input_number} type="number" value={course.size} onChange={e => setCourse({...course, size: e.target.value})} ></input>
-      </div>
-      <div className={styles.course_item}>
-        <SelectParticipants 
-          selectedGym = {selectedGym}
-          setSelectedGym = {setSelectedGym}
-          selectedCoaches = {selectedCoaches}
-          setSelectedCoaches = {setSelectedCoaches}
-          selectedMembers = {selectedMembers}
-          setSelectedMembers = {setSelectedMembers}
-        /> 
-      </div>
-      <div className={styles.course_item}>
-        <SelectWorkouts
-          selectedWorkouts = {selectedWorkouts}
-          setSelectedWorkouts = {setSelectedWorkouts}
-        /> 
-      </div>
-      <div className={styles.course_item}>
-        Course note:
-      </div>
-      <div className={styles.course_item}>
-        <textarea className={styles.textarea} value={course.note} onChange={e => setCourse({...course, note: e.target.value}) } ></textarea>
-      </div>
-      <div className={styles.course_item}>
-        <button className={styles.button} onClick={()=>{
-            Functions.handleCreateButton(course, courseFromCalendar, calendarContext, setAuth)
-          }}>Create</button>
-        <button className={styles.button} onClick={()=>Functions.cancel(courseFromCalendar, calendarContext)}>Cancel</button>
-      </div>
-    </div> */}
     </Paper> 
   )
 }

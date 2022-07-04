@@ -33,8 +33,8 @@ export default function Aside({setSection}) {
           <MenuItem onClick={() =>setSection('member') }>Manage Member</MenuItem>
           <MenuItem onClick={() =>setSection('create course') }>Create Course</MenuItem>
           <MenuItem onClick={() =>setSection('calendar') }>Update Course</MenuItem>
-          <MenuItem onClick={() =>setSection('performance') }>Record Performance</MenuItem>
-          <MenuItem onClick={() =>setSection('checkout') }>Checkout Course</MenuItem>          
+          <MenuItem onClick={() =>setSection('enroll and checkout') }>Enroll & Checkout Member</MenuItem>
+          <MenuItem onClick={() =>setSection('performance') }>Record Performance</MenuItem>        
         </Menu>
         {/* <Menu iconShape="circle">
           <SubMenu

@@ -3,12 +3,11 @@ import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid' 
 import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin from "@fullcalendar/interaction"
-import styles from './calender_coach.module.css'
 import { useState, useEffect } from "react"
 import { CalendarContext } from '../../utils/reactContexts'
 import Course_coach from '../course_coach/CourseCoach'
 import Functions from './calender_coach_functions'
-import {Paper, Typography, Card, Button, Box, Radio, TextField} from '@mui/material'
+import {Box} from '@mui/material'
 
 
 
@@ -95,7 +94,6 @@ function Component () {
           editable={true}
           selectable={true}
           events={calendarEvents}
-          //select={handleSelect}
           eventClick={eventSetter}
           eventContent={renderEventContent}
           eventDrop={eventSetter}

@@ -31,7 +31,7 @@ function Component() {
       {section === 'member' ?  <Member /> : <></>}
       {section === 'calendar' ?  <Calendar /> : <></>}
       {section === 'performance' ?  <CalendarCoach /> : <></>}
-      {section === 'checkout' ?  <CalendarCheck /> : <></>}
+      {section === 'enroll and checkout' ?  <CalendarCheck /> : <></>}
       {section === 'create course' ?  <CalendarCreation /> : <></>}
     </div>
   );

@@ -25,9 +25,7 @@ async function handleEnrollButton(id, calendarContext, setAuth) {
     if (response.ok) {
       alert('Enrolled successfully')
       calendarContext.setUpdate(!calendarContext.update)
-      // let oldArr = calendarContext.arr
-      // let newArr = oldArr.filter(item => item.id !== id)
-      // calendarContext.setArr(newArr)
+      
     } else {
       let data = await response.json()
       alert(response.status+': '+ data.error)
@@ -55,9 +53,7 @@ async function handleQuitButton(id, calendarContext, setAuth) {
     if (response.ok) {
       alert('Quit successfully')
       calendarContext.setUpdate(!calendarContext.update)
-      // let oldArr = calendarContext.arr
-      // let newArr = oldArr.filter(item => item.id !== id)
-      // calendarContext.setArr(newArr)
+      
     } else {
       let data = await response.json()
       alert(response.status+': '+ data.error)
@@ -87,6 +83,5 @@ async function getWorkout (workout_id, setUpdatedWorkout) {
     else console.log(response.status+': '+ data.error)
   }catch(e){
     console.log(e)
-    //alert(e.message)
   }  
 }

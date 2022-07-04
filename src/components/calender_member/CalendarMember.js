@@ -3,12 +3,11 @@ import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid' 
 import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin from "@fullcalendar/interaction"
-import styles from './calender_member.module.css'
 import { useState, useEffect } from "react"
 import { CalendarContext } from '../../utils/reactContexts'
 import CourseMember from '../course_member/CourseMember'
 import Functions from './calender_member_functions'
-import {Paper, Typography, Card, Button, Box, Radio, TextField} from '@mui/material'
+import { Box } from '@mui/material'
 
 
 
@@ -26,7 +25,6 @@ function Component () {
     Functions.updateArr(calendarEvents, arr, setArr)
   },[calendarEvents])
 
-  //console.log(arr)
 
   function eventSetter(arg) {
     if(arr.length > 3) return alert ('open too many courses')
@@ -88,9 +86,7 @@ function Component () {
           initialView="timeGridWeek"
           editable={true}
           selectable={true}
-          //events={arr}
           events={calendarEvents}
-          //select={handleSelect}
           eventClick={eventSetter}
           eventContent={renderEventContent}
           eventDrop={eventSetter}
