@@ -2,7 +2,6 @@ import moment from 'moment'
 import { CalendarContext } from '../../utils/reactContexts'
 import { useContext, useState, useEffect }  from 'react'
 import Functions from './course_coach_functions'
-import  { Navigate } from 'react-router-dom' // auth handler
 import UpdateCourseWorkoutsPerformance from '../update_course_workouts_performance/UpdateCourseWorkoutsPerformance'
 import {Paper, Typography, Card, Button, Divider, Box, TextField, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle} from '@mui/material'
 
@@ -13,7 +12,6 @@ function Component({id}) {
   let courseInfo = calendarContext.arr.find(item => item.id === id)
   
 
-  const [auth, setAuth] = useState(true) // auth handler
 
   useEffect(() => {
     courseInfo = calendarContext.arr.find(item => item.id === id)
@@ -30,7 +28,6 @@ function Component({id}) {
   };
 
 
-  if (!auth) return <Navigate to='/login'/> // auth handler
   return (
     <Paper elevation={3} sx={{ p: 2, mb: 2 }}>
       <Box sx={{display: 'flex', justifyContent: 'space-between',  alignItems: 'baseline'}}>

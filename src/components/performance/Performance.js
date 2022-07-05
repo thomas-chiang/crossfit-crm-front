@@ -23,11 +23,11 @@ function Component({performance, setUpdate}) {
         <Typography >{performance.name}</Typography>
       </Box>
       
-      <TextField  sx={{mr:1, mt:1, width: 100}} size='small' type='number' label="kg" variant="outlined" value={updatedPerformance.kg} onChange={e=>{setUpdatedPerformance({...updatedPerformance, kg: e.target.value})}}/>
-      <TextField  sx={{mr:1, mt:1, width: 100}} size='small' type='number' label="rep" variant="outlined" value={updatedPerformance.rep} onChange={e=>{setUpdatedPerformance({...updatedPerformance, rep: e.target.value})}}/>
-      <TextField  sx={{mr:1, mt:1, width: 100}} size='small' type='number' label="meter" variant="outlined" value={updatedPerformance.meter} onChange={e=>{setUpdatedPerformance({...updatedPerformance, meter: e.target.value})}}/>
-      <TextField  sx={{mr:1, mt:1, width: 100}} size='small' type='number' label="cal" variant="outlined" value={updatedPerformance.cal} onChange={e=>{setUpdatedPerformance({...updatedPerformance, cal: e.target.value})}}/>
-      <TextField  sx={{mr:1, mt:1, width: 100}} size='small' type='number' label="sec" variant="outlined" value={updatedPerformance.sec} onChange={e=>{setUpdatedPerformance({...updatedPerformance, sec: e.target.value})}}/>
+      <TextField  sx={{mr:1, mt:1, width: 100}} size='small' type='number' label="kg" variant="outlined" value={updatedPerformance.kg || ''} onChange={e=>{setUpdatedPerformance({...updatedPerformance, kg: e.target.value})}}/>
+      <TextField  sx={{mr:1, mt:1, width: 100}} size='small' type='number' label="rep" variant="outlined" value={updatedPerformance.rep || ''} onChange={e=>{setUpdatedPerformance({...updatedPerformance, rep: e.target.value})}}/>
+      <TextField  sx={{mr:1, mt:1, width: 100}} size='small' type='number' label="meter" variant="outlined" value={updatedPerformance.meter || ''} onChange={e=>{setUpdatedPerformance({...updatedPerformance, meter: e.target.value})}}/>
+      <TextField  sx={{mr:1, mt:1, width: 100}} size='small' type='number' label="cal" variant="outlined" value={updatedPerformance.cal || ''} onChange={e=>{setUpdatedPerformance({...updatedPerformance, cal: e.target.value})}}/>
+      <TextField  sx={{mr:1, mt:1, width: 100}} size='small' type='number' label="sec" variant="outlined" value={updatedPerformance.sec || ''} onChange={e=>{setUpdatedPerformance({...updatedPerformance, sec: e.target.value})}}/>
       <Button sx={{ mr: 1, mt:1}}  variant="contained" onClick={()=>Functions.updatePerformance(updatedPerformance, setAuth, setUpdate)}>update</Button>
       <Button sx={{ mr: 1, mt:1}}  variant="contained" color="secondary" onClick={()=>Functions.deletePerformance(updatedPerformance, setAuth, setUpdate)}>delete</Button>
     </Paper>

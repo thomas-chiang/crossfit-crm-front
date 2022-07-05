@@ -1,6 +1,5 @@
 import utilsFunctions from '../../utils/functions'
 const Functions = {
-  
   createWorkout, //
   getMovementOptions, //
   getWorkoutsWithMovements, //

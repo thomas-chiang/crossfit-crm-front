@@ -72,7 +72,6 @@ async function enrollMemberByEmail (course_id, email, setUpdate, setAuth) {
         }
       }
     )
-    console.log(response.ok)
     if (response.ok) {
       alert('Enrolled successfully')
       setUpdate(Date())

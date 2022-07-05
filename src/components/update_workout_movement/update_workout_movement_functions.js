@@ -1,12 +1,12 @@
 import utilsFunctions from '../../utils/functions'
 const Functions = {
-  updateOwnedWorkoutMovement,
+  updateWorkoutMovement,
   getWorkoutMovement,
   deleteWorkoutMovement
 }
 export default Functions
 
-async function updateOwnedWorkoutMovement (updatedMovement, setUpdate, setPassDownUpdate, setAuth) {
+async function updateWorkoutMovement (updatedMovement, setUpdate, setPassDownUpdate, setAuth) {
   console.log(updatedMovement)
   try{
     let token = localStorage.getItem('jwtToken')
@@ -34,7 +34,6 @@ async function updateOwnedWorkoutMovement (updatedMovement, setUpdate, setPassDo
     console.log(e)
     alert(e.message)
   }
-
 }
 
 

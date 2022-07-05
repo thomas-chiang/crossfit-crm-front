@@ -27,7 +27,6 @@ function Component () {
 
 
   function eventSetter(arg) {
-    if(arr.length > 3) return alert ('open too many courses')
     let obj = {
       id: arg.event.id,
       title: arg.event.title,

@@ -2,7 +2,7 @@ import { useState, useEffect }  from 'react'
 import  { Navigate } from 'react-router-dom' // auth handler
 import Functions from './workout_movement_functions'
 import React from 'react'
-import {Paper, Typography, Card, Button, Divider, Box, TextField} from '@mui/material'
+import { Typography,  Button, Box, TextField} from '@mui/material'
 
 
 
@@ -17,7 +17,7 @@ function Component({course_id, user_id, workout_id, workout_name, setUpdate}) {
   return (
     <>
       {movements.map((movement, index) => 
-        <Box>
+        <Box key={index}>
           <CreatePerformance 
             course_id={course_id} 
             user_id={user_id} 
@@ -55,11 +55,11 @@ function CreatePerformance({course_id, user_id, workout_id, setUpdate, movement,
   return (
     <Box sx={{display: 'flex', alignItems: 'stretch'}}> 
       <Typography sx={{ width: 1/9, display: 'flex', alignItems: 'center', justifyContent: 'right', mr: 1}}>{movement.name}</Typography>
-      <TextField  sx={{mr:1, mt:1, width: 80}} size='small' type='number' label="kg" variant="outlined" value={performance.kg} onChange={e=>{setPerformance({...performance, kg: e.target.value})}}/>
-      <TextField  sx={{mr:1, mt:1, width: 80}} size='small' type='number' label="rep" variant="outlined" value={performance.rep} onChange={e=>{setPerformance({...performance, rep: e.target.value})}}/>
-      <TextField  sx={{mr:1, mt:1, width: 80}} size='small' type='number' label="meter" variant="outlined" value={performance.meter} onChange={e=>{setPerformance({...performance, meter: e.target.value})}}/>
-      <TextField  sx={{mr:1, mt:1, width: 80}} size='small' type='number' label="cal" variant="outlined" value={performance.cal} onChange={e=>{setPerformance({...performance, cal: e.target.value})}}/>
-      <TextField  sx={{mr:1, mt:1, width: 80}} size='small' type='number' label="sec" variant="outlined" value={performance.sec} onChange={e=>{setPerformance({...performance, sec: e.target.value})}}/>
+      <TextField  sx={{mr:1, mt:1, width: 100}} size='small' type='number' label="kg" variant="outlined" value={performance.kg} onChange={e=>{setPerformance({...performance, kg: e.target.value})}}/>
+      <TextField  sx={{mr:1, mt:1, width: 100}} size='small' type='number' label="rep" variant="outlined" value={performance.rep} onChange={e=>{setPerformance({...performance, rep: e.target.value})}}/>
+      <TextField  sx={{mr:1, mt:1, width: 100}} size='small' type='number' label="meter" variant="outlined" value={performance.meter} onChange={e=>{setPerformance({...performance, meter: e.target.value})}}/>
+      <TextField  sx={{mr:1, mt:1, width: 100}} size='small' type='number' label="cal" variant="outlined" value={performance.cal} onChange={e=>{setPerformance({...performance, cal: e.target.value})}}/>
+      <TextField  sx={{mr:1, mt:1, width: 100}} size='small' type='number' label="sec" variant="outlined" value={performance.sec} onChange={e=>{setPerformance({...performance, sec: e.target.value})}}/>
       <Button sx={{ mr: 1, mt:1, width: 200}} size='small' type=''variant="contained" onClick={()=>{Functions.createPerformance(performance, setAuth, setUpdate)}}>create performance</Button>
     </Box>
   );

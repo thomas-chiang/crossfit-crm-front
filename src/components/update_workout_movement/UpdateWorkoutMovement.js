@@ -17,6 +17,7 @@ function Component({movement, setPassDownUpdate, setUpdateFromChild}) {
     Functions.getWorkoutMovement(setUpdatedMovement, workout_movement_id)
   },[update, movement])
 
+
   if (!auth) return <Navigate to='/login'/> // auth handler
   return (
     <Box sx={{ maxHeight: '100%', display: 'flex'}}>
@@ -26,7 +27,7 @@ function Component({movement, setPassDownUpdate, setUpdateFromChild}) {
       <TextField sx={{m:1, width: 100}} size='small' type='number' label="meter" variant="outlined" value={updatedMovement.meter || ''} onChange={e => setUpdatedMovement({...updatedMovement, meter: e.target.value})}/>
       <TextField sx={{m:1, width: 100}} size='small' type='number' label="cal" variant="outlined" value={updatedMovement.cal || ''} onChange={e => setUpdatedMovement({...updatedMovement, cal: e.target.value})}/>
       <TextField sx={{m:1, width: 100}} size='small' type='number' label="sec" variant="outlined" value={updatedMovement.sec || ''} onChange={e => setUpdatedMovement({...updatedMovement, sec: e.target.value})}/>
-      <Button sx={{ m: 1}} size='small' onClick={()=>{Functions.updateOwnedWorkoutMovement(updatedMovement, setUpdate, setPassDownUpdate, setAuth)}} variant="contained" >update</Button>
+      <Button sx={{ m: 1}} size='small' onClick={()=>{Functions.updateWorkoutMovement(updatedMovement, setUpdate, setPassDownUpdate, setAuth)}} variant="contained" >update</Button>
       <Button sx={{ m: 1}} size='small' onClick={()=>{Functions.deleteWorkoutMovement(workout_movement_id, setUpdateFromChild, setPassDownUpdate, setAuth)}} variant="contained" color="secondary">delete</Button> 
     </Box>
   );

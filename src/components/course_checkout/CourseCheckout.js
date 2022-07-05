@@ -23,8 +23,6 @@ function Component({id}) {
     Functions.getCourseEnrolledmembers(id, setMembers)
   },[update])
   
-  console.log(members)
-
   if (!auth) return <Navigate to='/login'/> // auth handler
   return (
     <Paper elevation={3} sx={{ p: 2, mb: 2}}>

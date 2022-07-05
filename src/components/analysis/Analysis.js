@@ -41,7 +41,9 @@ function Component() {
           <Select placeholder={'Select movement'} defaultValue={selectedMovement} onChange={setSelectedMovement} options={movements}/>
         </Box>
       </Box>
-      {lineData ? <Line lineData={lineData}/> : <></>}
+      <Box sx={{ p:1}}>
+        {lineData ? <Line lineData={lineData}/> : <></>}
+      </Box>
     </Paper>
     </Box>
   );

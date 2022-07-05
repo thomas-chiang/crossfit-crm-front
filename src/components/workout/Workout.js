@@ -26,6 +26,7 @@ function Component() {
     minute: '',
     note: ''
   })
+  
   const [movementOptions, setMovementOptions] = useState([])
   const [selectedMovement, setSelectedMovement] = useState(null);
   const [movementDetail, setMovementDetail] = useState ({
