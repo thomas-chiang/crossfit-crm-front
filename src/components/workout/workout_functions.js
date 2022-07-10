@@ -33,7 +33,7 @@ async function getWorkoutsWithMovements(setWorkouts) {
     else alert(response.status+': '+ data.error)
   }catch(e){
     console.log(e)
-    alert(e.message)
+    //alert(e.message)
   }
 }
 

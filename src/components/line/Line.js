@@ -37,25 +37,25 @@ export const options = {
         weight: 'bold'
       },
       formatter: Math.round,
-      padding: 6,
+      padding: 2,
       align: 'right',
       anchor: 'end',
     },
-   
+    
   },
-  // layout: {
-  //   padding: {
-  //     top: 0,
-  //     right: 100,
-  //     bottom: 40,
-  //     left: 80
-  //   }
-  // },
-  // elements: {
-  //   line: {
-  //     fill: false,
-  //   }
-  // }
+  scales: {
+    x: {
+      ticks: {
+        padding: 20,
+      }
+    },
+    y: {
+      ticks: {
+        padding: 20,
+      }
+    }
+  }
+ 
 }
 
 export default function Component({lineData}) {

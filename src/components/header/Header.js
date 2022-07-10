@@ -1,8 +1,8 @@
-import styles from './header.module.css'
 import { Link } from "react-router-dom";
 import { useContext, useEffect, useState } from 'react'
 import { AppContext } from '../../utils/reactContexts'
 import Functions from './header_functions';
+import { Typography, Box,  List, ListItem} from '@mui/material'
 
 
 function Component() {
@@ -14,27 +14,48 @@ function Component() {
     Functions.getUserProfile(setUser, appContext)
   },[appContext.update])
 
+  const linkStyle = {textDecoration: 'none', color: 'white'}
 
   return (
-    <div className={styles.container}>
-      <div className={styles.logo}>
-        <Link className={styles.a} to="/">CrossFit CRM</Link>
-      </div>
-      <nav>
-        <ul className={styles.ul}>
-          {/* <li className={styles.li}><Link className={styles.a} to="/workout">WORKOUT</Link></li>
-          <li className={styles.li}><Link className={styles.a} to="/movement">MOVEMENT</Link></li>
-          <li className={styles.li}><Link className={styles.a} to="/gym">GYM</Link></li> */}
-          <li className={styles.li}><Link className={styles.a} to="/analysis">ANALYSIS</Link></li>
-          <li className={styles.li}><Link className={styles.a} to="/calendar">COURSE CALENDAR</Link></li>
-          { 
-            user 
-            ? <li className={styles.li}><Link className={styles.a} to="/profile">PROFILE</Link></li>
-            : <li className={styles.li}><Link className={styles.a} to="/profile">LOGIN</Link></li>
-          } 
-        </ul>
-      </nav>  
-    </div>
+    <Box 
+      sx={{
+        display: 'flex',
+        backgroundColor: 'black', 
+        color: 'white', 
+        justifyContent: 'space-between',
+        alignItems: 'center', 
+        height: '9.75vh',
+        padding: 2
+      }}
+    >
+      <Box  >
+        <Link style={linkStyle} to="/">
+          <Typography variant="h3" sx={{ fontWeight: 'bold', textDecoration: 'none'}}>CrossFit CRM</Typography>
+        </Link>
+      </Box>
+      
+      <List sx={{display: 'flex',}}>
+        {/* <li className={styles.li}><Link className={styles.a} to="/workout">WORKOUT</Link></li>
+        <li className={styles.li}><Link className={styles.a} to="/movement">MOVEMENT</Link></li>
+        <li className={styles.li}><Link className={styles.a} to="/gym">GYM</Link></li> */}
+        <ListItem  >
+          <Link  style={linkStyle} to="/analysis">ANALYSIS</Link>
+        </ListItem>
+        <ListItem  >
+          <Link style={{...linkStyle, width: 160, textAlign: 'center'}} to="/calendar">COURSE CALENDAR</Link>
+        </ListItem>
+        { 
+          user ? 
+          <ListItem >
+            <Link style={linkStyle} to="/profile">PROFILE</Link>
+          </ListItem>
+          : <ListItem >
+            <Link  style={linkStyle} to="/profile">LOGIN</Link>
+          </ListItem>
+        } 
+      </List>
+       
+    </Box>
     
   );
 }

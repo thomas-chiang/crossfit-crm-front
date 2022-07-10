@@ -2,7 +2,8 @@ import utilsFunctions from '../../utils/functions'
 const Functions = {
   getUsersByRole,
   updateValidStatus,
-  updatePoint
+  updatePoint,
+  insertPoint
 }
 export default Functions
 
@@ -71,3 +72,44 @@ async function updatePoint (user_id, point, setUpdate, setAuth) {
     alert(e.message)
   }
 }
+
+
+async function insertPoint (user_id, point, setUpdate, setAuth) {
+  try{
+    let token = localStorage.getItem('jwtToken')
+
+    if(!await utilsFunctions.auth()) return setAuth(false)
+
+    const response = await fetch (
+      process.env.REACT_APP_API_URL+`user/point?user_id=${user_id}&point=${point}`,
+      {
+        method: 'POST',
+        headers: { 
+          'Authorization': `Bearer ${token}`
+        }
+      }
+    )
+    let data = await response.json()
+    if (response.ok) {
+      if(point > 0) alert('added point successfully')
+      if(point < 0) alert('deducted point successfully')
+      setUpdate(Date())
+    }
+    else alert(response.status+': '+ data.error)
+  }catch(e){
+    alert(e.message)
+  }
+}
+
+// async function getPoint(user_id, point, setPoint) {
+//   try{
+//     const response = await fetch (
+//       process.env.REACT_APP_API_URL+`user/point/${user_id}`,
+//     )
+//     let data = await response.json()
+//     if (response.ok) setPoint(data)
+//     else alert(response.status+': '+ data.error)
+//   }catch(e){
+//     console.log(e.message)
+//   }
+// }

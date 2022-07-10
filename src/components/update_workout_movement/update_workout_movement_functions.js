@@ -75,7 +75,7 @@ async function deleteWorkoutMovement (workout_movement_id, setUpdateFromChild, s
       setPassDownUpdate(Date())
       setUpdateFromChild(Date())
     }
-    else console.log(response.status+': '+ data.error)
+    else alert(response.status+': '+ data.error)
   }catch(e){
     alert(e.message)
   }  

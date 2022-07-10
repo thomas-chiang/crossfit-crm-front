@@ -1,9 +1,9 @@
 import { useState, useEffect }  from 'react'
-import Functions from './update_course_workouts_performance_functions'
+import Functions from './course_workouts_performance_functions'
 import Select from 'react-select';
 import Performance from '../performance/Performance'
-import WorkoutMovements from '../workout_movements/WorkoutMovements'
-import {Paper, Typography, Card, Button, Divider, Box, TextField} from '@mui/material'
+import PerformanceCreation from '../performance_creation/PerformanceCreation'
+import {Paper, Typography,  Box, TextField} from '@mui/material'
 
 
 
@@ -26,24 +26,23 @@ function Component({
 
   return (
     <Box >
-      <Paper elevation={3} sx={{ p:1, my:1}}>
-        <Select isMulti defaultValue={selectedWorkouts} onChange={setSelectedWorkouts} options={workouts} />
+      <Paper elevation={3} sx={{ p:2, my:1}}>
+        <Select isMulti defaultValue={selectedWorkouts} onChange={setSelectedWorkouts} options={workouts} menuPortalTarget={document.body}  styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}/>
         {selectedWorkouts?.map((workout, index) =>
           <Paper elevation={3} key={index} sx={{p:1, my: 1}}>
-            <Typography >{workout.name}: </Typography>
-            < WorkoutMovements 
+            < PerformanceCreation 
               setUpdate={setUpdate}
               course_id={course_id}
               user_id={user_id}
-              workout_id={workout.id}
-              workout_name={workout.name}
+              workout={workout}
             />
           </Paper>
         )}
       </Paper>
+
       {performances.length > 0 
       ? 
-        <Paper elevation={3} sx={{ p:1, my:1}}>
+        <Paper elevation={3} sx={{ p:2, my:1}}>
         <Typography >Performances: </Typography>
         {performances.map((performance, index) =>
           <Box key={index}>
@@ -55,6 +54,7 @@ function Component({
         )}
       </Paper>
       : <></>}
+
     </Box>
   );
 }

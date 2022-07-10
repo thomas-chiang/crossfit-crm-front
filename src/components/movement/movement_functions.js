@@ -21,7 +21,7 @@ async function getMovements(setMovements) {
   }
 }
 
-async function createMovement (name, setUpdate, setAuth) {
+async function createMovement (newMovement, setUpdate, setAuth) {
   try{
     let token = localStorage.getItem('jwtToken')
 
@@ -35,7 +35,7 @@ async function createMovement (name, setUpdate, setAuth) {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`
         },
-        body: JSON.stringify({name})
+        body: JSON.stringify(newMovement)
       }
     )
     let data = await response.json()
@@ -49,7 +49,7 @@ async function createMovement (name, setUpdate, setAuth) {
   }
 }
 
-async function updateMovement (id, movementName, setUpdate, setAuth) {
+async function updateMovement (updateingMovement, setUpdate, setAuth) {
   try{
     let token = localStorage.getItem('jwtToken')
 
@@ -63,10 +63,7 @@ async function updateMovement (id, movementName, setUpdate, setAuth) {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`
         },
-        body: JSON.stringify({
-          id: id,
-          name: movementName,
-        })
+        body: JSON.stringify(updateingMovement)
       }
     )
     let data = await response.json()

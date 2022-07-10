@@ -3,11 +3,12 @@ import  { Navigate } from 'react-router-dom' // auth handler
 import Functions from './update_workout_functions'
 import Select from 'react-select';
 import UpdateWorkoutMovement from '../update_workout_movement/UpdateWorkoutMovement'
-import {Card, Button, Box, TextField, TextareaAutosize} from '@mui/material'
+import {Paper, Button, Box, TextField, TextareaAutosize} from '@mui/material'
 
 
 
 function Component({workout, movementOptions, passDownUpdate, setPassDownUpdate}) {
+
 
   const [updateFromChild, setUpdateFromChild] = useState(Date())
   const [update, setUpdate] = useState(Date())
@@ -20,7 +21,7 @@ function Component({workout, movementOptions, passDownUpdate, setPassDownUpdate}
     rep: '',
     meter: '',
     cal: '',
-    sec: ''
+    // sec: ''
   })
 
   useEffect(() => {
@@ -43,8 +44,14 @@ function Component({workout, movementOptions, passDownUpdate, setPassDownUpdate}
   if (!auth) return <Navigate to='/login'/> // auth handler
   return (
     
-    <Card sx={{ p: 1, m: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', /* width: 950 */ }}>
-        <TextField sx={{m:1}} size='small' label="Workout name" variant="outlined" value={updatingWorkout.name} onChange={e => setUpdatingWorkout({...updatingWorkout, name: e.target.value})}/>
+    <Paper elevation={3} sx={{ p: 1, m: 1 }}>
+        <Box sx={{ display: 'flex'}}>
+          <TextField sx={{m:1, flexGrow: 1}} size='small' label="Workout name" variant="outlined" value={updatingWorkout.name || ''}  onChange={e => setUpdatingWorkout({...updatingWorkout, name: e.target.value})}/>
+          <TextField sx={{m:1, width: 100}} type='number' size='small' label="round" variant="outlined" value={updatingWorkout.round || ''}  onChange={e => setUpdatingWorkout({...updatingWorkout, round: e.target.value})}/>
+          <TextField sx={{m:1, width: 120}} type='number' size='small' label="extra count" variant="outlined" value={updatingWorkout.extra_count || ''}  onChange={e => setUpdatingWorkout({...updatingWorkout, extra_count: e.target.value})}/>
+          <TextField sx={{m:1, width: 100}} type='number' size='small' label="minute" variant="outlined" value={updatingWorkout.minute || ''}  onChange={e => setUpdatingWorkout({...updatingWorkout, minute: e.target.value})}/>
+          <TextField sx={{m:1, width: 100}} type='number' size='small' label="extra sec" variant="outlined" value={updatingWorkout.extra_sec || ''}  onChange={e => setUpdatingWorkout({...updatingWorkout, extra_sec: e.target.value})}/>
+        </Box> 
         {
           updatingWorkout.movements
           ? updatingWorkout.movements.map((movement, index) =>
@@ -66,15 +73,17 @@ function Component({workout, movementOptions, passDownUpdate, setPassDownUpdate}
           <TextField sx={{m:1, width: 100}} size='small' type='number' label="rep" variant="outlined" value={newWorkoutMovement.rep} onChange={e => setNewWorkoutMovement({...newWorkoutMovement, rep: e.target.value})} />
           <TextField sx={{m:1, width: 100}} size='small' type='number' label="meter" variant="outlined" value={newWorkoutMovement.meter} onChange={e => setNewWorkoutMovement({...newWorkoutMovement, meter: e.target.value})}/>
           <TextField sx={{m:1, width: 100}} size='small' type='number' label="cal" variant="outlined" value={newWorkoutMovement.cal} onChange={e => setNewWorkoutMovement({...newWorkoutMovement, cal: e.target.value})}/>
-          <TextField sx={{m:1, width: 100}} size='small' type='number' label="sec" variant="outlined" value={newWorkoutMovement.sec} onChange={e => setNewWorkoutMovement({...newWorkoutMovement, sec: e.target.value})}/>
+          {/* <TextField sx={{m:1, width: 100}} size='small' type='number' label="sec" variant="outlined" value={newWorkoutMovement.sec} onChange={e => setNewWorkoutMovement({...newWorkoutMovement, sec: e.target.value})}/> */}
           <Button sx={{ m: 1}} size='small' disabled={!selectedMovement} onClick={()=>{Functions.addWorkoutMovement(newWorkoutMovement, setAuth, setUpdate, setPassDownUpdate)}} variant="contained" > add movement</Button> 
         </Box>
-        <TextareaAutosize placeholder="note" style={{ margin: 10 }} minRows={3} value={updatingWorkout.note} onChange={e => setUpdatingWorkout({...updatingWorkout, note: e.target.value})}/>
+        <Box sx={{ display: 'flex'}}>
+           <TextareaAutosize placeholder="note" style={{ margin: 8, flexGrow: 1}} minRows={3} value={updatingWorkout.note || ''} onChange={e => setUpdatingWorkout({...updatingWorkout, note: e.target.value})}/>
+        </Box>
         <Box sx={{display: 'flex', justifyContent: 'right'}}>
-          <Button sx={{ m: 1}} variant='contained' onClick={() => {Functions.updateOnlyWorkout(updatingWorkout, setAuth, setUpdate, setPassDownUpdate)}} >update workout name & note</Button>
+          <Button sx={{ m: 1}} variant='contained' onClick={() => {Functions.updateOnlyWorkout(updatingWorkout, setAuth, setUpdate, setPassDownUpdate)}} >update workout (no movements)</Button>
           <Button sx={{ m: 1}} variant='contained' onClick={() => {Functions.deleteWorkout(updatingWorkout.id, setAuth, setPassDownUpdate)}} color="secondary">delete workout</Button>
         </Box>
-      </Card>
+      </Paper>
     
     
   );

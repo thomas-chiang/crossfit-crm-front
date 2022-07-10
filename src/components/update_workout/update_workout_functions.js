@@ -82,7 +82,7 @@ async function updateOnlyWorkout (updatedWorkout, setAuth, setUpdate, setPassDow
     if(!await utilsFunctions.auth()) return setAuth(false)
 
     const response = await fetch (
-      process.env.REACT_APP_API_URL+'workout/onlynameandnote',
+      process.env.REACT_APP_API_URL+'workout/onlyworkout',
       {
         method: 'PUT',
         headers: { 

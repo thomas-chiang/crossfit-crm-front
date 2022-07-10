@@ -4,7 +4,7 @@ import Functions from './workout_functions'
 import Select from 'react-select';
 import { AppContext } from '../../utils/reactContexts'
 import UpdateWorkout from '../update_workout/UpdateWorkout'
-import {Card, Button, Box, TextField, TextareaAutosize} from '@mui/material'
+import {Paper, Button, Box, TextField, TextareaAutosize} from '@mui/material'
 
 
 
@@ -22,8 +22,10 @@ function Component() {
   // create workout
   const [newWorkout, setNewWorkout] = useState({
     name: '',
-    demo_link: '' ,
+    round: '' ,
+    extra_count: '',
     minute: '',
+    extra_sec: '',
     note: ''
   })
   
@@ -34,7 +36,7 @@ function Component() {
     rep: '',
     meter: '',
     cal: '',
-    sec: ''
+    //sec: ''
   })
   const [movementArr, setMovementArr] = useState([])
   
@@ -43,8 +45,12 @@ function Component() {
 
   useEffect(() => {
     Functions.getWorkoutsWithMovements(setWorkouts)
-    Functions.getMovementOptions(setMovementOptions)
+    // Functions.getMovementOptions(setMovementOptions)
   },[update, appContext.update, passDownUpdate])
+
+  useEffect(() => {
+    Functions.getMovementOptions(setMovementOptions)
+  },[selectedMovement])
 
 
   const customStyles = {
@@ -53,32 +59,37 @@ function Component() {
       height: 40,
       width: 150,
     })
-  };
+  }
 
- 
 
   if (!auth) return <Navigate to='/login'/> // auth handler
   return (
-    <Box sx={{m: 3, display: 'flex', alignItems: 'stretch', flexWrap: 'wrap'}}>
-      <Card sx={{ p: 1, m: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', /* width: 950  */}}>
-        <TextField sx={{m:1}} size='small' label="Workout name" variant="outlined" value={newWorkout.name} onChange={e => setNewWorkout({...newWorkout, name: e.target.value})}/>
+    <Box sx={{m: 3, display: 'flex', flexWrap: 'wrap'}}>
+      <Paper elevation={3} sx={{ p: 1, m: 1}}>
+        <Box sx={{ display: 'flex'}}>
+          <TextField sx={{m:1, flexGrow: 1}} size='small' label="Workout name" variant="outlined" value={newWorkout.name} onChange={e => setNewWorkout({...newWorkout, name: e.target.value})}/>
+          <TextField sx={{m:1, width: 100}} type='number' size='small' label="round" variant="outlined" value={newWorkout.round} onChange={e => setNewWorkout({...newWorkout, round: e.target.value})}/>
+          <TextField sx={{m:1, width: 120}} type='number' size='small' label="extra count" variant="outlined" value={newWorkout.extra_count} onChange={e => setNewWorkout({...newWorkout, extra_count: e.target.value})}/>
+          <TextField sx={{m:1, width: 100}} type='number' size='small' label="minute" variant="outlined" value={newWorkout.minute} onChange={e => setNewWorkout({...newWorkout, minute: e.target.value})}/>
+          <TextField sx={{m:1, width: 100}} type='number' size='small' label="extra sec" variant="outlined" value={newWorkout.extra_sec} onChange={e => setNewWorkout({...newWorkout, extra_sec: e.target.value})}/>
+        </Box>  
         {
           movementArr.length > 0 
           ? 
           movementArr.map((movement, index) =>
-            <Box key={index} sx={{ maxHeight: '100%', display: 'flex'}}>
+            <Box key={index} sx={{ display: 'flex'}}>
               <TextField disabled={true} sx={{m:1, width: 150}} size='small' label="Movement" variant="outlined" value={movement.name}/>
               <TextField disabled={true} sx={{m:1, width: 100}} size='small' type='number' label="kg" variant="outlined" value={movement.kg}/>
               <TextField disabled={true} sx={{m:1, width: 100}} size='small' type='number' label="rep" variant="outlined" value={movement.rep}/>
               <TextField disabled={true} sx={{m:1, width: 100}} size='small' type='number' label="meter" variant="outlined" value={movement.meter}/>
               <TextField disabled={true} sx={{m:1, width: 100}} size='small' type='number' label="cal" variant="outlined" value={movement.cal}/>
-              <TextField disabled={true} sx={{m:1, width: 100}} size='small' type='number' label="sec" variant="outlined" value={movement.sec}/>
+              {/* <TextField disabled={true} sx={{m:1, width: 100}} size='small' type='number' label="sec" variant="outlined" value={movement.sec}/> */}
               <Button sx={{ m: 1}} size='small' onClick={()=>{setMovementArr(movementArr.filter((m, i) => i !== index))}} variant="contained" color="secondary">remove movement</Button> 
             </Box>
           )
           : <></>
         }
-        <Box sx={{ maxHeight: '100%', display: 'flex'}}>
+        <Box sx={{ display: 'flex'}}>
           <Box sx={{m:1}}>
             <Select maxMenuHeight={120} defaultValue={selectedMovement} onChange={setSelectedMovement} options={movementOptions} styles={customStyles}/>
           </Box>
@@ -86,14 +97,16 @@ function Component() {
           <TextField sx={{m:1, width: 100}} size='small' type='number' label="rep" variant="outlined" value={movementDetail.rep} onChange={e => setMovementDetail({...movementDetail, rep: e.target.value})} />
           <TextField sx={{m:1, width: 100}} size='small' type='number' label="meter" variant="outlined" value={movementDetail.meter} onChange={e => setMovementDetail({...movementDetail, meter: e.target.value})}/>
           <TextField sx={{m:1, width: 100}} size='small' type='number' label="cal" variant="outlined" value={movementDetail.cal} onChange={e => setMovementDetail({...movementDetail, cal: e.target.value})}/>
-          <TextField sx={{m:1, width: 100}} size='small' type='number' label="sec" variant="outlined" value={movementDetail.sec} onChange={e => setMovementDetail({...movementDetail, sec: e.target.value})}/>
+          {/* <TextField sx={{m:1, width: 100}} size='small' type='number' label="sec" variant="outlined" value={movementDetail.sec} onChange={e => setMovementDetail({...movementDetail, sec: e.target.value})}/> */}
           <Button sx={{ m: 1}} size='small' disabled={!selectedMovement} onClick={()=>{setMovementArr([...movementArr, { ...movementDetail, movement_id: selectedMovement.id, name: selectedMovement.name}])}} variant="contained" > add movement</Button> 
         </Box>
-        <TextareaAutosize placeholder="note" style={{ margin: 10 }} minRows={3} value={newWorkout.note} onChange={e => setNewWorkout({...newWorkout, note: e.target.value})}/>
+        <Box sx={{ display: 'flex'}}>
+           <TextareaAutosize placeholder="note" style={{ margin: 8, flexGrow: 1}} minRows={3} value={newWorkout.note} onChange={e => setNewWorkout({...newWorkout, note: e.target.value})}/>
+        </Box>
         <Box sx={{display: 'flex', justifyContent: 'right'}}>
           <Button sx={{ m: 1}} variant='contained' disabled={movementArr.length == 0} onClick={() => Functions.createWorkout(newWorkout, movementArr, setUpdate, setAuth)} >create workout</Button>
         </Box>
-      </Card>
+      </Paper>
 
       {workouts.map((workout, index)=>
         <UpdateWorkout key={index} movementOptions={movementOptions} workout={workout} setPassDownUpdate={setPassDownUpdate} passDownUpdate={passDownUpdate}/>
@@ -104,5 +117,4 @@ function Component() {
 }
 
 export default Component;
-
 

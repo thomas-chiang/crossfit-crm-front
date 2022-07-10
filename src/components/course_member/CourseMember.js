@@ -3,7 +3,7 @@ import { CalendarContext } from '../../utils/reactContexts'
 import { useContext, useState, useEffect }  from 'react'
 import Functions from './course_member_functions'
 import  { Navigate } from 'react-router-dom' // auth handler
-import {Paper, Typography, Card, Button, Divider, Box, TextField, TextareaAutosize, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle} from '@mui/material'
+import {Paper, Typography, Card, Button, Divider, Box, TextField, TextareaAutosize, Dialog} from '@mui/material'
 
 
 function Component({id}) {
@@ -54,21 +54,25 @@ function Component({id}) {
           <Button variant="contained" sx={{ mr:1}}  onClick={()=>(handleClickOpen(workout.id))} > {workout.name}</Button>
           <Dialog fullWidth	maxWidth={'xl'} open={open && workoutId == workout.id} onClose={handleClose} sx={{ display: 'flex', justifyContent: 'center', height: 'auto' }}>
             <Paper elevation={3} sx={{ p: 2, m: 2 }}>
-              <Box sx={{display: 'flex', justifyContent: 'space-between',  alignItems: 'baseline'}}>
-                <Typography sx={{ display: 'inline' }} variant="h5" > {workout.name} </Typography>
+              <Box sx={{display: 'flex',   alignItems: 'center'}}>
+                <Typography sx={{mr: 1,  width: 1/3 }} variant="h5" > {workout.name}: </Typography>
+                <TextField disabled={true} sx={{mr:1, mt:1, width: 100}} size='small' type='number' label="round" variant="outlined" value={workout.round || ''}/>
+                <TextField disabled={true} sx={{mr:1, mt:1, width: 150}} size='small' type='number' label="extra_count" variant="outlined" value={workout.extra_count || ''} />
+                <TextField disabled={true} sx={{mr:1, mt:1, width: 100}} size='small' type='number' label="minute" variant="outlined" value={workout.minute || ''} />
+                <TextField disabled={true} sx={{ mt:1, width: 120}} size='small' type='number' label="extra_sec" variant="outlined" value={workout.extra_sec || ''} />
               </Box>
+              <Divider sx={{mt: 1}}/>
               {workoutWithMovements?.movements.map((movement, index)=>
                 <Box key={index} sx={{display: 'flex', alignItems: 'stretch'}}> 
                 <Typography sx={{ width: 1/5, display: 'flex', alignItems: 'center', justifyContent: 'right', mr: 1}}>{movement.name}</Typography>
-                <TextField disabled={true} sx={{mr:1, mt:1, width: 100}} size='small' type='number' label="kg" variant="outlined" value={movement.kg}/>
-                <TextField disabled={true} sx={{mr:1, mt:1, width: 100}} size='small' type='number' label="rep" variant="outlined" value={movement.rep} />
-                <TextField disabled={true} sx={{mr:1, mt:1, width: 100}} size='small' type='number' label="meter" variant="outlined" value={movement.meter} />
-                <TextField disabled={true} sx={{mr:1, mt:1, width: 100}} size='small' type='number' label="cal" variant="outlined" value={movement.cal} />
-                <TextField disabled={true} sx={{mt:1, width: 100}} size='small' type='number' label="sec" variant="outlined" value={movement.sec} />
+                <TextField disabled={true} sx={{mr:1, mt:1, width: 100}} size='small' type='number' label="kg" variant="outlined" value={movement.kg || ''}/>
+                <TextField disabled={true} sx={{mr:1, mt:1, width: 100}} size='small' type='number' label="rep" variant="outlined" value={movement.rep || ''} />
+                <TextField disabled={true} sx={{mr:1, mt:1, width: 100}} size='small' type='number' label="meter" variant="outlined" value={movement.meter || ''} />
+                <TextField disabled={true} sx={{mr:1, mt:1, width: 100}} size='small' type='number' label="cal" variant="outlined" value={movement.cal || ''} />
               </Box>
               )}
               <Box sx={{flexGrow: 1, display: "flex", alignItems: 'center', mt:1}}>
-                <TextareaAutosize minRows={1.9} disabled={true} placeholder="note" style={{ width: "100%" }} value={workout.note} />
+                <TextareaAutosize minRows={1.9} disabled={true} placeholder="note" style={{ width: "100%" }} value={workout.note || ''} />
               </Box>
               <Box sx={{display: 'flex', justifyContent: 'right', mt:1}}>
                 <Button color='secondary' variant='contained' onClick={handleClose}>Cancel</Button>

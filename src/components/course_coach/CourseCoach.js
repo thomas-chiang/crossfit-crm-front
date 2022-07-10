@@ -2,7 +2,7 @@ import moment from 'moment'
 import { CalendarContext } from '../../utils/reactContexts'
 import { useContext, useState, useEffect }  from 'react'
 import Functions from './course_coach_functions'
-import UpdateCourseWorkoutsPerformance from '../update_course_workouts_performance/UpdateCourseWorkoutsPerformance'
+import CourseWorkoutsPerformance from '../course_workouts_performance/CourseWorkoutsPerformance'
 import {Paper, Typography, Card, Button, Divider, Box, TextField, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle} from '@mui/material'
 
 
@@ -11,8 +11,6 @@ function Component({id}) {
   const calendarContext = useContext(CalendarContext)
   let courseInfo = calendarContext.arr.find(item => item.id === id)
   
-
-
   useEffect(() => {
     courseInfo = calendarContext.arr.find(item => item.id === id)
   },[calendarContext.update])
@@ -63,7 +61,7 @@ function Component({id}) {
                   <Typography variant="subtitle2" >Time: {moment(courseInfo.start).local().format('YYYY/MM/DD H:mm A')} - {moment(courseInfo.end).local().format('YYYY/MM/DD H:mm A')}</Typography>
                 </Box> 
               </Box>
-              <UpdateCourseWorkoutsPerformance
+              <CourseWorkoutsPerformance
                     course_id={id}
                     user_id={member.id}
                     preSelectedWorkouts = {courseInfo.workouts ? courseInfo.workouts : null}

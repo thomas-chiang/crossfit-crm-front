@@ -3,10 +3,8 @@ import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid' 
 import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin from "@fullcalendar/interaction"
-import styles from './calendar.module.css'
 import { useState, useEffect } from "react"
 import { CalendarContext } from '../../utils/reactContexts'
-import CourseCreation from '../course_creation/CourseCreation'
 import Course from '../course/Course'
 import Functions from './calendar_functions'
 import {Box} from '@mui/material'
@@ -26,7 +24,6 @@ function Component () {
 
 
   function handleSelect (arg) {
-    if(arr.length > 3) return alert ('open too many courses')
     setNewCalendarEvent({
       start: arg.startStr,
       end: arg.endStr

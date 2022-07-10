@@ -6,6 +6,7 @@ import Movement from './components/movement/Movement'
 import Workout from './components/workout/Workout'
 import CalendarMember from './components/calender_member/CalendarMember'
 import Analysis from './components/analysis/Analysis'
+import Leaderboard from './components/leaderboard/Leaderboard'
 import { Routes, Route } from "react-router-dom"
 import Header from './components/header/Header'
 import { AppContext } from './utils/reactContexts.js'
@@ -31,7 +32,7 @@ function App() {
     <AppContext.Provider value={contextValue}>
       <Header />
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Leaderboard />} />
         <Route path="/login" element={<Login />} />
         <Route path="/calendar" element={<CalendarMember />} />
         <Route path="/profile" element={<Profile />} />
