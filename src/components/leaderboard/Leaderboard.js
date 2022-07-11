@@ -51,10 +51,10 @@ function Component() {
         </Box>
         <Box sx={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center',}}>
           {leaderboards.length > 0 ? leaderboards.map((workout, index) =>
-            <Paper elevation={3} key={index} sx={{ m: 1, mb: 3, p: 1, width: 1/4 }}>
+            <Paper elevation={3} key={index} sx={{ m: 1, mb: 3, p: 1, width: 3/10 }}>
 
-              <Box sx={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center',}}>
-                <Button onClick={()=>(handleClickOpen(workout?.id))}>{workout?.name}</Button>
+              <Box sx={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', m: 1}}>
+                <Button variant='contained' onClick={()=>(handleClickOpen(workout?.id))}>{workout?.name}</Button>
               </Box>
               <Dialog fullWidth	maxWidth={'xl'} open={open && workoutId == workout?.id} onClose={handleClose} sx={{ display: 'flex', justifyContent: 'center', height: 'auto' }}>
                 <Paper elevation={3} sx={{ p: 2, m: 2 }}>
@@ -79,9 +79,9 @@ function Component() {
                     <TextareaAutosize minRows={1.9} disabled={true} placeholder="note" style={{ width: "100%" }} value={workout?.note || ''} />
                   </Box>
                   <Divider sx={{mt: 1}}/>
-                  {workout.leaders.length > 0
-                  ? <Box sx={{display: "flex", flexWrap: 'wrap', alignItems: 'center'}}> 
-                    <Box sx={{mt: 1, mr:1}}>Top 10:</Box>
+                  {workout.leaders.length > 0 ? 
+                  <Box sx={{display: "flex", flexWrap: 'wrap', alignItems: 'center', width: 600}}> 
+                    <Box sx={{mt: 1, mr: 1, width: 1}}>Top 10:</Box>
                     {workout.leaders.map((leader, index)=> 
                         <Leader leader={leader} key={index}/>
                     )}

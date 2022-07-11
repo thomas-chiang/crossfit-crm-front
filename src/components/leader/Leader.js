@@ -30,7 +30,7 @@ function Component({leader}) {
   if(performances) return (
     <Paper sx={{display: 'flex', justifyContent:'space-between', alignItems: 'center', mt: 1, mr: 1}}>
       <Box sx={{m:1}}>{performances[0]?.user_name}:</Box> 
-      <Box><Button size='small' onClick={()=>(handleClickOpen(performances[0].id))} >{(leader.score).toFixed(2)}</Button></Box>
+      <Box sx={{m:1}}><Button variant="contained" size='small' onClick={()=>(handleClickOpen(performances[0].id))} >{(leader.score).toFixed(2)}</Button></Box>
       <Dialog fullWidth	maxWidth={'xl'} open={open && workoutId == performances[0].id} onClose={handleClose} sx={{ display: 'flex', justifyContent: 'center', height: 'auto' }}>
         <Paper elevation={3} sx={{ p: 2, m: 2 }}>
           <Box sx={{display: 'flex', justifyContent: 'right', mb: 1}}>

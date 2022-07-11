@@ -48,8 +48,8 @@ function Component({id}) {
           <Box sx={{display: 'flex', justifyContent: 'right'}}>
             {member.checkout === 0 
             ? <>
-              <Button sx={{ m: 1}} size='small' variant='contained' onClick={()=>{Functions.checkoutMemberById(id, member.id, member.enrollment, setUpdate, setAuth)}}>checkout</Button>
-              <Button sx={{ my: 1}} size='small' color='secondary' variant='contained' onClick={()=>{Functions.quitMemberById(id, member.id, member.enrollment, setUpdate, setAuth)}}>quit</Button>
+              <Button sx={{ m: 1}} size='small' variant='contained' onClick={()=>{Functions.checkoutMemberById(id, member.id, member.enrollment, setUpdate, setAuth, calendarContext)}}>checkout</Button>
+              <Button sx={{ my: 1}} size='small' color='secondary' variant='contained' onClick={()=>{Functions.quitMemberById(id, member.id, member.enrollment, setUpdate, setAuth, calendarContext)}}>quit</Button>
             </>
             : <>
               <Button disabled={true} sx={{ m: 1}} size='small' variant='contained' >checked out</Button>
@@ -60,7 +60,7 @@ function Component({id}) {
         <Card sx={{ p: 1, mr: 2, my: 1, display: 'flex',flexDirection: 'column', justifyContent: 'space-between' }}>
           <TextField size='small' type='email' label="email" variant="outlined" value={email} onChange={e=>setEmail(e.target.value)}/>
           <Box sx={{display: 'flex', justifyContent: 'right'}}>
-            <Button sx={{ my: 1, bottom: 0}} size='small' variant='contained' onClick={()=>{Functions.enrollMemberByEmail(id, email, setUpdate, setAuth)}} >enroll</Button>
+            <Button sx={{ my: 1, bottom: 0}} size='small' variant='contained' onClick={()=>{Functions.enrollMemberByEmail(id, email, setUpdate, setAuth, calendarContext)}} >enroll</Button>
           </Box>
         </Card>
       </Box>

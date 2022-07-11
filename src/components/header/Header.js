@@ -35,9 +35,9 @@ function Component() {
       </Box>
       
       <List sx={{display: 'flex',}}>
-        {/* <li className={styles.li}><Link className={styles.a} to="/workout">WORKOUT</Link></li>
-        <li className={styles.li}><Link className={styles.a} to="/movement">MOVEMENT</Link></li>
-        <li className={styles.li}><Link className={styles.a} to="/gym">GYM</Link></li> */}
+        <ListItem  >
+          <Link  style={linkStyle} to="/leaderboard">LEADERBOARD</Link>
+        </ListItem>
         <ListItem  >
           <Link  style={linkStyle} to="/analysis">ANALYSIS</Link>
         </ListItem>

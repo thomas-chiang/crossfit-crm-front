@@ -40,6 +40,7 @@ export const options = {
     legend: {
       marginBottom: 0,
       position: 'top',
+      align: 'center'
       // labels: {
       //   padding: 10
       // }

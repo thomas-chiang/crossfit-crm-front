@@ -14,26 +14,35 @@ export default function Aside({setSection, role}) {
       <SidebarContent>
         <Menu iconShape="circle">
           <MenuItem onClick={() =>setSection('personal info') }>Personal Info</MenuItem>
-          {role >= 2 
-          ? <>
-            <MenuItem onClick={() =>setSection('movement') }>Movement</MenuItem>
-            <MenuItem onClick={() =>setSection('workout') }>Workout</MenuItem>
-          </> : <></>}
-          
 
-          {/* <MenuItem onClick={() =>setSection('gym') }>Gym</MenuItem> */}
           {role >= 3 
           ? <>
-            <MenuItem onClick={() =>setSection('coach') }>Manage Coach</MenuItem>
-            <MenuItem onClick={() =>setSection('member') }>Manage Member</MenuItem>
-            <MenuItem onClick={() =>setSection('create course') }>Create Course</MenuItem>
+            <div>&nbsp;</div>
+            {/* <MenuItem onClick={() =>setSection('coach') }>Manage Coaches</MenuItem> */}
+            <MenuItem onClick={() =>setSection('member') }>Manage Personnel</MenuItem>
           </> : <></>}
+
+          {role >= 2 
+          ? <>
+            <div>&nbsp;</div>
+            <MenuItem onClick={() =>setSection('movement') }>Manage Movements</MenuItem>
+            <MenuItem onClick={() =>setSection('workout') }>Manage Workouts</MenuItem>
+          </> : <></>}
+
+          {role >= 2 
+          ? <>
+            <div>&nbsp;</div>
+            <MenuItem onClick={() =>setSection('create course') }>Create Course</MenuItem>
+            <MenuItem onClick={() =>setSection('calendar') }>Update Course</MenuItem>
+          </> : <></>}
+
           
           {role >= 2 
           ? <>
-            <MenuItem onClick={() =>setSection('calendar') }>Update Course</MenuItem>
-            <MenuItem onClick={() =>setSection('enroll and checkout') }>Enroll & Checkout Member</MenuItem>
-            <MenuItem onClick={() =>setSection('performance') }>Record Performance</MenuItem> 
+            <div>&nbsp;</div>
+            <MenuItem onClick={() =>setSection('performance') }>Record Performances</MenuItem> 
+            <div>&nbsp;</div>
+            <MenuItem onClick={() =>setSection('enroll and checkout') }>Enroll & Checkout Members</MenuItem>
           </> : <></>}
                  
         </Menu>

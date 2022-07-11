@@ -9,7 +9,7 @@ const Functions = {
 }
 export default Functions
 
-async function checkoutMemberById (course_id, user_id, enrollment, setUpdate, setAuth) {
+async function checkoutMemberById (course_id, user_id, enrollment, setUpdate, setAuth, calendarContext) {
   try {
     if(!await utilsFunctions.auth()) return setAuth(false)
     let token = localStorage.getItem('jwtToken')  // auth
@@ -25,6 +25,7 @@ async function checkoutMemberById (course_id, user_id, enrollment, setUpdate, se
     if (response.ok) {
       alert('Checked out successfully')
       setUpdate(Date())
+      calendarContext.setUpdate(!calendarContext.update)
     } else {
       let data = await response.json()
       alert(response.status+': '+ data.error)
@@ -34,7 +35,7 @@ async function checkoutMemberById (course_id, user_id, enrollment, setUpdate, se
   }  
 }
 
-async function quitMemberById (course_id, user_id, enrollment, setUpdate, setAuth) {
+async function quitMemberById (course_id, user_id, enrollment, setUpdate, setAuth, calendarContext) {
   try {
     if(!await utilsFunctions.auth()) return setAuth(false)
     let token = localStorage.getItem('jwtToken')  // auth
@@ -50,6 +51,7 @@ async function quitMemberById (course_id, user_id, enrollment, setUpdate, setAut
     if (response.ok) {
       alert('Quit successfully')
       setUpdate(Date())
+      calendarContext.setUpdate(!calendarContext.update)
     } else {
       let data = await response.json()
       alert(response.status+': '+ data.error)
@@ -59,7 +61,7 @@ async function quitMemberById (course_id, user_id, enrollment, setUpdate, setAut
   }  
 }
 
-async function enrollMemberByEmail (course_id, email, setUpdate, setAuth) {
+async function enrollMemberByEmail (course_id, email, setUpdate, setAuth, calendarContext) {
   try {
     if(!await utilsFunctions.auth()) return setAuth(false)
     let token = localStorage.getItem('jwtToken')  // auth
@@ -75,6 +77,7 @@ async function enrollMemberByEmail (course_id, email, setUpdate, setAuth) {
     if (response.ok) {
       alert('Enrolled successfully')
       setUpdate(Date())
+      calendarContext.setUpdate(!calendarContext.update)
     } else {
       let data = await response.json()
       alert(response.status+': '+ data.error)

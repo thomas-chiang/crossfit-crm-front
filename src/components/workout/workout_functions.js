@@ -29,6 +29,7 @@ async function getWorkoutsWithMovements(setWorkouts) {
       process.env.REACT_APP_API_URL+'workout/movement'
     )
     let data = await response.json()
+    data.reverse()
     if (response.ok) setWorkouts(data)
     else alert(response.status+': '+ data.error)
   }catch(e){

@@ -14,6 +14,7 @@ async function getMovements(setMovements) {
       process.env.REACT_APP_API_URL+'movement'
     )
     let data = await response.json()
+    data.reverse()
     if (response.ok) setMovements(data)
     else alert(response.status+': '+ data.error)
   }catch(e){

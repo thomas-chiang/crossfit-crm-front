@@ -2,8 +2,9 @@ import utilsFunctions from '../../utils/functions'
 const Functions = {
   getUsersByRole,
   updateValidStatus,
-  updatePoint,
-  insertPoint
+  // updatePoint,
+  insertPoint,
+  updateRole
 }
 export default Functions
 
@@ -47,14 +48,14 @@ async function updateValidStatus (user_id, valid_status, setUpdate, setAuth) {
   }
 }
 
-async function updatePoint (user_id, point, setUpdate, setAuth) {
+async function updateRole (user_id, role, setUpdate, setAuth) {
   try{
     let token = localStorage.getItem('jwtToken')
 
     if(!await utilsFunctions.auth()) return setAuth(false)
 
     const response = await fetch (
-      process.env.REACT_APP_API_URL+`user/point?user_id=${user_id}&point=${point}`,
+      process.env.REACT_APP_API_URL+`user/role?user_id=${user_id}&role=${role}`,
       {
         method: 'PUT',
         headers: { 
@@ -64,7 +65,7 @@ async function updatePoint (user_id, point, setUpdate, setAuth) {
     )
     let data = await response.json()
     if (response.ok) {
-      alert('updated point successfully')
+      alert('updated valid status successfully')
       setUpdate(Date())
     }
     else alert(response.status+': '+ data.error)
@@ -72,6 +73,32 @@ async function updatePoint (user_id, point, setUpdate, setAuth) {
     alert(e.message)
   }
 }
+
+// async function updatePoint (user_id, point, setUpdate, setAuth) {
+//   try{
+//     let token = localStorage.getItem('jwtToken')
+
+//     if(!await utilsFunctions.auth()) return setAuth(false)
+
+//     const response = await fetch (
+//       process.env.REACT_APP_API_URL+`user/point?user_id=${user_id}&point=${point}`,
+//       {
+//         method: 'PUT',
+//         headers: { 
+//           'Authorization': `Bearer ${token}`
+//         }
+//       }
+//     )
+//     let data = await response.json()
+//     if (response.ok) {
+//       alert('updated point successfully')
+//       setUpdate(Date())
+//     }
+//     else alert(response.status+': '+ data.error)
+//   }catch(e){
+//     alert(e.message)
+//   }
+// }
 
 
 async function insertPoint (user_id, point, setUpdate, setAuth) {

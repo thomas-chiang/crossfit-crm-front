@@ -52,6 +52,13 @@ function MovementBox({id, movement, setUpdate, setAuth}) {
     id,
   })
 
+  useEffect(() => {
+    setUpdateingMovement({
+      name: movement.name,
+      demo_link: movement.demo_link,
+      id,
+    })
+  },[movement])
   //console.log(updateingMovement)
 
   return (

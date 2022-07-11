@@ -33,6 +33,7 @@ function App() {
       <Header />
       <Routes>
         <Route path="/" element={<Leaderboard />} />
+        <Route path="/leaderboard" element={<Leaderboard />} />
         <Route path="/login" element={<Login />} />
         <Route path="/calendar" element={<CalendarMember />} />
         <Route path="/profile" element={<Profile />} />
