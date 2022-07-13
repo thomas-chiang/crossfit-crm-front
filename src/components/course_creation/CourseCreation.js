@@ -66,7 +66,7 @@ function Component({id ,courseFromCalendar, obj}) {
   
   if (!auth) return <Navigate to='/login'/> // auth
   return (
-    <Paper elevation={3} sx={{ p: 2, my: 2 }}>
+    <Paper elevation={3} sx={{ p: 2, mb: 2 }}>
       <Box sx={{display: 'flex', justifyContent: 'space-between',  alignItems: 'baseline', mb: 1}}>
         <Typography sx={{ display: 'inline' }} variant="h5" >CREATE COURSE</Typography>
         <Box sx={{display: 'inline-flex'}}>

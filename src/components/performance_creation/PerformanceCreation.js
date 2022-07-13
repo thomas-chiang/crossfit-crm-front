@@ -106,7 +106,7 @@ function CreatePerformance({course_id, user_id, workout_id, setUpdate, movement,
   if (!auth) return <Navigate to='/login'/> // auth handler
   return (
     <Box sx={{display: 'flex', alignItems: 'stretch'}}> 
-      <Typography sx={{ width: 1/9, display: 'flex', alignItems: 'center', justifyContent: 'right', mr: 1}}>{movement.name}</Typography>
+      <Typography sx={{ width: 1/5, display: 'flex', alignItems: 'center', justifyContent: 'right', mr: 1}}>{movement.name}</Typography>
       <TextField  sx={{mr:1, mt:1, width: 100}} size='small' type='number' label="kg" variant="outlined" value={performance.kg} onChange={e=>{setPerformance({...performance, kg: e.target.value})}}/>
       <TextField  sx={{mr:1, mt:1, width: 100}} size='small' type='number' label="rep" variant="outlined" value={performance.rep} onChange={e=>{setPerformance({...performance, rep: e.target.value})}}/>
       <TextField  sx={{mr:1, mt:1, width: 100}} size='small' type='number' label="meter" variant="outlined" value={performance.meter} onChange={e=>{setPerformance({...performance, meter: e.target.value})}}/>

@@ -5,7 +5,7 @@ import Functions from './course_checkout_functions'
 import  { Navigate } from 'react-router-dom' // auth handler
 import {Paper, Typography, Card, Button, Divider, Box, TextField} from '@mui/material'
 
-function Component({id}) {
+function Component({id, role}) {
 
   const calendarContext = useContext(CalendarContext)
   let courseInfo = calendarContext.arr.find(item => item.id === id)
@@ -47,10 +47,19 @@ function Component({id}) {
           <Typography sx={{ m: 1}} variant="subtitle1" >Status: <i>{member.enrollment == 1 ? 'enrolled' : member.enrollment > 1 ? 'waiting' : 'canceled'}</i></Typography>
           <Box sx={{display: 'flex', justifyContent: 'right'}}>
             {member.checkout === 0 
-            ? <>
-              <Button sx={{ m: 1}} size='small' variant='contained' onClick={()=>{Functions.checkoutMemberById(id, member.id, member.enrollment, setUpdate, setAuth, calendarContext)}}>checkout</Button>
-              <Button sx={{ my: 1}} size='small' color='secondary' variant='contained' onClick={()=>{Functions.quitMemberById(id, member.id, member.enrollment, setUpdate, setAuth, calendarContext)}}>quit</Button>
-            </>
+            ? <> 
+              {member.enrollment == 1 ?
+              <> 
+                {role >= 3 ? 
+                  <Button sx={{ m: 1}} size='small' variant='contained' onClick={()=>{Functions.checkoutMemberById(id, member.id, member.enrollment, setUpdate, setAuth, calendarContext)}}>checkout</Button>
+                : <></>}
+                <Button sx={{ my: 1}} size='small' color='secondary' variant='contained' onClick={()=>{Functions.quitMemberById(id, member.id, member.enrollment, setUpdate, setAuth, calendarContext)}}>quit</Button>
+              </>
+              : 
+              <>
+                <Button sx={{ my: 1, bottom: 0}} size='small' variant='contained' onClick={()=>{Functions.enrollMemberByExistingUserId(id, member.id, setUpdate, setAuth, calendarContext)}} >enroll</Button>
+              </>}
+              </>
             : <>
               <Button disabled={true} sx={{ m: 1}} size='small' variant='contained' >checked out</Button>
             </>}

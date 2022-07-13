@@ -67,7 +67,7 @@ function Component() {
                   </Box>
                   <Divider sx={{mt: 1}}/>
                   {workoutWithMovements?.movements.map((movement, index)=>
-                    <Box key={index} sx={{display: 'flex', alignItems: 'stretch'}}> 
+                  <Box key={index} sx={{display: 'flex', alignItems: 'stretch'}}> 
                     <Typography sx={{ width: 1/5, display: 'flex', alignItems: 'center', justifyContent: 'right', mr: 1}}>{movement.name}</Typography>
                     <TextField disabled={true} sx={{mr:1, mt:1, width: 100}} size='small' type='number' label="kg" variant="outlined" value={movement.kg || ''}/>
                     <TextField disabled={true} sx={{mr:1, mt:1, width: 100}} size='small' type='number' label="rep" variant="outlined" value={movement.rep || ''} />

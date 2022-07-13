@@ -60,9 +60,6 @@ function Component() {
             </Box>
           : <></> }
           
-         {/*  <Box sx={{ width: 200}}>
-            <Select placeholder={'Select movement'} defaultValue={selectedMovement} onChange={setSelectedMovement} options={movements}/>
-          </Box> */}
         </Box>
         <Box sx={{ p:1}}>
           {lineData ? <Line lineData={lineData}/> : <></>}

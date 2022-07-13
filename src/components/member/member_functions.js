@@ -2,7 +2,6 @@ import utilsFunctions from '../../utils/functions'
 const Functions = {
   getUsersByRole,
   updateValidStatus,
-  // updatePoint,
   insertPoint,
   updateRole
 }
@@ -20,7 +19,6 @@ async function getUsersByRole(role_level, setCoaches) {
     alert(e.message)
   }
 }
-
 
 async function updateValidStatus (user_id, valid_status, setUpdate, setAuth) {
   try{
@@ -74,41 +72,16 @@ async function updateRole (user_id, role, setUpdate, setAuth) {
   }
 }
 
-// async function updatePoint (user_id, point, setUpdate, setAuth) {
-//   try{
-//     let token = localStorage.getItem('jwtToken')
-
-//     if(!await utilsFunctions.auth()) return setAuth(false)
-
-//     const response = await fetch (
-//       process.env.REACT_APP_API_URL+`user/point?user_id=${user_id}&point=${point}`,
-//       {
-//         method: 'PUT',
-//         headers: { 
-//           'Authorization': `Bearer ${token}`
-//         }
-//       }
-//     )
-//     let data = await response.json()
-//     if (response.ok) {
-//       alert('updated point successfully')
-//       setUpdate(Date())
-//     }
-//     else alert(response.status+': '+ data.error)
-//   }catch(e){
-//     alert(e.message)
-//   }
-// }
 
 
-async function insertPoint (user_id, point, setUpdate, setAuth) {
+async function insertPoint (user_id, point, setUpdate, setAuth, behavior) {
   try{
     let token = localStorage.getItem('jwtToken')
 
     if(!await utilsFunctions.auth()) return setAuth(false)
 
     const response = await fetch (
-      process.env.REACT_APP_API_URL+`user/point?user_id=${user_id}&point=${point}`,
+      process.env.REACT_APP_API_URL+`user/point?user_id=${user_id}&point=${point}&behavior=${behavior}`,
       {
         method: 'POST',
         headers: { 
@@ -127,16 +100,3 @@ async function insertPoint (user_id, point, setUpdate, setAuth) {
     alert(e.message)
   }
 }
-
-// async function getPoint(user_id, point, setPoint) {
-//   try{
-//     const response = await fetch (
-//       process.env.REACT_APP_API_URL+`user/point/${user_id}`,
-//     )
-//     let data = await response.json()
-//     if (response.ok) setPoint(data)
-//     else alert(response.status+': '+ data.error)
-//   }catch(e){
-//     console.log(e.message)
-//   }
-// }

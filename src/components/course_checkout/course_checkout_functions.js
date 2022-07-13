@@ -5,7 +5,8 @@ const Functions = {
   getCourseEnrolledmembers,
   enrollMemberByEmail,
   quitMemberById,
-  checkoutMemberById
+  checkoutMemberById,
+  enrollMemberByExistingUserId
 }
 export default Functions
 
@@ -67,6 +68,32 @@ async function enrollMemberByEmail (course_id, email, setUpdate, setAuth, calend
     let token = localStorage.getItem('jwtToken')  // auth
     const response = await fetch (
       process.env.REACT_APP_API_URL+`course/enrollmentbycoach/?course_id=${course_id}&email=${email}`,
+      {
+        method: "POST",
+        headers: {
+          'Authorization': `Bearer ${token}` // auth
+        }
+      }
+    )
+    if (response.ok) {
+      alert('Enrolled successfully')
+      setUpdate(Date())
+      calendarContext.setUpdate(!calendarContext.update)
+    } else {
+      let data = await response.json()
+      alert(response.status+': '+ data.error)
+    }
+  } catch (e) {
+    alert(e.message)
+  }  
+}
+
+async function enrollMemberByExistingUserId (course_id, user_id, setUpdate, setAuth, calendarContext) {
+  try {
+    if(!await utilsFunctions.auth()) return setAuth(false)
+    let token = localStorage.getItem('jwtToken')  // auth
+    const response = await fetch (
+      process.env.REACT_APP_API_URL+`course/enrollmentbycoach/existinguser/?course_id=${course_id}&user_id=${user_id}`,
       {
         method: "POST",
         headers: {

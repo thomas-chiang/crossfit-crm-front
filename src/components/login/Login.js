@@ -51,8 +51,10 @@ function Component() {
               ? Functions.handleSignUp(role, name, email, password, gender, appContext, navigate)
               : Functions.handleSignIn(role, email, password, appContext, navigate)
             }} >{signUp ? 'Sign up' : 'Sign in'}
-          </Button>
-          <Button color='secondary' variant='contained' sx={{m: 1}} onClick={()=>setSignUp(!signUp)} >{signUp ? 'Sign in?' : 'Sign up?'}</Button>
+          </Button>  
+        </Box>
+        <Box sx={{display: 'flex', justifyContent: 'center'}} >
+          <Button color='secondary'  sx={{m: 1}} onClick={()=>setSignUp(!signUp)} >{signUp ? 'Sign in?' : 'Sign up?'}</Button>
         </Box>
       </Paper>
     </Box>

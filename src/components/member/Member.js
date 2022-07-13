@@ -57,7 +57,7 @@ function MemberBox({member, setUpdate, setAuth}) {
         </Box>  
       </Box>
       <Box sx={{display: 'flex', alignItems:'center', mt: 1}}>
-        <Box sx={{ width: 120, mr: 1}}>
+        <Box sx={{ width: 120, mr: 1, my: 2}}>
           <Select 
             menuPortalTarget={document.body}  styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
             onChange={setSelectedRole}
@@ -70,28 +70,29 @@ function MemberBox({member, setUpdate, setAuth}) {
           />
         </Box>
         
-        <Button sx={{ height: 38, width: 80}} variant="contained" size='small' onClick={()=>Functions.updateRole(member.id, selectedRole.role, setUpdate, setAuth)}>update</Button>
+        <Button disabled={member.role == 3 } sx={{ height: 38, width: 80}} variant="contained" size='small' onClick={()=>Functions.updateRole(member.id, selectedRole.role, setUpdate, setAuth)}>update</Button>
       </Box>
       <ThemeProvider theme={theme}>
         <Box sx={{display: 'flex', alignItems:'center', mt: 1}}>
           <TextField sx={{ width: 120, mr: 1}} type='number' label="Point added" size='small' variant="outlined" value={addingPoint} onChange={e=>setAddingPoint(e.target.value)}/>
           
-            <Button color='neutral' sx={{ height: 40, width: 80}}variant="contained" size='small' onClick={()=>Functions.insertPoint(member.id, addingPoint, setUpdate, setAuth)}>add</Button>
+          <Button color='neutral' sx={{ height: 40, width: 80}}variant="contained" size='small' onClick={()=>Functions.insertPoint(member.id, addingPoint, setUpdate, setAuth, 'add')}>add</Button>
           
         </Box>
         <Box sx={{display: 'flex', alignItems:'center', mt: 1}}>
           <TextField sx={{ width: 120, mr: 1}} type='number' label="Point deducted" size='small' variant="outlined" value={deductingPoint} onChange={e=>setDeductingPointPoint(e.target.value)}/>
-          <Button color='neutral' sx={{ height: 40, width: 80}}variant="contained" size='small' onClick={()=>Functions.insertPoint(member.id, -deductingPoint,setUpdate, setAuth)}>deduct</Button>
+          <Button color='neutral' sx={{ height: 40, width: 80}}variant="contained" size='small' onClick={()=>Functions.insertPoint(member.id, -deductingPoint,setUpdate, setAuth, 'deduct')}>deduct</Button>
         </Box>
       </ThemeProvider>
-      <Box sx={{display: 'flex', justifyContent: 'right'}}>
+      <Box sx={{display: 'flex', justifyContent: 'right', mt: 2}}>
         <Button sx={{ mt: 1, bottom: 0}} size='small' variant='contained' 
           color={member.valid == 1 ? 'secondary' : 'primary'}
           onClick={()=>Functions.updateValidStatus(member.id, member.valid == 1 ? 0 : 1 ,setUpdate, setAuth)}
+          disabled={member.role == 3 }
         >
           {member.valid == 1 ? 'invalidate' : 'validate'}
         </Button>
-      </Box>
+      </Box>  
     </Card>
   )
 }

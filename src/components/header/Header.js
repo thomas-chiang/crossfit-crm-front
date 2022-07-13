@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation, Navigate } from "react-router-dom";
 import { useContext, useEffect, useState } from 'react'
 import { AppContext } from '../../utils/reactContexts'
 import Functions from './header_functions';
@@ -15,6 +15,8 @@ function Component() {
   },[appContext.update])
 
   const linkStyle = {textDecoration: 'none', color: 'white'}
+
+  const location = useLocation().pathname
 
   return (
     <Box 
@@ -46,9 +48,12 @@ function Component() {
         </ListItem>
         { 
           user ? 
-          <ListItem >
-            <Link style={linkStyle} to="/profile">PROFILE</Link>
-          </ListItem>
+            location != '/profile' ?
+            <ListItem >
+              <Link style={linkStyle} to="/profile">PROFILE</Link>
+            </ListItem> 
+            : 
+            <></>
           : <ListItem >
             <Link  style={linkStyle} to="/profile">LOGIN</Link>
           </ListItem>

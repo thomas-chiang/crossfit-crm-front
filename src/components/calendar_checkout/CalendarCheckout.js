@@ -11,7 +11,7 @@ import Functions from './calender_checkout_functions'
 import {Paper, Typography, Card, Button, Box, Radio, TextField} from '@mui/material'
 
 
-function Component () {
+function Component ({role}) {
 
   const [update, setUpdate] = useState(true)
   const [calendarEvents, setCalendarEvents] = useState(null)
@@ -70,7 +70,7 @@ function Component () {
   return (
     <Box sx={{m: 3}} >   
       <CalendarContext.Provider value={contextValue}>
-          {arr.length > 0 ? arr.map((item, index)=> <CourseCheckout key={index} id={item.id}/>) : <></>} 
+          {arr.length > 0 ? arr.map((item, index)=> <CourseCheckout key={index} id={item.id} role={role}/>) : <></>} 
         <FullCalendar
           dayMaxEventRows= {5}
           eventMaxStack= {5}
@@ -84,9 +84,9 @@ function Component () {
           }}
           customButtons={{ 
             customButton: {
-              text: 'Enroll & Checkout Member',
+              text: role == 2 ? 'Enroll Members' : 'Enroll & Checkout Members',
               click: function() {
-                alert('Click a blue box and start enrolling and checking out member');
+                alert(role == 2 ? 'Click a blue box and start enrolling members' : 'Click a blue box and start enrolling and checking out members');
               }
             } 
           }}
