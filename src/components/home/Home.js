@@ -14,7 +14,7 @@ function Component() {
     setLoop(
       setInterval(() => {
         setChange(!change);
-      }, 3000)
+      }, 2000)
     );
 
     return function cleanup() {

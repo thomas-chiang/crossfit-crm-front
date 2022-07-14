@@ -58,7 +58,7 @@ function Component() {
         <Box sx={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', p: 1}}>
           {movementArr ? 
             movementArr.map((movement, index)=> 
-              <Paper key={index} elevation={3} key={index} sx={{ m: 1, mb: 3, p: 1, width: 4.5/10 }}>
+              <Paper key={index} elevation={3} sx={{ m: 1, mb: 3, p: 1, width: 4.5/10 }}>
                 {movement.name}
                 <AnalysisBar barData={movement.barData}/>
               </Paper>
