@@ -7,7 +7,7 @@ import { useState, useEffect } from "react"
 import { CalendarContext } from '../../utils/reactContexts'
 import CourseMember from '../course_member/CourseMember'
 import Functions from './calender_member_functions'
-import { Box } from '@mui/material'
+import { Box, Paper } from '@mui/material'
 
 
 
@@ -68,7 +68,8 @@ function Component () {
 
 
   return (
-    <Box sx={{m: 3}} >    
+    <Box sx={{p: 3}} >  
+    <Paper sx={{p: 3, backgroundColor: 'white'}}> 
       <CalendarContext.Provider value={contextValue}>
         {arr.length > 0 ? arr.map((item, index)=> <CourseMember key={index} id={item.id}/>) : <></>} 
         <FullCalendar
@@ -82,7 +83,7 @@ function Component () {
             center: 'title',
             right: 'timeGridDay timeGridWeek dayGridMonth'
           }}
-          initialView="timeGridWeek"
+          initialView="dayGridMonth"
           editable={true}
           selectable={true}
           events={calendarEvents}
@@ -95,6 +96,7 @@ function Component () {
           height= {'auto'}
         />     
       </CalendarContext.Provider>
+    </Paper> 
     </Box> 
   )
 }

@@ -1,8 +1,183 @@
+import { Grid, Typography, Button, Box, Paper, CardMedia, Card } from '@mui/material';
+import { Navigate} from "react-router-dom";
+import {  useState, useEffect } from 'react'
+
+
 function Component() {
+
+  const [profile, setProfile] = useState(false)
+  const [change, setChange] = useState(false)
+  const [loop, setLoop] = useState();
+
+
+  useEffect(() => {
+    setLoop(
+      setInterval(() => {
+        setChange(!change);
+      }, 3000)
+    );
+
+    return function cleanup() {
+      clearInterval(loop);
+    };
+  },[change])
+
+  let cardColor = 'rgb(40,40,40)'
+
+  let gridStyle = {
+    textAlign: 'center',
+    p:1
+  }
+
+  if (profile) return <Navigate to='/profile'/>
   return (
-    <div>
-      home
-    </div>
+    <Box >
+      <Grid container spacing={1} sx={{mt: 8, mb: 10}}>
+        <Grid item  md={1}></Grid>
+        <Grid item  md={10} >
+          <Paper sx={{p:2}}>
+            <Box sx={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
+              <Typography variant="h3" fontWeight={700} >
+                Let's Run Your CrossFit Gym!
+              </Typography>
+              <Button variant="contained" sx={{fontSize: '16px'}} onClick={()=> setProfile(true)}>
+                Start
+              </Button>
+            </Box>
+            <Box sx={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
+              <Typography variant="h6" >
+                A well-rounded  gym system including <b><i>membership administration</i></b>, <b><i>workout customization</i></b>, <b><i>performance analysis</i></b>, and <b><i>course management</i></b>.
+              </Typography> 
+            </Box> 
+          </Paper>
+        </Grid>
+        <Grid item  md={1}></Grid>
+      </Grid>
+      <Grid container spacing={6}>
+        <Grid item  md={1}></Grid>
+        <Grid item  md={2} >
+          <Card sx={{ position: 'relative', backgroundColor: cardColor, color: 'white' }} >
+            <CardMedia
+              component="img"
+              height="140"
+              image={require('./role_point1.jpeg')}
+              sx={{transition: 'opacity 2s', position: 'absolute',top: 0, opacity: change ? 1: 0}}
+            />
+            <CardMedia
+              component="img"
+              height="140"
+              image={require('./role_point2.jpeg')}
+              sx={{transition: 'opacity 2s',position: 'absolute',top: 0, opacity: change ? 0: 1}}
+            />
+            <CardMedia
+              component="img"
+              height="140"
+            />
+            <Typography variant="h6" sx={gridStyle}>
+              <b>Manage Users & Points</b>
+            </Typography>
+          </Card>   
+        </Grid>
+
+        <Grid item  md={2} >
+          <Card sx={{ position: 'relative', backgroundColor: cardColor, color: 'white' }} >
+            <CardMedia
+              component="img"
+              height="140"
+              image={require('./workout1.jpeg')}
+              sx={{transition: 'opacity 2s', position: 'absolute',top: 0, opacity: change ? 1: 0}}
+            />
+            <CardMedia
+              component="img"
+              height="140"
+              image={require('./workout2.jpeg')}
+              sx={{transition: 'opacity 2s',position: 'absolute',top: 0, opacity: change ? 0: 1}}
+            />
+            <CardMedia
+              component="img"
+              height="140"
+            />
+            <Typography variant="h6" sx={gridStyle}>
+              <b>Design Your Own Workouts</b>
+            </Typography>
+          </Card>   
+        </Grid>
+
+        <Grid item  md={2} >
+          <Card sx={{ position: 'relative', backgroundColor: cardColor, color: 'white' }} >
+            <CardMedia
+              component="img"
+              height="140"
+              image={require('./course1.jpeg')}
+              sx={{transition: 'opacity 2s', position: 'absolute',top: 0, opacity: change ? 1: 0}}
+            />
+            <CardMedia
+              component="img"
+              height="140"
+              image={require('./course2.jpeg')}
+              sx={{transition: 'opacity 2s',position: 'absolute',top: 0, opacity: change ? 0: 1}}
+            />
+            <CardMedia
+              component="img"
+              height="140"
+            />
+            <Typography variant="h6" sx={gridStyle}>
+              <b>Create & Enroll Courses</b>
+            </Typography>
+          </Card>   
+        </Grid>
+        
+        <Grid item  md={2} >
+          <Card sx={{ position: 'relative', backgroundColor: cardColor, color: 'white' }} >
+            <CardMedia
+              component="img"
+              height="140"
+              image={require('./check_record1.jpeg')}
+              sx={{transition: 'opacity 2s', position: 'absolute',top: 0, opacity: change ? 1: 0}}
+            />
+            <CardMedia
+              component="img"
+              height="140"
+              image={require('./check_record2.jpeg')}
+              sx={{transition: 'opacity 2s',position: 'absolute',top: 0, opacity: change ? 0: 1}}
+            />
+            <CardMedia
+              component="img"
+              height="140"
+            />
+            <Typography variant="h6" sx={gridStyle}>
+              <b>Check Points & Record Results</b>
+            </Typography>
+          </Card>   
+        </Grid>
+
+        <Grid item  md={2} >
+          <Card sx={{ position: 'relative', backgroundColor: cardColor, color: 'white' }} >
+            <CardMedia
+              component="img"
+              height="140"
+              image={require('./analyze_compete1.jpeg')}
+              sx={{transition: 'opacity 2s', position: 'absolute',top: 0, opacity: change ? 1: 0}}
+            />
+            <CardMedia
+              component="img"
+              height="140"
+              image={require('./analyze_compete2.jpeg')}
+              sx={{transition: 'opacity 2s',position: 'absolute',top: 0, opacity: change ? 0: 1}}
+            />
+            <CardMedia
+              component="img"
+              height="140"
+            />
+            <Typography variant="h6" sx={gridStyle}>
+              <b>Compete & Analyze</b>
+            </Typography>
+          </Card>   
+        </Grid>
+        <Grid item  md={0.5}></Grid>
+      </Grid>
+      
+    </Box>
   );
 }
 

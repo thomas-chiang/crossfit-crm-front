@@ -1,22 +1,21 @@
 import Line from '../line/Line'
 import Select from 'react-select';
-import Functions from './analysis_functions'
+import Functions from './analysis_functions2'
 import { useEffect, useState } from 'react'
-import {Paper, Box, Typography }from '@mui/material';
-
-
+import {Paper, Box, Typography } from '@mui/material';
+import AnalysisBar from '../analysis_bar/AnalysisBar'
 
 function Component() {
 
   // const [movements, setMovements] = useState([])
   // const [selectedMovement, setSelectedMovement] = useState(null)
-  const [lineData, setLineDate] = useState(null)
+  //const [lineData, setLineDate] = useState(null)
   const [members, setMembers] = useState([])
   const [selectedMember, setSelectedMember] = useState(null)
   const [userWorkouts, setUserWorkouts] = useState(null)
   const [selectedWorkout, setSelectedWorkout] = useState(null)
   const [workoutMovements, setWorkoutMovements] = useState(null)
-  const [selectedMovement, setSelectedMovement] = useState(null)
+  const [movementArr, setMovementArr] = useState(null)
 
   useEffect(() => {
     Functions.getUsersByRole(1, setMembers)
@@ -29,13 +28,14 @@ function Component() {
   },[selectedMember])  
 
   useEffect(() => {
-    setSelectedMovement(null)
     if(selectedWorkout) Functions.getDistinctWorkoutMovements(selectedWorkout.workout_id, setWorkoutMovements)
   },[selectedWorkout]) 
 
   useEffect(() => {
-    if(selectedMember && selectedWorkout && selectedMovement) Functions.getPerformanceByWorkoutMovement(selectedMember.id, selectedWorkout.workout_id, selectedMovement.movement_id, setLineDate)
-  },[selectedMovement, selectedMember]) 
+    if(selectedMember && selectedWorkout && workoutMovements) Functions.getPerformanceByWorkout(selectedMember.id, selectedWorkout.workout_id, workoutMovements, setMovementArr)
+  },[workoutMovements]) 
+
+  console.log(movementArr)
 
  
   return (
@@ -54,16 +54,16 @@ function Component() {
               }
             </Box>
           : <></> }
-
-          { selectedWorkout  ?   
-            <Box sx={{ width: 200, mr: 1}}>
-              <Select placeholder={'Select movement'} value={selectedMovement} onChange={setSelectedMovement} options={workoutMovements}/>
-            </Box>
-          : <></> }
-          
         </Box>
-        <Box sx={{ p:1}}>
-          {lineData ? <Line lineData={lineData}/> : <></>}
+        <Box sx={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', p: 1}}>
+          {movementArr ? 
+            movementArr.map((movement, index)=> 
+              <Paper key={index} elevation={3} key={index} sx={{ m: 1, mb: 3, p: 1, width: 4.5/10 }}>
+                {movement.name}
+                <AnalysisBar barData={movement.barData}/>
+              </Paper>
+            )
+          : <></>}
         </Box>
       </Paper>
     </Box>

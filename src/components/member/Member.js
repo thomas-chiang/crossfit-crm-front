@@ -48,13 +48,14 @@ function MemberBox({member, setUpdate, setAuth}) {
   
 
   return (
-    <Card sx={{ p: 1, m: 1}}>
+    <Paper elevation={3} sx={{ p: 1, m: 1}}>
       <Box sx={{mb:2, display: 'flex', justifyContent: 'space-between'}}>
         {member.name}: 
-        <Box >
+        <Paper elevation={3} sx={{textAlign: 'center', p:1}} >
+          <Typography>Point(s) </Typography>
           {member.point ? member.point : 0}
            <i style={{color:'green'}}> - {member.point_to_be_deducted ? member.point_to_be_deducted : 0}</i>
-        </Box>  
+        </Paper>  
       </Box>
       <Box sx={{display: 'flex', alignItems:'center', mt: 1}}>
         <Box sx={{ width: 120, mr: 1, my: 2}}>
@@ -93,6 +94,6 @@ function MemberBox({member, setUpdate, setAuth}) {
           {member.valid == 1 ? 'invalidate' : 'validate'}
         </Button>
       </Box>  
-    </Card>
+    </Paper>
   )
 }

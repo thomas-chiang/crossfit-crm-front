@@ -25,7 +25,7 @@ function Component() {
           {signUp 
             ?
               <>
-                <Typography variant="h4">SIGN UP</Typography>
+                <Typography variant="h4" fontWeight={700} >SIGN UP</Typography>
                 <TextField sx={{m: 1}} size='small' label='Name' variant='outlined' value={name} onChange={e => setName(e.target.value)}></TextField>
                 <Box sx={{display: 'flex', alignItems: 'center'}}> 
                   <Radio checked={gender == 1} onChange={e => setGender(e.target.value)} value={1} name="gender"/><Typography variant="button"> male </Typography>
@@ -33,7 +33,7 @@ function Component() {
                 </Box>
               </>
             : 
-              <Typography sx={{m: 1}} variant="h4">SIGN IN</Typography>
+              <Typography sx={{m: 1}} variant="h4" fontWeight={700}>SIGN IN</Typography>
           }
           
           <Box sx={{display: 'flex', alignItems: 'center'}}> 

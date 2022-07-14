@@ -8,7 +8,7 @@ import { CalendarContext } from '../../utils/reactContexts'
 import CourseCheckout from '../course_checkout/CourseCheckout'
 import Functions from './calender_checkout_functions'
 
-import {Paper, Typography, Card, Button, Box, Radio, TextField} from '@mui/material'
+import {Paper, Box,} from '@mui/material'
 
 
 function Component ({role}) {
@@ -66,9 +66,9 @@ function Component ({role}) {
     setArr
   }
 
-
   return (
-    <Box sx={{m: 3}} >   
+    <Box sx={{m: 3}} >
+      <Paper sx={{p: 3, backgroundColor: 'white'}}>
       <CalendarContext.Provider value={contextValue}>
           {arr.length > 0 ? arr.map((item, index)=> <CourseCheckout key={index} id={item.id} role={role}/>) : <></>} 
         <FullCalendar
@@ -104,6 +104,7 @@ function Component ({role}) {
           height= {'auto'}
         />     
       </CalendarContext.Provider>
+      </Paper>
     </Box> 
   )
 }

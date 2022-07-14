@@ -11,8 +11,10 @@ import { Routes, Route, Navigate } from "react-router-dom"
 import Header from './components/header/Header'
 import { AppContext } from './utils/reactContexts.js'
 import { useState } from 'react'
+import Analysis2 from './components/analysis2/Analysis2'
 
-import Test from './components/calendar_creation/CalendarCreation'
+
+import { Box } from '@mui/material'
 
 
 
@@ -30,20 +32,23 @@ function App() {
 
   return (
     <AppContext.Provider value={contextValue}>
+      
+      <Box sx={{background: `url(${require('./gym.jpeg')})  center center fixed`, backgroundSize: 'cover', width: 1, height: 1, minHeight: "100vh"}}>
       <Header />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/leaderboard" element={<Leaderboard />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/calendar" element={<CalendarMember />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/gym" element={<Gym />} />
-        <Route path="/movement" element={<Movement />} />
-        <Route path="/workout" element={<Workout />} />
-        <Route path="/analysis" element={<Analysis />} />
-        <Route path="/test" element={<Test />} />
-        <Route path="*" element={<Navigate to="/" />} />
-      </Routes>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/leaderboard" element={<Leaderboard />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/calendar" element={<CalendarMember />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/gym" element={<Gym />} />
+          <Route path="/movement" element={<Movement />} />
+          <Route path="/workout" element={<Workout />} />
+          <Route path="/analysis" element={<Analysis2 />} />
+          <Route path="/test" element={<Analysis />} />
+          <Route path="*" element={<Navigate to="/" />} />
+        </Routes>
+      </Box>
     </AppContext.Provider>
   );
 }

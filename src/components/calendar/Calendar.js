@@ -7,7 +7,7 @@ import { useState, useEffect } from "react"
 import { CalendarContext } from '../../utils/reactContexts'
 import Course from '../course/Course'
 import Functions from './calendar_functions'
-import {Box} from '@mui/material'
+import {Box, Paper} from '@mui/material'
 
 
 
@@ -75,7 +75,8 @@ function Component () {
   }
 
   return (
-    <Box sx={{m: 3}} >   
+    <Box sx={{m: 3}} >
+      <Paper sx={{p: 3, backgroundColor: 'white'}}> 
       <CalendarContext.Provider value={contextValue}>
           {arr.length > 0 ? arr.map(item => <Course key={item.id} id={item.id}/>) : <></>} 
         <FullCalendar
@@ -111,6 +112,7 @@ function Component () {
           height= {'auto'}
         />     
       </CalendarContext.Provider>
+      </Paper>
     </Box> 
   )
 }

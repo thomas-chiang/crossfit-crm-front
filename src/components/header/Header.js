@@ -1,4 +1,4 @@
-import { Link, useLocation, Navigate } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useContext, useEffect, useState } from 'react'
 import { AppContext } from '../../utils/reactContexts'
 import Functions from './header_functions';

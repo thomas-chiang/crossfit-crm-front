@@ -21,7 +21,7 @@ function Component({id, role}) {
 
   useEffect(()=>{
     Functions.getCourseEnrolledmembers(id, setMembers)
-  },[update])
+  },[update, calendarContext.update])
   
   if (!auth) return <Navigate to='/login'/> // auth handler
   return (

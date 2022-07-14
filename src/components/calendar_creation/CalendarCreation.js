@@ -8,7 +8,7 @@ import { CalendarContext } from '../../utils/reactContexts'
 import CourseCreation from '../course_creation/CourseCreation'
 import Course from '../course/Course'
 import Functions from './calendar_creation_functions'
-import {Box} from '@mui/material'
+import {Box, Paper} from '@mui/material'
 
 
 function Component () {
@@ -57,7 +57,8 @@ function Component () {
   }
 
   return (
-    <Box sx={{m: 3}} >   
+    <Box sx={{m: 3}} >
+      <Paper sx={{p: 3, backgroundColor: 'white'}}> 
       <CalendarContext.Provider value={contextValue}>
           {arr.length > 0 ? arr.map((courseFromCalendar, index)=> <CourseCreation key={index} obj={obj} id={courseFromCalendar.id} courseFromCalendar={courseFromCalendar} />) : <></>}
           {/* {newCalendarEvent ? <CourseCreation setUpdateCalendar={setUpdateCalendar}/> : <></>} */} 
@@ -91,6 +92,7 @@ function Component () {
           height= {'auto'}
         />     
       </CalendarContext.Provider>
+      </Paper>  
     </Box> 
   )
 }
