@@ -38,6 +38,12 @@ function Component() {
       
       <List sx={{display: 'flex',}}>
         <ListItem  >
+          <Link  style={linkStyle} to="/movement">MOVEMENTS</Link>
+        </ListItem>
+        <ListItem  >
+          <Link  style={linkStyle} to="/workout">WORKOUTS</Link>
+        </ListItem>
+        <ListItem  >
           <Link  style={linkStyle} to="/leaderboard">LEADERBOARD</Link>
         </ListItem>
         <ListItem  >

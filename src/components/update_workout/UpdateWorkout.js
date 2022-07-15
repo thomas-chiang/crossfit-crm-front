@@ -41,7 +41,7 @@ function Component({workout, movementOptions, passDownUpdate, setPassDownUpdate}
     control: base => ({
       ...base,
       height: 40,
-      width: 150,
+      width: 200,
     })
   };
 
@@ -71,13 +71,12 @@ function Component({workout, movementOptions, passDownUpdate, setPassDownUpdate}
         }
         <Box sx={{ maxHeight: '100%', display: 'flex'}}>
           <Box sx={{m:1}}>
-            <Select maxMenuHeight={120} defaultValue={selectedMovement} onChange={setSelectedMovement} options={movementOptions} styles={customStyles}/>
+            <Select maxMenuHeight={120} placeholder='Select Movement' defaultValue={selectedMovement} onChange={setSelectedMovement} options={movementOptions} styles={customStyles}/>
           </Box>
           <TextField sx={{m:1, width: 100}} size='small' type='number' label="kg" variant="outlined" value={newWorkoutMovement.kg} onChange={e => setNewWorkoutMovement({...newWorkoutMovement, kg: e.target.value})}/>
           <TextField sx={{m:1, width: 100}} size='small' type='number' label="rep" variant="outlined" value={newWorkoutMovement.rep} onChange={e => setNewWorkoutMovement({...newWorkoutMovement, rep: e.target.value})} />
           <TextField sx={{m:1, width: 100}} size='small' type='number' label="meter" variant="outlined" value={newWorkoutMovement.meter} onChange={e => setNewWorkoutMovement({...newWorkoutMovement, meter: e.target.value})}/>
           <TextField sx={{m:1, width: 100}} size='small' type='number' label="cal" variant="outlined" value={newWorkoutMovement.cal} onChange={e => setNewWorkoutMovement({...newWorkoutMovement, cal: e.target.value})}/>
-          {/* <TextField sx={{m:1, width: 100}} size='small' type='number' label="sec" variant="outlined" value={newWorkoutMovement.sec} onChange={e => setNewWorkoutMovement({...newWorkoutMovement, sec: e.target.value})}/> */}
           <Button sx={{ m: 1}} size='small' disabled={!selectedMovement || disable} onClick={()=>{Functions.addWorkoutMovement(newWorkoutMovement, setAuth, setUpdate, setPassDownUpdate, setDisable, setAlert)}} variant="contained" > add movement</Button> 
         </Box>
         <Box sx={{ display: 'flex'}}>

@@ -4,7 +4,7 @@ import Functions from './workout_functions'
 import Select from 'react-select';
 import { AppContext } from '../../utils/reactContexts'
 import UpdateWorkout from '../update_workout/UpdateWorkout'
-import {Paper, Button, Box, TextField, TextareaAutosize, Alert} from '@mui/material'
+import {Paper, Button, Box, TextField, TextareaAutosize, Alert, Typography} from '@mui/material'
 
 
 
@@ -64,7 +64,7 @@ function Component() {
     control: base => ({
       ...base,
       height: 40,
-      width: 150,
+      width: 200,
     })
   }
 
@@ -102,13 +102,17 @@ function Component() {
           movementArr.length > 0 
           ? 
           movementArr.map((movement, index) =>
-            <Box key={index} sx={{ display: 'flex'}}>
-              <TextField disabled={true} sx={{m:1, width: 150}} size='small' label="Movement" variant="outlined" value={movement.name}/>
+            <Box key={index} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'start'}}>
+              <Box sx={{m:1, ml: 2}}>{movement.name}:</Box>
+              {movement.kg ? <Box sx={{m:1}}>{movement.kg} kg(s)</Box>: <></>}
+              {movement.rep ? <Box sx={{m:1}}>{movement.rep} rep(s)</Box>: <></>}
+              {movement.meter ? <Box sx={{m:1}}>{movement.meter} meter(s)</Box>: <></>}
+              {movement.cal ? <Box sx={{m:1}}>{movement.cal} cal(s)</Box>: <></>}
+              {/* <TextField disabled={true} sx={{m:1, width: 150, color:'black'}} size='small' label="Movement" variant="outlined" value={movement.name}/>
               <TextField disabled={true} sx={{m:1, width: 100}} size='small' type='number' label="kg" variant="outlined" value={movement.kg}/>
               <TextField disabled={true} sx={{m:1, width: 100}} size='small' type='number' label="rep" variant="outlined" value={movement.rep}/>
               <TextField disabled={true} sx={{m:1, width: 100}} size='small' type='number' label="meter" variant="outlined" value={movement.meter}/>
-              <TextField disabled={true} sx={{m:1, width: 100}} size='small' type='number' label="cal" variant="outlined" value={movement.cal}/>
-              {/* <TextField disabled={true} sx={{m:1, width: 100}} size='small' type='number' label="sec" variant="outlined" value={movement.sec}/> */}
+              <TextField disabled={true} sx={{m:1, width: 100}} size='small' type='number' label="cal" variant="outlined" value={movement.cal}/> */}
               <Button sx={{ m: 1}} size='small' onClick={()=>{setMovementArr(movementArr.filter((m, i) => i !== index))}} variant="contained" color="secondary">remove movement</Button> 
             </Box>
           )
@@ -116,7 +120,7 @@ function Component() {
         }
         <Box sx={{ display: 'flex'}}>
           <Box sx={{m:1}}>
-            <Select maxMenuHeight={120} defaultValue={selectedMovement} onChange={setSelectedMovement} options={movementOptions} styles={customStyles}/>
+            <Select maxMenuHeight={120} placeholder='Select Movement' defaultValue={selectedMovement} onChange={setSelectedMovement} options={movementOptions} styles={customStyles}/>
           </Box>
           <TextField sx={{m:1, width: 100}} size='small' type='number' label="kg" variant="outlined" value={movementDetail.kg} onChange={e => setMovementDetail({...movementDetail, kg: e.target.value})}/>
           <TextField sx={{m:1, width: 100}} size='small' type='number' label="rep" variant="outlined" value={movementDetail.rep} onChange={e => setMovementDetail({...movementDetail, rep: e.target.value})} />

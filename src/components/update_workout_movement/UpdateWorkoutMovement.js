@@ -25,13 +25,13 @@ function Component({movement, setPassDownUpdate, setUpdateFromChild}) {
 
   if (!auth) return <Navigate to='/login'/> // auth handler
   return (
-    <Box sx={{ maxHeight: '100%', display: 'flex'}}>
-      <TextField disabled={true} sx={{m:1, width: 150}} size='small' label="Movement" variant="outlined" value={updatedMovement?.name}/>
+    <Box sx={{ maxHeight: '100%', display: 'flex', alignItems: 'center'}}>
+      <Box sx={{m:1, flexGrow: 1, textAlign: 'end'}}>{movement.name}:</Box>
+
       <TextField sx={{m:1, width: 100}} size='small' type='number' label="kg" variant="outlined" value={updatedMovement?.kg || ''} onChange={e => setUpdatedMovement({...updatedMovement, kg: e.target.value})}/>
       <TextField sx={{m:1, width: 100}} size='small' type='number' label="rep" variant="outlined" value={updatedMovement?.rep || ''} onChange={e => setUpdatedMovement({...updatedMovement, rep: e.target.value})}/>
       <TextField sx={{m:1, width: 100}} size='small' type='number' label="meter" variant="outlined" value={updatedMovement?.meter || ''} onChange={e => setUpdatedMovement({...updatedMovement, meter: e.target.value})}/>
       <TextField sx={{m:1, width: 100}} size='small' type='number' label="cal" variant="outlined" value={updatedMovement?.cal || ''} onChange={e => setUpdatedMovement({...updatedMovement, cal: e.target.value})}/>
-      {/* <TextField sx={{m:1, width: 100}} size='small' type='number' label="sec" variant="outlined" value={updatedMovement.sec || ''} onChange={e => setUpdatedMovement({...updatedMovement, sec: e.target.value})}/> */}
       <Button disabled={disable} sx={{ m: 1}} size='small' onClick={()=>{Functions.updateWorkoutMovement(updatedMovement, setUpdate, setPassDownUpdate, setAuth, setDisable, setAlert)}} variant="contained" >update</Button>
       <Button disabled={disable} sx={{ m: 1}} size='small' onClick={()=>{Functions.deleteWorkoutMovement(workout_movement_id, setUpdateFromChild, setPassDownUpdate, setAuth, setDisable, setAlert)}} variant="contained" color="secondary">delete</Button> 
     </Box>

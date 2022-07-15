@@ -4,9 +4,29 @@ const Functions = {
   handleEnrollButton,
   handleQuitButton,
   handleCancelButton,
-  getWorkout
+  getWorkout,
+  getDistinctWorkoutMovements
 }
 export default Functions
+
+async function getDistinctWorkoutMovements(workout_id, setWorkoutMovements) {
+  try{
+    const response = await fetch (
+      process.env.REACT_APP_API_URL+`workout/distinctworkoutmovements/${workout_id}`
+    )
+    let data = await response.json()
+
+    for (let item of data) {
+      item.label = item.name
+      item.value = item.name
+    }
+
+    if (response.ok) setWorkoutMovements(data)
+    else alert(data.error)
+  }catch(e){
+    alert(e.message)
+  }
+}
 
 async function handleEnrollButton(id, calendarContext, setAuth, setDisable, setAlert) {
   setDisable(true)

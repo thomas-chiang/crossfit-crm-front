@@ -3,7 +3,7 @@ import { CalendarContext, AppContext } from '../../utils/reactContexts'
 import { useContext, useState, useEffect }  from 'react'
 import Functions from './course_member_functions'
 import  { Navigate } from 'react-router-dom' // auth handler
-import {Paper, Typography, Card, Button, Divider, Box, TextField, TextareaAutosize, Dialog} from '@mui/material'
+import {Paper, Typography, Card, Button, Divider, Box, CardMedia, TextareaAutosize, Dialog} from '@mui/material'
 
 
 function Component({id}) {
@@ -14,6 +14,7 @@ function Component({id}) {
 
   const [auth, setAuth] = useState(true) // auth handler
   const [disable, setDisable] = useState(false)
+  const [distinctMovements, setDistinctMovements] = useState([])
 
   useEffect(() => {
     courseInfo = calendarContext.arr.find(item => item.id === id)
@@ -32,6 +33,7 @@ function Component({id}) {
   const [workoutWithMovements, setWorkoutWithMovements] = useState(null)
   useEffect(() =>{
     Functions.getWorkout(workoutId, setWorkoutWithMovements)
+    Functions.getDistinctWorkoutMovements(workoutId, setDistinctMovements)
   },[workoutId])
 
 
@@ -57,22 +59,43 @@ function Component({id}) {
           <Dialog fullWidth	maxWidth={'xl'} open={open && workoutId == workout.id} onClose={handleClose} sx={{ display: 'flex', justifyContent: 'center', height: 'auto' }}>
             <Paper elevation={5} sx={{ p: 2, m: 2 }}>
               <Box sx={{display: 'flex',   alignItems: 'center'}}>
-                <Typography sx={{mr: 1,  width: 1/3 }} variant="h5" > {workout.name}: </Typography>
-                <TextField disabled={true} sx={{mr:1, mt:1, width: 100}} size='small' type='number' label="round" variant="outlined" value={workout.round || ''}/>
-                <TextField disabled={true} sx={{mr:1, mt:1, width: 150}} size='small' type='number' label="extra_count" variant="outlined" value={workout.extra_count || ''} />
-                <TextField disabled={true} sx={{mr:1, mt:1, width: 100}} size='small' type='number' label="minute" variant="outlined" value={workout.minute || ''} />
-                <TextField disabled={true} sx={{ mt:1, width: 120}} size='small' type='number' label="extra_sec" variant="outlined" value={workout.extra_sec || ''} />
+                <Box sx={{m:1, fontWeight: 'bold'}}> {workout.name || ''}:</Box>
+                {workout.round ? <Box sx={{m:1}}> {workout.round} round(s)</Box> : <></> }
+                {workout.extra_count ? <Box sx={{m:1}}> {workout.extra_count} extra count(s)</Box> : <></> }
+                {workout.minute ? <Box sx={{m:1}}> {workout.minute} minute(s)</Box> : <></> }
+                {workout.extra_sec ? <Box sx={{m:1}}> {workout.extra_sec} extra sec(s)</Box> : <></> }
+                
               </Box>
               <Divider sx={{mt: 1}}/>
-              {workoutWithMovements?.movements.map((movement, index)=>
-                <Box key={index} sx={{display: 'flex', alignItems: 'stretch'}}> 
-                <Typography sx={{ width: 1/5, display: 'flex', alignItems: 'center', justifyContent: 'right', mr: 1}}>{movement.name}</Typography>
-                <TextField disabled={true} sx={{mr:1, mt:1, width: 100}} size='small' type='number' label="kg" variant="outlined" value={movement.kg || ''}/>
-                <TextField disabled={true} sx={{mr:1, mt:1, width: 100}} size='small' type='number' label="rep" variant="outlined" value={movement.rep || ''} />
-                <TextField disabled={true} sx={{mr:1, mt:1, width: 100}} size='small' type='number' label="meter" variant="outlined" value={movement.meter || ''} />
-                <TextField disabled={true} sx={{mr:1, mt:1, width: 100}} size='small' type='number' label="cal" variant="outlined" value={movement.cal || ''} />
+              <Box sx={{display: 'flex'}}>
+                    <Box>
+                      {workoutWithMovements?.movements.map((movement, index)=>
+                      <Box key={index} sx={{display: 'flex', alignItems: 'stretch'}}>
+                        <Box sx={{m:1, width: 150, textAlign: 'end'}}>{movement.name}:</Box>
+                        {movement?.kg ? <Box sx={{m:1}}>{movement?.kg} kg(s)</Box> : <></>}
+                        {movement?.rep ? <Box sx={{m:1}}>{movement?.rep} rep(s)</Box> : <></>}
+                        {movement?.meter ? <Box sx={{m:1}}>{movement?.meter} meter(s)</Box> : <></>}
+                        {movement?.cal ? <Box sx={{m:1}}>{movement?.cal} cal(s)</Box> : <></>}   
+                      </Box>
+                      )}
+                    </Box>
+                    <Divider orientation="vertical" sx={{ m: 1, }} flexItem />
+                    <Box sx={{display: 'flex', alignItems: 'start', flexWrap: 'wrap', width: 310}}>
+                      {distinctMovements.map((movement, index)=> 
+                        <MovementBox key={index} id={movement.id} movement={movement}  />
+                      )}
+                    </Box>
+                  </Box>
+                  <Divider sx={{mt: 1}}/>
+              {/* {workoutWithMovements?.movements.map((movement, index)=>
+              <Box key={index} sx={{display: 'flex', alignItems: 'stretch'}}> 
+                <Box sx={{m:1, width: 150, textAlign: 'end'}}>{movement.name}:</Box>
+                {movement.kg ? <Box sx={{m:1}}>{movement.kg} kg(s)</Box> : <></>}
+                {movement.rep ? <Box sx={{m:1}}>{movement.rep} rep(s)</Box> : <></>}
+                {movement.meter ? <Box sx={{m:1}}>{movement.meter} meter(s)</Box> : <></>}
+                {movement.cal ? <Box sx={{m:1}}>{movement.cal} cal(s)</Box> : <></>}  
               </Box>
-              )}
+              )} */}
               <Box sx={{flexGrow: 1, display: "flex", alignItems: 'center', mt:1}}>
                 <TextareaAutosize minRows={1.9} disabled={true} placeholder="note" style={{ width: "100%" }} value={workout.note || ''} />
               </Box>
@@ -102,4 +125,60 @@ function Component({id}) {
   )
 }
 
-export default Component;
+export default Component
+
+
+
+
+
+function MovementBox({id, movement, setUpdate, setAuth}) {
+
+  const [updateingMovement, setUpdateingMovement] = useState({
+    name: movement.name,
+    demo_link: movement.demo_link,
+    id,
+  })
+  const [disable, setDisable] = useState(false)
+  const [play, setPlay] = useState(false)
+
+  useEffect(() => {
+    setUpdateingMovement({
+      name: movement.name,
+      demo_link: movement.demo_link,
+      id,
+    })
+  },[movement])
+  //console.log(updateingMovement)
+
+  //console.log(movement.embed_link)
+
+  return (
+    <Paper elevation={5} sx={{ m: 1,  display: 'flex', flexDirection: 'column', justifyContent: 'space-between', cursor: 'pointer',}} onClick={()=>setPlay(!play)}>
+      <Box sx={{mx: 1}}>
+        <Typography >{updateingMovement.name}</Typography>
+      </Box>
+    
+      { movement.demo_link ? 
+      <Box sx={{flexBasis: '100%'}} >
+        {play 
+        ?
+          <iframe
+            frameBorder="0"
+            src={`${movement.embed_link}?autoplay=1&mute=1&showinfo=0&modestbranding=1&rel=0`}
+            allow='autoplay'
+            muted
+            style={{height: 140}}
+          />
+        :
+          <CardMedia
+            sx={{ mb: 0.5}}
+            component="img"
+            height="100"
+            image={`https://img.youtube.com/vi/${movement.youtube_id}/0.jpg`}
+          />
+        }
+      </Box>  
+      : <></>}
+    </Paper>
+  )
+}

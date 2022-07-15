@@ -1,8 +1,8 @@
 import Home from './components/home/Home'
 import Login from './components/login/Login'
 import Profile from './components/profile/Profile'
-import Movement from './components/movement/Movement'
-import Workout from './components/workout/Workout'
+import PublicMovement from './components/public_movement/PublicMovement'
+import PublicWorkout from './components/public_workouts/PublicWorkouts'
 import CalendarMember from './components/calender_member/CalendarMember'
 import Analysis from './components/analysis/Analysis'
 import Leaderboard from './components/leaderboard/Leaderboard'
@@ -67,8 +67,8 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/calendar" element={<CalendarMember />} />
           <Route path="/profile" element={<Profile />} />
-          <Route path="/movement" element={<Movement />} />
-          <Route path="/workout" element={<Workout />} />
+          <Route path="/movement" element={<PublicMovement />} />
+          <Route path="/workout" element={<PublicWorkout />} />
           <Route path="/analysis" element={<Analysis2 />} />
           <Route path="/test" element={<Analysis />} />
           <Route path="*" element={<Navigate to="/" />} />

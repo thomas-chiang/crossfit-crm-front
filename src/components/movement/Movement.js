@@ -1,7 +1,7 @@
 import { useState, useEffect }  from 'react'
 import  { Navigate } from 'react-router-dom' // auth handler
 import Functions from './movement_functions'
-import {Card, Button, Box, TextField, Paper} from '@mui/material'
+import {Card, Button, Box, TextField, Paper, CardMedia} from '@mui/material'
 
 
 function Component() {
@@ -25,7 +25,7 @@ function Component() {
   if (!auth) return <Navigate to='/login'/> // auth handler
   return (
     <Box sx={{m: 3, display: 'flex', alignItems: 'stretch', flexWrap: 'wrap'}}>
-      <Paper elevation={5} sx={{ m: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+      <Paper elevation={5} sx={{ m: 1, pt: 1,  display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
         <Box sx={{display: 'flex'}}>
           <TextField size='small' label="Movement name" variant="outlined" value={newMovement.name} sx={{m:1, flexBasis: '100%'}} onChange={e=>setNewMovement({...newMovement, name: e.target.value})}/>
         </Box>
@@ -53,6 +53,8 @@ function MovementBox({id, movement, setUpdate, setAuth}) {
     id,
   })
   const [disable, setDisable] = useState(false)
+  const [play, setPlay] = useState(false)
+
 
   useEffect(() => {
     setUpdateingMovement({
@@ -62,9 +64,10 @@ function MovementBox({id, movement, setUpdate, setAuth}) {
     })
   },[movement])
   //console.log(updateingMovement)
+  
 
   return (
-    <Paper elevation={5} sx={{ m: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between'}}>
+    <Paper elevation={5} sx={{ m: 1, pt: 1,  display: 'flex', flexDirection: 'column', justifyContent: 'space-between'}}>
       <Box sx={{display: 'flex'}}>
         <TextField size='small' label="Movement name" variant="outlined" value={updateingMovement.name} sx={{m:1, flexBasis: '100%'}} onChange={e=>setUpdateingMovement({...updateingMovement, name: e.target.value})}/>
       </Box>
@@ -73,12 +76,24 @@ function MovementBox({id, movement, setUpdate, setAuth}) {
       </Box>   
       { movement.demo_link ? 
       <Box sx={{flexBasis: '100%'}}>
-        <iframe
-          frameBorder="0"
-          src={`${movement.embed_link}?autoplay=0&mute=1&showinfo=0&modestbranding=1&rel=0`}
-          allow='autoplay'
-          muted
-        />
+        {play 
+        ?
+          <iframe
+            frameBorder="0"
+            src={`${movement.embed_link}?autoplay=1&mute=1&showinfo=0&modestbranding=1&rel=0`}
+            allow='autoplay'
+            muted
+            style={{height: 140}}
+          />
+        :
+          <CardMedia
+            sx={{cursor: 'pointer'}}
+            onClick={()=>setPlay(true)}
+            component="img"
+            height="140"
+            image={`https://img.youtube.com/vi/${movement.youtube_id}/0.jpg`}
+          />
+        }
       </Box>  
       : <></>}
       <Box sx={{display: 'flex',  justifyContent: 'right', flexBasis: '100%', alignItems: 'end', mt: 1,}} >
