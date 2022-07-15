@@ -1,4 +1,4 @@
-import { CalendarContext } from '../../utils/reactContexts'
+import { CalendarContext, AppContext } from '../../utils/reactContexts'
 import { useContext, useState, useEffect }  from 'react'
 import Functions from './course_functions'
 import  { Navigate } from 'react-router-dom' // auth handler
@@ -7,11 +7,13 @@ import Select from 'react-select';
 
 
 function Component({id}) {
+  const setAlert =  useContext(AppContext).setAlert
 
   const calendarContext = useContext(CalendarContext)
   const courseInfo = calendarContext.arr.find(item => item.id === id)
 
   const [auth, setAuth] = useState(true) // auth handler
+  const [disable, setDisable] = useState(false)
   const [course, setCourse] = useState({
     id, 
     start: courseInfo.start.slice(0,-6),
@@ -25,6 +27,7 @@ function Component({id}) {
   const [selectedWorkouts, setSelectedWorkouts] = useState(courseInfo.workouts)
   const [workouts, setWorkouts] = useState([])
   const [coaches, setCoaches] = useState([])
+  
   
   useEffect(()=>{
     Functions.getWorkouts(setWorkouts)
@@ -49,7 +52,7 @@ function Component({id}) {
 
   if (!auth) return <Navigate to='/login'/> // auth handler
   return (
-    <Paper elevation={3} sx={{ p: 2, mb: 2}}>
+    <Paper elevation={5} sx={{ p: 2, mb: 2}}>
       <Box sx={{display: 'flex', justifyContent: 'space-between',  alignItems: 'baseline', mb: 1}}>
         <Typography sx={{ display: 'inline' }} variant="h5" >UPDATE COURSE</Typography>
         <Box sx={{display: 'inline-flex'}}>
@@ -71,8 +74,8 @@ function Component({id}) {
       <Box sx={{mb: 1}}><Select isMulti value={selectedWorkouts} onChange={setSelectedWorkouts} options={workouts} placeholder={'Select workouts'} /></Box>   
       <Box sx={{display: 'flex', mb: 1}}><TextareaAutosize placeholder="note" minRows={3} style={{ width: "100%" }} value={course.note} onChange={e => setCourse({...course, note: e.target.value}) }/></Box>
       <Box sx={{display: 'flex', justifyContent: 'right'}}>
-        <Button sx={{mr:1}} variant='contained' onClick={()=>Functions.handleUpdateButton(course, calendarContext, setAuth)}>update</Button>
-        <Button sx={{mr:1}} color='secondary' variant='contained' onClick={()=>Functions.handleDeleteButton(id, calendarContext, setAuth)}>Delete</Button>
+        <Button disabled={disable} sx={{mr:1}} variant='contained' onClick={()=>Functions.handleUpdateButton(course, calendarContext, setAuth, setDisable, setAlert)}>update</Button>
+        <Button disabled={disable} sx={{mr:1}} color='secondary' variant='contained' onClick={()=>Functions.handleDeleteButton(id, calendarContext, setAuth, setDisable, setAlert)}>Delete</Button>
         <Button color='secondary' variant='contained' onClick={()=>Functions.handleCancelButton(id, calendarContext)}>Cancel</Button>
       </Box>
     </Paper> 

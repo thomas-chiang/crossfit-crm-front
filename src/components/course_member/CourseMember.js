@@ -1,5 +1,5 @@
 import moment from 'moment'
-import { CalendarContext } from '../../utils/reactContexts'
+import { CalendarContext, AppContext } from '../../utils/reactContexts'
 import { useContext, useState, useEffect }  from 'react'
 import Functions from './course_member_functions'
 import  { Navigate } from 'react-router-dom' // auth handler
@@ -7,11 +7,13 @@ import {Paper, Typography, Card, Button, Divider, Box, TextField, TextareaAutosi
 
 
 function Component({id}) {
+  const setAlert =  useContext(AppContext).setAlert
 
   const calendarContext = useContext(CalendarContext)
   let courseInfo = calendarContext.arr.find(item => item.id === id)
 
   const [auth, setAuth] = useState(true) // auth handler
+  const [disable, setDisable] = useState(false)
 
   useEffect(() => {
     courseInfo = calendarContext.arr.find(item => item.id === id)
@@ -35,7 +37,7 @@ function Component({id}) {
 
   if (!auth) return <Navigate to='/login'/> // auth handler
   return (
-    <Paper elevation={3} sx={{ p: 2, mb: 2 }}>
+    <Paper elevation={5} sx={{ p: 2, mb: 2 }}>
       <Box sx={{display: 'flex', justifyContent: 'space-between',  alignItems: 'baseline'}}>
         <Typography sx={{ display: 'inline' }} variant="h5" >{courseInfo.title} </Typography>
         <Box sx={{display: 'inline-flex'}}>
@@ -53,7 +55,7 @@ function Component({id}) {
         {courseInfo.workouts?.map((workout, index) => <Box key={index}>
           <Button variant="contained" sx={{ mr:1}}  onClick={()=>(handleClickOpen(workout.id))} > {workout.name}</Button>
           <Dialog fullWidth	maxWidth={'xl'} open={open && workoutId == workout.id} onClose={handleClose} sx={{ display: 'flex', justifyContent: 'center', height: 'auto' }}>
-            <Paper elevation={3} sx={{ p: 2, m: 2 }}>
+            <Paper elevation={5} sx={{ p: 2, m: 2 }}>
               <Box sx={{display: 'flex',   alignItems: 'center'}}>
                 <Typography sx={{mr: 1,  width: 1/3 }} variant="h5" > {workout.name}: </Typography>
                 <TextField disabled={true} sx={{mr:1, mt:1, width: 100}} size='small' type='number' label="round" variant="outlined" value={workout.round || ''}/>
@@ -92,8 +94,8 @@ function Component({id}) {
         )}
       </Box>
       <Box sx={{display: 'flex', justifyContent: 'right', mt: 1}}>
-        <Button sx={{mr:1}} variant='contained' onClick={()=>Functions.handleEnrollButton(id, calendarContext, setAuth)}>Enroll</Button>
-        <Button sx={{mr:1}} color='secondary' variant='contained' onClick={()=>Functions.handleQuitButton(id, calendarContext, setAuth)}>Quit</Button>
+        <Button disabled={disable} sx={{mr:1}} variant='contained' onClick={()=>Functions.handleEnrollButton(id, calendarContext, setAuth, setDisable, setAlert)}>Enroll</Button>
+        <Button disabled={disable} sx={{mr:1}} color='secondary' variant='contained' onClick={()=>Functions.handleQuitButton(id, calendarContext, setAuth, setDisable, setAlert)}>Quit</Button>
         <Button color='secondary' variant='contained' onClick={()=>Functions.handleCancelButton(id, calendarContext)}>Cancel</Button>
       </Box>
     </Paper> 

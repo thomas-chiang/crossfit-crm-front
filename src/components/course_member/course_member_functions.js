@@ -8,7 +8,8 @@ const Functions = {
 }
 export default Functions
 
-async function handleEnrollButton(id, calendarContext, setAuth) {
+async function handleEnrollButton(id, calendarContext, setAuth, setDisable, setAlert) {
+  setDisable(true)
   try {
     if(!await utilsFunctions.auth()) return setAuth(false)
 
@@ -23,20 +24,22 @@ async function handleEnrollButton(id, calendarContext, setAuth) {
       }
     )
     if (response.ok) {
-      alert('Enrolled successfully')
+      setAlert('Enrolled successfully')
       calendarContext.setUpdate(!calendarContext.update)
       
     } else {
       let data = await response.json()
-      alert(response.status+': '+ data.error)
+      setAlert(data.error)
     }
   } catch (e) {
-    alert(e.message)
-  }  
+    setAlert(e.message)
+  }
+  setDisable(false)  
 }
 
 
-async function handleQuitButton(id, calendarContext, setAuth) {
+async function handleQuitButton(id, calendarContext, setAuth, setDisable, setAlert) {
+  setDisable(true)
   try {
     if(!await utilsFunctions.auth()) return setAuth(false)
 
@@ -51,16 +54,17 @@ async function handleQuitButton(id, calendarContext, setAuth) {
       }
     )
     if (response.ok) {
-      alert('Quit successfully')
+      setAlert('Quit successfully')
       calendarContext.setUpdate(!calendarContext.update)
       
     } else {
       let data = await response.json()
-      alert(response.status+': '+ data.error)
+      setAlert(data.error)
     }
   } catch (e) {
-    alert(e.message)
-  }  
+    setAlert(e.message)
+  }
+  setDisable(false)  
 }
 
 
@@ -80,7 +84,7 @@ async function getWorkout (workout_id, setUpdatedWorkout) {
     )
     let data = await response.json()
     if (response.ok) setUpdatedWorkout(data)
-    else console.log(response.status+': '+ data.error)
+    else console.log(data.error)
   }catch(e){
     console.log(e)
   }  

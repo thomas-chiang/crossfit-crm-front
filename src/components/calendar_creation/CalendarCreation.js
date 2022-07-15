@@ -3,16 +3,18 @@ import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid' 
 import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin from "@fullcalendar/interaction"
-import { useState, useEffect } from "react"
-import { CalendarContext } from '../../utils/reactContexts'
+import { useState, useEffect, useContext } from "react"
+import { CalendarContext, AppContext } from '../../utils/reactContexts'
 import CourseCreation from '../course_creation/CourseCreation'
 import Course from '../course/Course'
 import Functions from './calendar_creation_functions'
 import {Box, Paper} from '@mui/material'
 
 
+
 function Component () {
 
+  const setAlert =  useContext(AppContext).setAlert
   const [update, setUpdate] = useState(true)
   const [calendarEvents, setCalendarEvents] = useState(null)
   const [newCalendarEvent, setNewCalendarEvent] = useState(null)
@@ -77,7 +79,7 @@ function Component () {
             customButton: {
               text: 'Create Course',
               click: function() {
-                alert('Click any white box below and start creating a course');
+                setAlert('Click any white box below and start creating a course');
               }
             } 
           }}

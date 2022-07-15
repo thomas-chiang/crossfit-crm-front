@@ -3,8 +3,8 @@ import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid' 
 import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin from "@fullcalendar/interaction"
-import { useState, useEffect } from "react"
-import { CalendarContext } from '../../utils/reactContexts'
+import { useState, useEffect, useContext } from "react"
+import { CalendarContext, AppContext } from '../../utils/reactContexts'
 import CourseCheckout from '../course_checkout/CourseCheckout'
 import Functions from './calender_checkout_functions'
 
@@ -12,6 +12,7 @@ import {Paper, Box,} from '@mui/material'
 
 
 function Component ({role}) {
+  const setAlert =  useContext(AppContext).setAlert
 
   const [update, setUpdate] = useState(true)
   const [calendarEvents, setCalendarEvents] = useState(null)
@@ -86,7 +87,7 @@ function Component ({role}) {
             customButton: {
               text: role == 2 ? 'Enroll Members' : 'Enroll & Checkout Members',
               click: function() {
-                alert(role == 2 ? 'Click a blue box and start enrolling members' : 'Click a blue box and start enrolling and checking out members');
+                setAlert(role == 2 ? 'Click a blue box and start enrolling members' : 'Click a blue box and start enrolling and checking out members');
               }
             } 
           }}

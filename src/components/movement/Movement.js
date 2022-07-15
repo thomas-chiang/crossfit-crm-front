@@ -13,6 +13,7 @@ function Component() {
     name: '',
     demo_link: ''
   })
+  const [disable, setDisable] = useState(false)
 
 
 
@@ -24,7 +25,7 @@ function Component() {
   if (!auth) return <Navigate to='/login'/> // auth handler
   return (
     <Box sx={{m: 3, display: 'flex', alignItems: 'stretch', flexWrap: 'wrap'}}>
-      <Paper elevation={3} sx={{ m: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+      <Paper elevation={5} sx={{ m: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
         <Box sx={{display: 'flex'}}>
           <TextField size='small' label="Movement name" variant="outlined" value={newMovement.name} sx={{m:1, flexBasis: '100%'}} onChange={e=>setNewMovement({...newMovement, name: e.target.value})}/>
         </Box>
@@ -32,7 +33,7 @@ function Component() {
           <TextField size='small' label="Youtube link" variant="outlined" value={newMovement.demo_link} sx={{m:1, flexBasis: '100%'}} onChange={e=>setNewMovement({...newMovement, demo_link: e.target.value})}/>
         </Box>   
         <Box sx={{display: 'flex',  justifyContent: 'right', flexBasis: '100%', alignItems: 'end', mt: 1,}}>
-          <Button sx={{ m: 1, bottom: 0}} size='small' variant='contained' onClick={()=>{Functions.createMovement(newMovement, setUpdate, setAuth)}} >create</Button>
+          <Button disabled={disable} sx={{ m: 1, bottom: 0}} size='small' variant='contained' onClick={()=>{Functions.createMovement(newMovement, setUpdate, setAuth, setDisable)}} >create</Button>
         </Box>
       </Paper>
       {movements.map((movement, index)=> 
@@ -51,6 +52,7 @@ function MovementBox({id, movement, setUpdate, setAuth}) {
     demo_link: movement.demo_link,
     id,
   })
+  const [disable, setDisable] = useState(false)
 
   useEffect(() => {
     setUpdateingMovement({
@@ -62,7 +64,7 @@ function MovementBox({id, movement, setUpdate, setAuth}) {
   //console.log(updateingMovement)
 
   return (
-    <Paper elevation={3} sx={{ m: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between'}}>
+    <Paper elevation={5} sx={{ m: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between'}}>
       <Box sx={{display: 'flex'}}>
         <TextField size='small' label="Movement name" variant="outlined" value={updateingMovement.name} sx={{m:1, flexBasis: '100%'}} onChange={e=>setUpdateingMovement({...updateingMovement, name: e.target.value})}/>
       </Box>
@@ -80,8 +82,8 @@ function MovementBox({id, movement, setUpdate, setAuth}) {
       </Box>  
       : <></>}
       <Box sx={{display: 'flex',  justifyContent: 'right', flexBasis: '100%', alignItems: 'end', mt: 1,}} >
-        <Button sx={{ mr: 1, mb: 1, bottom: 0}} size='small' variant='contained' onClick={()=>Functions.updateMovement(updateingMovement, setUpdate, setAuth)} >update</Button>
-        <Button sx={{ mr: 1, mb: 1, bottom: 0}} size='small' variant='contained' onClick={()=>Functions.deleteMovement(id, setUpdate, setAuth)} color='secondary'>delete</Button>
+        <Button disabled={disable} sx={{ mr: 1, mb: 1, bottom: 0}} size='small' variant='contained' onClick={()=>Functions.updateMovement(updateingMovement, setUpdate, setAuth, setDisable)} >update</Button>
+        <Button disabled={disable} sx={{ mr: 1, mb: 1, bottom: 0}} size='small' variant='contained' onClick={()=>Functions.deleteMovement(id, setUpdate, setAuth, setDisable)} color='secondary'>delete</Button>
       </Box>
     </Paper>
   )

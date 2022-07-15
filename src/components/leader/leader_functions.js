@@ -13,7 +13,7 @@ async function getLeader(member, setLeader) {
     if (response.ok) {
       setLeader(data)
     } else {
-      console.log(response.status+': '+ data.error)
+      console.log(data.error)
       localStorage.removeItem('jwtToken')
     }
   } catch(e){

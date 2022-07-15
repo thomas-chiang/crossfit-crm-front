@@ -1,7 +1,6 @@
 import Home from './components/home/Home'
 import Login from './components/login/Login'
 import Profile from './components/profile/Profile'
-import Gym from './components/gym/Gym'
 import Movement from './components/movement/Movement'
 import Workout from './components/workout/Workout'
 import CalendarMember from './components/calender_member/CalendarMember'
@@ -9,12 +8,12 @@ import Analysis from './components/analysis/Analysis'
 import Leaderboard from './components/leaderboard/Leaderboard'
 import { Routes, Route, Navigate } from "react-router-dom"
 import Header from './components/header/Header'
-import { AppContext } from './utils/reactContexts.js'
-import { useState } from 'react'
+import { AppContext, AlertContext } from './utils/reactContexts.js'
+import { useState, useEffect } from 'react'
 import Analysis2 from './components/analysis2/Analysis2'
 
 
-import { Box } from '@mui/material'
+import { Box, Alert } from '@mui/material'
 
 
 
@@ -23,16 +22,43 @@ function App() {
 
   const [update, setUpdate] = useState(true)
   const [user, setUser] = useState(null)
+  const [alert, setAlert] = useState(null)
+  useEffect(() => {
+    const timeId = setTimeout(() => setAlert(null), 2000)
+    return () => clearTimeout(timeId)   
+  }, [alert]);
+  
   const contextValue = {
     update,
     setUpdate,
     user,
-    setUser
+    setUser,
+    alert,
+    setAlert
   }
+
+  
 
   return (
     <AppContext.Provider value={contextValue}>
-      
+      {alert ? 
+        <Alert 
+          severity="info" variant="filled"
+          sx={{
+            position: 'fixed', 
+            top: 10, 
+            right: 0, 
+            left: 0, 
+            mx: 'auto', 
+            width: alert.length*10, 
+            display: 'flex', 
+            justifyContent: 'center',
+            backgroundColor: 'gray'
+          }}
+        >
+          {alert}
+        </Alert>
+      : <></>}
       <Box sx={{background: `url(${require('./gym.jpeg')})  center center fixed`, backgroundSize: 'cover', width: 1, height: 1, minHeight: "100vh"}}>
       <Header />
         <Routes>
@@ -41,7 +67,6 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/calendar" element={<CalendarMember />} />
           <Route path="/profile" element={<Profile />} />
-          <Route path="/gym" element={<Gym />} />
           <Route path="/movement" element={<Movement />} />
           <Route path="/workout" element={<Workout />} />
           <Route path="/analysis" element={<Analysis2 />} />

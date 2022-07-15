@@ -17,7 +17,7 @@ async function getRole (setRole) {
     if (response.ok) {
       setRole(data.role)
     } else {
-      console.log(response.status+': '+ data.error)
+      console.log(data.error)
       localStorage.removeItem('jwtToken')
     }
   } catch(e){

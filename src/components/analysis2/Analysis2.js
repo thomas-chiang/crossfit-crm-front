@@ -40,7 +40,7 @@ function Component() {
  
   return (
     <Box sx={{p: 3, height: 'auto'}} > 
-      <Paper elevation={3} >
+      <Paper elevation={5} >
         <Box sx={{display: 'flex', flexWrap: 'wrap', justifyContent: 'center', pt: 1}}>
           <Typography sx={{flexBasis: '100%', textAlign: 'center', fontWeight: 'bold', my: 1}} variant='h4'>Analysis</Typography>
           <Box sx={{ width: 200, mr: 1}}>
@@ -58,7 +58,7 @@ function Component() {
         <Box sx={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', p: 1}}>
           {movementArr ? 
             movementArr.map((movement, index)=> 
-              <Paper key={index} elevation={3} sx={{ m: 1, mb: 3, p: 1, width: 4.5/10 }}>
+              <Paper key={index} elevation={5} sx={{ m: 1, mb: 3, p: 1, width: 4.5/10 }}>
                 {movement.name}
                 <AnalysisBar barData={movement.barData}/>
               </Paper>

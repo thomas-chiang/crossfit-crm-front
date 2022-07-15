@@ -14,7 +14,7 @@ async function getPointsByUser(user_id, setPoints) {
     )
     let data = await response.json()
     if (response.ok) setPoints(data)
-    else alert(response.status+': '+ data.error)
+    else alert(data.error)
   }catch(e){
     alert(e.message)
   }
@@ -33,7 +33,7 @@ async function getUsersByRole(role_level, setCoaches) {
     }
 
     if (response.ok) setCoaches(data)
-    else alert(response.status+': '+ data.error)
+    else alert(data.error)
   }catch(e){
     alert(e.message)
   }
@@ -54,7 +54,7 @@ async function getUser (setUser) {
       data.label = data.name
       setUser(data)
     } else {
-      console.log(response.status+': '+ data.error)
+      console.log(data.error)
       localStorage.removeItem('jwtToken')
     }
   } catch(e){

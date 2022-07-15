@@ -23,7 +23,7 @@ async function getMovements(setMovements) {
       item.value = item.id
     }
     if (response.ok) setMovements(data)
-    else alert(response.status+': '+ data.error)
+    else alert(data.error)
   }catch(e){
     alert(e.message)
   }
@@ -43,7 +43,7 @@ async function getDistinctWorkoutMovements(workout_id, setWorkoutMovements) {
     }
 
     if (response.ok) setWorkoutMovements(data)
-    else alert(response.status+': '+ data.error)
+    else alert(data.error)
   }catch(e){
     alert(e.message)
   }
@@ -61,7 +61,7 @@ async function getUserWorkouts (user_id, setUserWorkouts) {
       item.value = item.workout_id
     }
     if (response.ok) setUserWorkouts(data)
-    else alert(response.status+': '+ data.error)
+    else alert(data.error)
   }catch(e){
     alert(e.message)
   }
@@ -77,7 +77,7 @@ async function getPerformanceByMovement(user_id, movement_id, setLineDate) {
     )
     let data = await response.json()
     if (response.ok) setLineDate(generateLineData(data))
-    else alert(response.status+': '+ data.error)
+    else alert(data.error)
   }catch(e){
     console.log(e)
     alert(e.message)
@@ -93,7 +93,7 @@ async function getPerformanceByWorkoutMovement (user_id, workout_id ,movement_id
     )
     let data = await response.json()
     if (response.ok) setLineDate(generateLineData(data))
-    else alert(response.status+': '+ data.error)
+    else alert(data.error)
   }catch(e){
     console.log(e)
     alert(e.message)
@@ -117,7 +117,7 @@ async function getUsersByRole(role_level, setCoaches) {
     }
 
     if (response.ok) setCoaches(data)
-    else alert(response.status+': '+ data.error)
+    else alert(data.error)
   }catch(e){
     alert(e.message)
   }

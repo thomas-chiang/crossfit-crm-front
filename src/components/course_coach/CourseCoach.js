@@ -27,7 +27,7 @@ function Component({id}) {
 
 
   return (
-    <Paper elevation={3} sx={{ p: 2, mb: 2 }}>
+    <Paper elevation={5} sx={{ p: 2, mb: 2 }}>
       <Box sx={{display: 'flex', justifyContent: 'space-between',  alignItems: 'baseline'}}>
         <Typography sx={{ display: 'inline' }} variant="h5" >RECORD PERFORMANCE </Typography>
         <Box sx={{display: 'inline-flex'}}>
@@ -49,7 +49,7 @@ function Component({id}) {
           <Typography sx={{ m: 1}} variant="subtitle1" >Status:<i> {member.enrollment == 1 ? 'enrolled' : member.enrollment > 1 ? 'waiting' : 'canceled'}</i></Typography>
           <Box sx={{ display: 'flex', justifyContent: 'right' }} ><Button sx={{ my: 1}} size='small' variant='contained' onClick={()=>(handleClickOpen(member.id))}>record</Button></Box>
           <Dialog fullWidth	maxWidth={'xl'} open={open && memberId == member.id} onClose={handleClose} sx={{ display: 'flex', justifyContent: 'center', height: 'auto' }}>
-            <Paper elevation={3} sx={{ p: 2, m: 2 }}>
+            <Paper elevation={5} sx={{ p: 2, m: 2 }}>
               <Box sx={{display: 'flex', justifyContent: 'space-between',  alignItems: 'baseline'}}>
                 <Typography sx={{ display: 'inline' }} variant="h5" > {member.name} </Typography>
                 <Box sx={{display: 'inline-flex'}}>

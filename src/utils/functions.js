@@ -17,7 +17,7 @@ async function getUserData () {
     if (response.ok) {
       return data
     } else {
-      console.log(response.status+': '+ data.error)
+      console.log(data.error)
       localStorage.removeItem('jwtToken')
     }
   } catch(e){
@@ -38,7 +38,7 @@ async function auth () {
     if (response.ok) {
       return true
     } else {
-      console.log(response.status+': '+ data.error)
+      console.log(data.error)
       localStorage.removeItem('jwtToken')
     }
   } catch(e){

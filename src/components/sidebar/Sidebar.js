@@ -15,12 +15,12 @@ export default function Aside({setSection, role}) {
         <Menu iconShape="circle">
           <div>&nbsp;</div>
           <div>&nbsp;</div>
-          <MenuItem onClick={() =>setSection('personal info') }>Personal Info</MenuItem>
-          <MenuItem onClick={() =>setSection('points') }>View Points History</MenuItem>
+          <MenuItem onClick={() =>setSection('personal info') }>Personal Information</MenuItem>
+          <MenuItem onClick={() =>setSection('points') }>View Point Histories</MenuItem>
 
           {role >= 3 
           ? <>
-            <MenuItem onClick={() =>setSection('member') }>Manage Personnel</MenuItem>
+            <MenuItem onClick={() =>setSection('member') }>Manage Users</MenuItem>
           </> : <></>}
 
           {role >= 2 
@@ -31,15 +31,15 @@ export default function Aside({setSection, role}) {
 
           {role >= 3 
           ? <>
-            <MenuItem onClick={() =>setSection('create course') }>Create Course</MenuItem>
-            <MenuItem onClick={() =>setSection('calendar') }>Update Course</MenuItem>
+            <MenuItem onClick={() =>setSection('create course') }>Create Courses</MenuItem>
+            <MenuItem onClick={() =>setSection('calendar') }>Update Courses</MenuItem>
           </> : <></>}
 
           
           {role >= 2 
           ? <>
             <MenuItem onClick={() =>setSection('performance') }>Record Performances</MenuItem> 
-            <MenuItem onClick={() =>setSection('enroll and checkout') }>{role == 2 ? 'Enroll Members' : "Enroll & Checkout Members"}</MenuItem>
+            <MenuItem onClick={() =>setSection('enroll and checkout') }>{role == 2 ? 'Enroll Users' : "Enroll & Checkout Users"}</MenuItem>
           </> : <></>}
                  
         </Menu>

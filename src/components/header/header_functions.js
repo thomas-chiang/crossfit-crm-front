@@ -17,7 +17,7 @@ async function getUserProfile (setUser, appContext) {
       setUser(data)
       appContext.setUser(data)
     } else {
-      console.log(response.status+': '+ data.error)
+      console.log(data.error)
       localStorage.removeItem('jwtToken')
       setUser(null)
     }

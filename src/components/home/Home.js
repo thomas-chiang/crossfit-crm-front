@@ -24,9 +24,23 @@ function Component() {
 
   let cardColor = 'rgb(40,40,40)'
 
-  let gridStyle = {
+  let typographyStyle = {
     textAlign: 'center',
-    p:1
+    p:1,
+    flexGrow: 1, 
+    display: 'flex', 
+    alignItems: 'center',
+    justifyContent: 'center',
+  }
+
+  let cardStyle = {
+    position: 'relative', 
+    backgroundColor: 'rgb(40,40,40)', 
+    color: 'white', 
+    height: 1, 
+    display: 'flex', 
+    flexDirection: 'column', 
+    justifyContent: 'start'
   }
 
   if (profile) return <Navigate to='/profile'/>
@@ -53,10 +67,13 @@ function Component() {
         </Grid>
         <Grid item  md={1}></Grid>
       </Grid>
-      <Grid container spacing={6}>
+
+
+
+      <Grid container spacing={6} sx={{display: 'flex', alignItems: 'stretch'}}>
         <Grid item  md={1}></Grid>
         <Grid item  md={2} >
-          <Card sx={{ position: 'relative', backgroundColor: cardColor, color: 'white' }} >
+          <Card sx={cardStyle} >
             <CardMedia
               component="img"
               height="140"
@@ -73,14 +90,14 @@ function Component() {
               component="img"
               height="140"
             />
-            <Typography variant="h6" sx={gridStyle}>
+            <Typography variant="h6" sx={typographyStyle} >
               <b>Manage Users & Points</b>
             </Typography>
           </Card>   
         </Grid>
 
         <Grid item  md={2} >
-          <Card sx={{ position: 'relative', backgroundColor: cardColor, color: 'white' }} >
+          <Card sx={cardStyle} >
             <CardMedia
               component="img"
               height="140"
@@ -97,14 +114,14 @@ function Component() {
               component="img"
               height="140"
             />
-            <Typography variant="h6" sx={gridStyle}>
-              <b>Design Your Own Workouts</b>
+            <Typography variant="h6" sx={typographyStyle}>
+              <b>Design Workouts</b>
             </Typography>
           </Card>   
         </Grid>
 
         <Grid item  md={2} >
-          <Card sx={{ position: 'relative', backgroundColor: cardColor, color: 'white' }} >
+          <Card sx={cardStyle} >
             <CardMedia
               component="img"
               height="140"
@@ -121,14 +138,14 @@ function Component() {
               component="img"
               height="140"
             />
-            <Typography variant="h6" sx={gridStyle}>
+            <Typography variant="h6" sx={typographyStyle}>
               <b>Create & Enroll Courses</b>
             </Typography>
           </Card>   
         </Grid>
         
         <Grid item  md={2} >
-          <Card sx={{ position: 'relative', backgroundColor: cardColor, color: 'white' }} >
+          <Card sx={cardStyle} >
             <CardMedia
               component="img"
               height="140"
@@ -145,14 +162,14 @@ function Component() {
               component="img"
               height="140"
             />
-            <Typography variant="h6" sx={gridStyle}>
-              <b>Check Points & Record Results</b>
+            <Typography variant="h6" sx={typographyStyle}>
+              <b>Checkout Points & Record Results</b>
             </Typography>
           </Card>   
         </Grid>
 
         <Grid item  md={2} >
-          <Card sx={{ position: 'relative', backgroundColor: cardColor, color: 'white' }} >
+          <Card sx={cardStyle} >
             <CardMedia
               component="img"
               height="140"
@@ -169,7 +186,7 @@ function Component() {
               component="img"
               height="140"
             />
-            <Typography variant="h6" sx={gridStyle}>
+            <Typography variant="h6" sx={typographyStyle}>
               <b>Compete & Analyze</b>
             </Typography>
           </Card>   

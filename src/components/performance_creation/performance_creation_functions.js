@@ -12,13 +12,14 @@ async function getWorkoutMovements(workout_id, setMovements) {
     )
     let data = await response.json()
     if (response.ok) setMovements(data)
-    else alert(response.status+': '+ data.error)
+    else alert(data.error)
   }catch(e){
     alert(e.message)
   }
 }
 
-async function createPerformance(performance, setAuth, setUpdate) {
+async function createPerformance(performance, setAuth, setUpdate, setDisable, setAlert) {
+  setDisable(true)
   try {
     if(!await utilsFunctions.auth()) return setAuth(false)
     
@@ -36,12 +37,13 @@ async function createPerformance(performance, setAuth, setUpdate) {
     )
     if (response.ok) {
       setUpdate(Date())
-      alert('created successfully')
+      setAlert('created successfully')
     } else {
       let data = await response.json()
-      alert(response.status+': '+ data.error)
+      setAlert(data.error)
     }
   } catch (e) {
-    alert(e.message)
-  }  
+    setAlert(e.message)
+  }
+  setDisable(false)  
 }

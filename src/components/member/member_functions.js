@@ -14,13 +14,14 @@ async function getUsersByRole(role_level, setCoaches) {
     )
     let data = await response.json()
     if (response.ok) setCoaches(data)
-    else alert(response.status+': '+ data.error)
+    else alert(data.error)
   }catch(e){
     alert(e.message)
   }
 }
 
-async function updateValidStatus (user_id, valid_status, setUpdate, setAuth) {
+async function updateValidStatus (user_id, valid_status, setUpdate, setAuth, setDisable, setAlert) {
+  setDisable(true)
   try{
     let token = localStorage.getItem('jwtToken')
 
@@ -37,16 +38,18 @@ async function updateValidStatus (user_id, valid_status, setUpdate, setAuth) {
     )
     let data = await response.json()
     if (response.ok) {
-      alert('updated valid status successfully')
+      setAlert('updated valid status successfully')
       setUpdate(Date())
     }
-    else alert(response.status+': '+ data.error)
+    else setAlert(data.error)
   }catch(e){
-    alert(e.message)
+    setAlert(e.message)
   }
+  setDisable(false)
 }
 
-async function updateRole (user_id, role, setUpdate, setAuth) {
+async function updateRole (user_id, role, setUpdate, setAuth, setDisable, setAlert) {
+  setDisable(true)
   try{
     let token = localStorage.getItem('jwtToken')
 
@@ -63,18 +66,20 @@ async function updateRole (user_id, role, setUpdate, setAuth) {
     )
     let data = await response.json()
     if (response.ok) {
-      alert('updated valid status successfully')
+      setAlert('updated role successfully')
       setUpdate(Date())
     }
-    else alert(response.status+': '+ data.error)
+    else setAlert(data.error)
   }catch(e){
-    alert(e.message)
+    setAlert(e.message)
   }
+  setDisable(false)
 }
 
 
 
-async function insertPoint (user_id, point, setUpdate, setAuth, behavior) {
+async function insertPoint (user_id, point, setUpdate, setAuth, behavior, setDisable, setAlert) {
+  setDisable(true)
   try{
     let token = localStorage.getItem('jwtToken')
 
@@ -91,12 +96,13 @@ async function insertPoint (user_id, point, setUpdate, setAuth, behavior) {
     )
     let data = await response.json()
     if (response.ok) {
-      if(point > 0) alert('added point successfully')
-      if(point < 0) alert('deducted point successfully')
+      if(point > 0) setAlert('added point successfully')
+      if(point < 0) setAlert('deducted point successfully')
       setUpdate(Date())
     }
-    else alert(response.status+': '+ data.error)
+    else setAlert(data.error)
   }catch(e){
-    alert(e.message)
+    setAlert(e.message)
   }
+  setDisable(false)
 }

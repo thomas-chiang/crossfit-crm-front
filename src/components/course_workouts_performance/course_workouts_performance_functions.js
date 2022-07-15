@@ -13,7 +13,7 @@ async function getWorkouts(setWorkouts) {
     )
     let data = await response.json()
     if (response.ok) setWorkouts(data)
-    else alert(response.status+': '+ data.error)
+    else alert(data.error)
   }catch(e){
     alert(e.message)
   }
@@ -26,7 +26,7 @@ async function getWorkouts(setWorkouts) {
 //     )
 //     let data = await response.json()
 //     if (response.ok) setPerformances(data)
-//     else alert(response.status+': '+ data.error)
+//     else alert(data.error)
 //   }catch(e){
 //     alert(e.message)
 //   }
@@ -39,7 +39,7 @@ async function getPerformancesByCourseUser(course_id, user_id, setPerformances) 
     )
     let data = await response.json()
     if (response.ok) setPerformances(data)
-    else alert(response.status+': '+ data.error)
+    else alert(data.error)
   }catch(e){
     alert(e.message)
   }

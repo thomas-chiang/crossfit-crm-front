@@ -7,7 +7,8 @@ const Functions = {
 }
 export default Functions
 
-async function handleCreateButton(course, courseFromCalendar, calendarContext, setAuth) {
+async function handleCreateButton(course, courseFromCalendar, calendarContext, setAuth, setDisable, setAlert) {
+  setDisable(true)
   delete course.id
   try {
     if(!await utilsFunctions.auth()) return setAuth(false)
@@ -26,18 +27,19 @@ async function handleCreateButton(course, courseFromCalendar, calendarContext, s
     )
 
     if (response.ok) {
-      alert('created successfully')
+      setAlert('created successfully')
       calendarContext.setUpdate(!calendarContext.update)
       let oldArr = calendarContext.arr
       let newArr = oldArr.filter(item => item.id !== courseFromCalendar.id)
       calendarContext.setArr(newArr)
     } else {
       let data = await response.json()
-      alert(response.status+': '+ data.error)
+      setAlert(data.error)
     }
   } catch (e) {
-    alert(e.message)
-  }  
+    setAlert(e.message)
+  }
+  setDisable(false)  
 }
 
 
@@ -53,7 +55,7 @@ async function getWorkouts(setWorkouts) {
     )
     let data = await response.json()
     if (response.ok) setWorkouts(data)
-    else alert(response.status+': '+ data.error)
+    else alert(data.error)
   }catch(e){
     console.log(e)
     //alert(e.message)
@@ -67,7 +69,7 @@ async function getValidCoaches(setCoaches) {
     )
     let data = await response.json()
     if (response.ok) setCoaches(data)
-    else alert(response.status+': '+ data.error)
+    else alert(data.error)
   }catch(e){
     console.log(e)
     //alert(e.message)

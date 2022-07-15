@@ -6,8 +6,8 @@ const Functions = {
 }
 export default Functions
 
-async function updateWorkoutMovement (updatedMovement, setUpdate, setPassDownUpdate, setAuth) {
-  console.log(updatedMovement)
+async function updateWorkoutMovement (updatedMovement, setUpdate, setPassDownUpdate, setAuth, setDisable, setAlert) {
+  setDisable(true)
   try{
     let token = localStorage.getItem('jwtToken')
     if(!await utilsFunctions.auth()) return setAuth(false)
@@ -25,15 +25,16 @@ async function updateWorkoutMovement (updatedMovement, setUpdate, setPassDownUpd
     )
     let data = await response.json()
     if (response.ok) {
-      alert('updated successfully')
+      setAlert('updated successfully')
       setUpdate(Date())
       setPassDownUpdate(Date())
     }
-    else alert(response.status+': '+ data.error)
+    else setAlert(data.error)
   }catch(e){
     console.log(e)
-    alert(e.message)
+    setAlert(e.message)
   }
+  setDisable(false)
 }
 
 
@@ -46,7 +47,7 @@ async function getWorkoutMovement (setUpdatedMovement, workout_movement_id) {
     )
     let data = await response.json()
     if (response.ok) setUpdatedMovement(data)
-    else console.log(response.status+': '+ data.error)
+    else console.log(data.error)
   }catch(e){
     //alert(e.message)
     console.log(e)
@@ -55,7 +56,8 @@ async function getWorkoutMovement (setUpdatedMovement, workout_movement_id) {
 
 
 
-async function deleteWorkoutMovement (workout_movement_id, setUpdateFromChild, setPassDownUpdate, setAuth) {
+async function deleteWorkoutMovement (workout_movement_id, setUpdateFromChild, setPassDownUpdate, setAuth, setDisable, setAlert) {
+  setDisable(true)
   try{
     let token = localStorage.getItem('jwtToken')
     if(!await utilsFunctions.auth()) return setAuth(false)
@@ -71,12 +73,13 @@ async function deleteWorkoutMovement (workout_movement_id, setUpdateFromChild, s
     )
     let data = await response.json()
     if (response.ok) {
-      alert('deleted successfully')
+      setAlert('deleted successfully')
       setPassDownUpdate(Date())
       setUpdateFromChild(Date())
     }
-    else alert(response.status+': '+ data.error)
+    else setAlert(data.error)
   }catch(e){
-    alert(e.message)
-  }  
+    setAlert(e.message)
+  }
+  setDisable(false)  
 }

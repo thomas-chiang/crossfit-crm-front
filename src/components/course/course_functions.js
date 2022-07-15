@@ -9,7 +9,8 @@ const Functions = {
 }
 
 export default Functions
-async function handleUpdateButton(course, calendarContext, setAuth) {
+async function handleUpdateButton(course, calendarContext, setAuth, setDisable, setAlert) {
+  setDisable(true)
   try {
     if(!await utilsFunctions.auth()) return setAuth(false)
 
@@ -26,21 +27,23 @@ async function handleUpdateButton(course, calendarContext, setAuth) {
       }
     )
     if (response.ok) {
-      alert('Updated successfully')
+      setAlert('Updated successfully')
       calendarContext.setUpdate(!calendarContext.update)
       let oldArr = calendarContext.arr
       let newArr = oldArr.filter(item => item.id !== course.id)
       calendarContext.setArr(newArr)
     } else {
       let data = await response.json()
-      alert(response.status+': '+ data.error)
+      setAlert(data.error)
     }
   } catch (e) {
-    alert(e.message)
-  }  
+    setAlert(e.message)
+  }
+  setDisable(false)  
 }
 
-async function handleDeleteButton(id, calendarContext, setAuth) {
+async function handleDeleteButton(id, calendarContext, setAuth, setDisable, setAlert) {
+  setDisable(true)
   try {
     if(!await utilsFunctions.auth()) return setAuth(false)
     
@@ -55,18 +58,19 @@ async function handleDeleteButton(id, calendarContext, setAuth) {
       }
     )
     if (response.ok) {
-      alert('Deleted successfully')
+      setAlert('Deleted successfully')
       calendarContext.setUpdate(!calendarContext.update)
       let oldArr = calendarContext.arr
       let newArr = oldArr.filter(item => item.id !== id)
       calendarContext.setArr(newArr)
     } else {
       let data = await response.json()
-      alert(response.status+': '+ data.error)
+      setAlert(data.error)
     }
   } catch (e) {
-    alert(e.message)
-  }  
+    setAlert(e.message)
+  }
+  setDisable(false)  
 }
 
 function handleCancelButton(id, calendarContext) {   
@@ -84,7 +88,7 @@ async function getWorkouts(setWorkouts) {
     )
     let data = await response.json()
     if (response.ok) setWorkouts(data)
-    else alert(response.status+': '+ data.error)
+    else alert(data.error)
   }catch(e){
     console.log(e)
     //alert(e.message)
@@ -98,7 +102,7 @@ async function getValidCoaches(setCoaches) {
     )
     let data = await response.json()
     if (response.ok) setCoaches(data)
-    else alert(response.status+': '+ data.error)
+    else alert(data.error)
   }catch(e){
     console.log(e)
     //alert(e.message)

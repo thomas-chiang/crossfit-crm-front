@@ -12,7 +12,7 @@ async function getCoaches(setCoaches) {
     )
     let data = await response.json()
     if (response.ok) setCoaches(data)
-    else alert(response.status+': '+ data.error)
+    else alert(data.error)
   }catch(e){
     alert(e.message)
   }
@@ -39,7 +39,7 @@ async function updateValidStatus (user_id, valid_status, setUpdate, setAuth) {
       alert('updated valid status successfully')
       setUpdate(Date())
     }
-    else alert(response.status+': '+ data.error)
+    else alert(data.error)
   }catch(e){
     alert(e.message)
   }

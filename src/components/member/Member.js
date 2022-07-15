@@ -1,9 +1,11 @@
 import { useState, useEffect }  from 'react'
 import  { Navigate } from 'react-router-dom' // auth handler
 import Functions from './member_functions'
-import {Paper, Typography, Card, Button, Box, Radio, TextField} from '@mui/material'
+import {Paper, Typography, Button, Box,  TextField, Alert} from '@mui/material'
 import Select from 'react-select';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { AppContext } from '../../utils/reactContexts'
+
 const theme = createTheme({
   palette: {
     neutral: {
@@ -20,6 +22,8 @@ function Component() {
   const [update, setUpdate] = useState(Date())
   const [auth, setAuth] = useState(true) // auth
   const [members, setMembers] = useState([])
+  
+
 
   useEffect(() => {
     Functions.getUsersByRole(1, setMembers)
@@ -44,11 +48,34 @@ function MemberBox({member, setUpdate, setAuth}) {
   const [addingPoint, setAddingPoint] = useState(0)
   const [deductingPoint, setDeductingPointPoint] = useState(0)
   const [selectedRole, setSelectedRole] = useState(member)
-
+  const [disable, setDisable] = useState(false)
+  const [alert, setAlert] = useState(null)
+  useEffect(() => {
+    const timeId = setTimeout(() => setAlert(null), 2000)
+    return () => clearTimeout(timeId)   
+  }, [alert]);
   
 
   return (
-    <Paper elevation={3} sx={{ p: 1, m: 1}}>
+    <Paper elevation={5} sx={{ p: 1, m: 1}}>
+      {alert ? 
+        <Alert 
+          severity="info" variant="filled"
+          sx={{
+            position: 'fixed', 
+            top: 10, 
+            right: 0, 
+            left: 0, 
+            mx: 'auto', 
+            width: alert.length*10, 
+            display: 'flex', 
+            justifyContent: 'center',
+            backgroundColor: 'gray'
+          }}
+        >
+          {alert}
+        </Alert>
+      : <></>}
       <Box sx={{mb:2, display: 'flex', justifyContent: 'space-between'}}>
         {member.name}: 
         <Paper elevation={3} sx={{textAlign: 'center', p:1}} >
@@ -71,25 +98,25 @@ function MemberBox({member, setUpdate, setAuth}) {
           />
         </Box>
         
-        <Button disabled={member.role == 3 } sx={{ height: 38, width: 80}} variant="contained" size='small' onClick={()=>Functions.updateRole(member.id, selectedRole.role, setUpdate, setAuth)}>update</Button>
+        <Button disabled={member.role == 3 || disable } sx={{ height: 38, width: 80}} variant="contained" size='small' onClick={()=>Functions.updateRole(member.id, selectedRole.role, setUpdate, setAuth, setDisable, setAlert)}>update</Button>
       </Box>
       <ThemeProvider theme={theme}>
         <Box sx={{display: 'flex', alignItems:'center', mt: 1}}>
           <TextField sx={{ width: 120, mr: 1}} type='number' label="Point added" size='small' variant="outlined" value={addingPoint} onChange={e=>setAddingPoint(e.target.value)}/>
           
-          <Button color='neutral' sx={{ height: 40, width: 80}}variant="contained" size='small' onClick={()=>Functions.insertPoint(member.id, addingPoint, setUpdate, setAuth, 'add')}>add</Button>
+          <Button disabled={disable} color='neutral' sx={{ height: 40, width: 80}}variant="contained" size='small' onClick={()=>Functions.insertPoint(member.id, addingPoint, setUpdate, setAuth, 'add', setDisable, setAlert)}>add</Button>
           
         </Box>
         <Box sx={{display: 'flex', alignItems:'center', mt: 1}}>
           <TextField sx={{ width: 120, mr: 1}} type='number' label="Point deducted" size='small' variant="outlined" value={deductingPoint} onChange={e=>setDeductingPointPoint(e.target.value)}/>
-          <Button color='neutral' sx={{ height: 40, width: 80}}variant="contained" size='small' onClick={()=>Functions.insertPoint(member.id, -deductingPoint,setUpdate, setAuth, 'deduct')}>deduct</Button>
+          <Button disabled={disable} color='neutral' sx={{ height: 40, width: 80}}variant="contained" size='small' onClick={()=>Functions.insertPoint(member.id, -deductingPoint,setUpdate, setAuth, 'deduct', setDisable, setAlert)}>deduct</Button>
         </Box>
       </ThemeProvider>
       <Box sx={{display: 'flex', justifyContent: 'right', mt: 2}}>
         <Button sx={{ mt: 1, bottom: 0}} size='small' variant='contained' 
           color={member.valid == 1 ? 'secondary' : 'primary'}
-          onClick={()=>Functions.updateValidStatus(member.id, member.valid == 1 ? 0 : 1 ,setUpdate, setAuth)}
-          disabled={member.role == 3 }
+          onClick={()=>Functions.updateValidStatus(member.id, member.valid == 1 ? 0 : 1 ,setUpdate, setAuth, setDisable, setAlert)}
+          disabled={member.role == 3 || disable}
         >
           {member.valid == 1 ? 'invalidate' : 'validate'}
         </Button>

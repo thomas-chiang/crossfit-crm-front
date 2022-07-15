@@ -2,15 +2,20 @@ import { useState, useEffect, useContext }  from 'react'
 import  { Navigate } from 'react-router-dom' // auth handler
 import Functions from './update_workout_movement_functions'
 import { Button, Box, TextField } from '@mui/material'
+import { AppContext } from '../../utils/reactContexts'
+
 
 
 
 function Component({movement, setPassDownUpdate, setUpdateFromChild}) {
 
+  const setAlert =  useContext(AppContext).setAlert
+
   const workout_movement_id = movement.id
   const [auth, setAuth] = useState(true) // auth
   const [update, setUpdate] = useState(Date())
   const [updatedMovement, setUpdatedMovement] = useState(movement)
+  const [disable, setDisable] = useState(false)
 
 
   useEffect(()=>{
@@ -27,8 +32,8 @@ function Component({movement, setPassDownUpdate, setUpdateFromChild}) {
       <TextField sx={{m:1, width: 100}} size='small' type='number' label="meter" variant="outlined" value={updatedMovement?.meter || ''} onChange={e => setUpdatedMovement({...updatedMovement, meter: e.target.value})}/>
       <TextField sx={{m:1, width: 100}} size='small' type='number' label="cal" variant="outlined" value={updatedMovement?.cal || ''} onChange={e => setUpdatedMovement({...updatedMovement, cal: e.target.value})}/>
       {/* <TextField sx={{m:1, width: 100}} size='small' type='number' label="sec" variant="outlined" value={updatedMovement.sec || ''} onChange={e => setUpdatedMovement({...updatedMovement, sec: e.target.value})}/> */}
-      <Button sx={{ m: 1}} size='small' onClick={()=>{Functions.updateWorkoutMovement(updatedMovement, setUpdate, setPassDownUpdate, setAuth)}} variant="contained" >update</Button>
-      <Button sx={{ m: 1}} size='small' onClick={()=>{Functions.deleteWorkoutMovement(workout_movement_id, setUpdateFromChild, setPassDownUpdate, setAuth)}} variant="contained" color="secondary">delete</Button> 
+      <Button disabled={disable} sx={{ m: 1}} size='small' onClick={()=>{Functions.updateWorkoutMovement(updatedMovement, setUpdate, setPassDownUpdate, setAuth, setDisable, setAlert)}} variant="contained" >update</Button>
+      <Button disabled={disable} sx={{ m: 1}} size='small' onClick={()=>{Functions.deleteWorkoutMovement(workout_movement_id, setUpdateFromChild, setPassDownUpdate, setAuth, setDisable, setAlert)}} variant="contained" color="secondary">delete</Button> 
     </Box>
   );
 }

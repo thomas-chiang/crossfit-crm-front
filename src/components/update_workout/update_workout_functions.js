@@ -7,7 +7,8 @@ const Functions = {
 }
 export default Functions
 
-async function deleteWorkout (workout_id, setAuth, setPassDownUpdate) {
+async function deleteWorkout (workout_id, setAuth, setPassDownUpdate, setDisable, setAlert) {
+  setDisable(true)
   try{
     let token = localStorage.getItem('jwtToken')
     if(!await utilsFunctions.auth()) return setAuth(false)
@@ -23,14 +24,15 @@ async function deleteWorkout (workout_id, setAuth, setPassDownUpdate) {
     )
     let data = await response.json()
     if (response.ok) {
-      alert('deleted successfully')
+      setAlert('deleted successfully')
       setPassDownUpdate(Date())
     }
-    else alert(response.status+': '+ data.error)
+    else setAlert(data.error)
   }catch(e){
     console.log(e)
-    alert(e.message)
-  }  
+    setAlert(e.message)
+  }
+  setDisable(false)  
 }
 
 async function getWorkout (workout_id, setUpdatedWorkout) {
@@ -40,14 +42,15 @@ async function getWorkout (workout_id, setUpdatedWorkout) {
     )
     let data = await response.json()
     if (response.ok) setUpdatedWorkout(data)
-    else console.log(response.status+': '+ data.error)
+    else console.log(data.error)
   }catch(e){
     console.log(e)
     //alert(e.message)
   }  
 }
 
-async function addWorkoutMovement (newWorkoutMovement, setAuth, setUpdate, setPassDownUpdate) {
+async function addWorkoutMovement (newWorkoutMovement, setAuth, setUpdate, setPassDownUpdate, setDisable, setAlert) {
+  setDisable(true)
   try{
     let token = localStorage.getItem('jwtToken')
     if(!await utilsFunctions.auth()) return setAuth(false)
@@ -65,18 +68,20 @@ async function addWorkoutMovement (newWorkoutMovement, setAuth, setUpdate, setPa
     )
     let data = await response.json()
     if (response.ok) {
-      alert('added successfully')
+      setAlert('added successfully')
       setUpdate(Date())
       setPassDownUpdate(Date())
     }
-    else alert(response.status+': '+ data.error)
+    else setAlert(data.error)
   }catch(e){
     console.log(e)
-    alert(e.message)
+    setAlert(e.message)
   }
+  setDisable(false)
 }
 
-async function updateOnlyWorkout (updatedWorkout, setAuth, setUpdate, setPassDownUpdate) {
+async function updateOnlyWorkout (updatedWorkout, setAuth, setUpdate, setPassDownUpdate, setDisable, setAlert) {
+  setDisable(true)
   try{
     let token = localStorage.getItem('jwtToken')
     if(!await utilsFunctions.auth()) return setAuth(false)
@@ -94,13 +99,14 @@ async function updateOnlyWorkout (updatedWorkout, setAuth, setUpdate, setPassDow
     )
     let data = await response.json()
     if (response.ok) {
-      alert('updated successfully')
+      setAlert('updated successfully')
       setUpdate(Date())
       setPassDownUpdate(Date())
     }
-    else alert(response.status+': '+ data.error)
+    else setAlert(data.error)
   }catch(e){
     console.log(e)
-    alert(e.message)
+    setAlert(e.message)
   }
+  setDisable(false)
 }

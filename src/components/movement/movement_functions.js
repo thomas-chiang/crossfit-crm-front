@@ -16,13 +16,14 @@ async function getMovements(setMovements) {
     let data = await response.json()
     data.reverse()
     if (response.ok) setMovements(data)
-    else alert(response.status+': '+ data.error)
+    else alert(data.error)
   }catch(e){
     alert(e.message)
   }
 }
 
-async function createMovement (newMovement, setUpdate, setAuth) {
+async function createMovement (newMovement, setUpdate, setAuth, setDisable) {
+  setDisable(true)
   try{
     let token = localStorage.getItem('jwtToken')
 
@@ -44,13 +45,15 @@ async function createMovement (newMovement, setUpdate, setAuth) {
       alert('created successfully')
       setUpdate(Date())
     }
-    else alert(response.status+': '+ data.error)
+    else alert(data.error)
   }catch(e){
     alert(e.message)
   }
+  setDisable(false)
 }
 
-async function updateMovement (updateingMovement, setUpdate, setAuth) {
+async function updateMovement (updateingMovement, setUpdate, setAuth, setDisable) {
+  setDisable(true)
   try{
     let token = localStorage.getItem('jwtToken')
 
@@ -72,13 +75,15 @@ async function updateMovement (updateingMovement, setUpdate, setAuth) {
       alert('updated successfully')
       setUpdate(Date())
     }
-    else alert(response.status+': '+ data.error)
+    else alert(data.error)
   }catch(e){
     alert(e.message)
   }
+  setDisable(false)
 }
 
-async function deleteMovement (id, setUpdate, setAuth) {
+async function deleteMovement (id, setUpdate, setAuth, setDisable) {
+  setDisable(true)
   try{
     let token = localStorage.getItem('jwtToken')
 
@@ -98,8 +103,9 @@ async function deleteMovement (id, setUpdate, setAuth) {
       alert('deleted successfully')
       setUpdate(Date())
     }
-    else alert(response.status+': '+ data.error)
+    else alert(data.error)
   }catch(e){
     alert(e.message)
   }
+  setDisable(false)
 }

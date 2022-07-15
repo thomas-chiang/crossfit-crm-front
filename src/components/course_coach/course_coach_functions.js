@@ -29,7 +29,7 @@ async function handleEnrollButton(id, calendarContext, setAuth) {
       // calendarContext.setArr(newArr)
     } else {
       let data = await response.json()
-      alert(response.status+': '+ data.error)
+      alert(data.error)
     }
   } catch (e) {
     alert(e.message)
@@ -59,7 +59,7 @@ async function handleQuitButton(id, calendarContext, setAuth) {
       // calendarContext.setArr(newArr)
     } else {
       let data = await response.json()
-      alert(response.status+': '+ data.error)
+      alert(data.error)
     }
   } catch (e) {
     alert(e.message)
@@ -91,7 +91,7 @@ async function handleUpdateButton(course, calendarContext, setAuth) {
       calendarContext.setArr(newArr)
     } else {
       let data = await response.json()
-      alert(response.status+': '+ data.error)
+      alert(data.error)
     }
   } catch (e) {
     alert(e.message)
@@ -120,7 +120,7 @@ async function handleDeleteButton(id, calendarContext, setAuth) {
       calendarContext.setArr(newArr)
     } else {
       let data = await response.json()
-      alert(response.status+': '+ data.error)
+      alert(data.error)
     }
   } catch (e) {
     alert(e.message)

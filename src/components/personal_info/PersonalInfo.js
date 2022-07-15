@@ -20,7 +20,7 @@ function Component() {
   if (logout) return <Navigate to='/'/>
   if (user) return (
     <Box sx={{padding: 5}}>
-      <Paper elevation={3} sx={{ p: 5 }} >
+      <Paper elevation={5} sx={{ p: 5 }} >
         <Typography variant="h6" sx={{m: 0.5}} >Name: {user.name}</Typography>
         <Typography variant="h6"  sx={{m: 0.5}}>Email: {user.email}</Typography>
         <Typography variant="h6"  sx={{m: 0.5}}>Gender: {user.gender === 1 ? 'Male' : 'Female'}</Typography>

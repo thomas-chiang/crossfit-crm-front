@@ -11,7 +11,7 @@ async function getWorkouts(setWorkouts) {
     )
     let data = await response.json()
     if (response.ok) setWorkouts(data)
-    else alert(response.status+': '+ data.error)
+    else alert(data.error)
   }catch(e){
     alert(e.message)
   }

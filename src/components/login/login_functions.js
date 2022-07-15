@@ -5,7 +5,8 @@ const Functions = {
 
 export default Functions
 
-async function handleSignUp (role, name, email, password, gender, appContext, navigate) {
+async function handleSignUp (role, name, email, password, gender, appContext, navigate, setDisable, setAlert) {
+  setDisable(true)
   try{
     let response = await fetch (
       process.env.REACT_APP_API_URL+'user/signup',
@@ -24,19 +25,21 @@ async function handleSignUp (role, name, email, password, gender, appContext, na
     )
     let data = await response.json()
     if (response.ok) {
-      alert('Signed up successfully')
+      setAlert('Signed up successfully')
       localStorage.setItem("jwtToken", data.access_token)
       appContext.setUpdate(!appContext.update)
       navigate(-1)
     } else {
-      alert(response.status+': '+ data.error+' Please login again')
+      setAlert(data.error)
     }
   } catch(e){
-    alert(e.message)
+    setAlert(e.message)
   }
+  setDisable(false)
 }
 
-async function handleSignIn (role, email, password, appContext, navigate) {
+async function handleSignIn (role, email, password, appContext, navigate, setDisable, setAlert) {
+  setDisable(true)
   try{
     let response = await fetch (
       process.env.REACT_APP_API_URL+'user/signin',
@@ -53,14 +56,15 @@ async function handleSignIn (role, email, password, appContext, navigate) {
     let data = await response.json()
 
     if (response.ok) {
-      alert('Signed in successfully')
+      setAlert('Signed in successfully')
       localStorage.setItem("jwtToken", data.access_token)
       appContext.setUpdate(!appContext.update)
       navigate(-1)
     } else {      
-      alert(response.status+': '+ data.error)
+      setAlert(data.error)
     }
   } catch(e){
-    alert(e.message)
+    setAlert(e.message)
   }
+  setDisable(false)
 }

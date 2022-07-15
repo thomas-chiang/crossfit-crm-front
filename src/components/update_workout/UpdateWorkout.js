@@ -4,6 +4,8 @@ import Functions from './update_workout_functions'
 import Select from 'react-select';
 import UpdateWorkoutMovement from '../update_workout_movement/UpdateWorkoutMovement'
 import {Paper, Button, Box, TextField, TextareaAutosize} from '@mui/material'
+import { AppContext } from '../../utils/reactContexts'
+
 
 
 
@@ -23,6 +25,9 @@ function Component({workout, movementOptions, passDownUpdate, setPassDownUpdate}
     cal: '',
     // sec: ''
   })
+  const [disable, setDisable] = useState(false)
+  const setAlert =  useContext(AppContext).setAlert
+
 
   useEffect(() => {
     Functions.getWorkout(workout.id, setUpdatingWorkout)
@@ -43,8 +48,7 @@ function Component({workout, movementOptions, passDownUpdate, setPassDownUpdate}
 
   if (!auth) return <Navigate to='/login'/> // auth handler
   return (
-    
-    <Paper elevation={3} sx={{ p: 1, m: 1 }}>
+    <Paper elevation={5} sx={{ p: 1, m: 1 }}>
         <Box sx={{ display: 'flex'}}>
           <TextField sx={{m:1, flexGrow: 1}} size='small' label="Workout name" variant="outlined" value={updatingWorkout.name || ''}  onChange={e => setUpdatingWorkout({...updatingWorkout, name: e.target.value})}/>
           <TextField sx={{m:1, width: 100}} type='number' size='small' label="round" variant="outlined" value={updatingWorkout.round || ''}  onChange={e => setUpdatingWorkout({...updatingWorkout, round: e.target.value})}/>
@@ -74,14 +78,14 @@ function Component({workout, movementOptions, passDownUpdate, setPassDownUpdate}
           <TextField sx={{m:1, width: 100}} size='small' type='number' label="meter" variant="outlined" value={newWorkoutMovement.meter} onChange={e => setNewWorkoutMovement({...newWorkoutMovement, meter: e.target.value})}/>
           <TextField sx={{m:1, width: 100}} size='small' type='number' label="cal" variant="outlined" value={newWorkoutMovement.cal} onChange={e => setNewWorkoutMovement({...newWorkoutMovement, cal: e.target.value})}/>
           {/* <TextField sx={{m:1, width: 100}} size='small' type='number' label="sec" variant="outlined" value={newWorkoutMovement.sec} onChange={e => setNewWorkoutMovement({...newWorkoutMovement, sec: e.target.value})}/> */}
-          <Button sx={{ m: 1}} size='small' disabled={!selectedMovement} onClick={()=>{Functions.addWorkoutMovement(newWorkoutMovement, setAuth, setUpdate, setPassDownUpdate)}} variant="contained" > add movement</Button> 
+          <Button sx={{ m: 1}} size='small' disabled={!selectedMovement || disable} onClick={()=>{Functions.addWorkoutMovement(newWorkoutMovement, setAuth, setUpdate, setPassDownUpdate, setDisable, setAlert)}} variant="contained" > add movement</Button> 
         </Box>
         <Box sx={{ display: 'flex'}}>
            <TextareaAutosize placeholder="note" style={{ margin: 8, flexGrow: 1}} minRows={3} value={updatingWorkout.note || ''} onChange={e => setUpdatingWorkout({...updatingWorkout, note: e.target.value})}/>
         </Box>
         <Box sx={{display: 'flex', justifyContent: 'right'}}>
-          <Button sx={{ m: 1}} variant='contained' onClick={() => {Functions.updateOnlyWorkout(updatingWorkout, setAuth, setUpdate, setPassDownUpdate)}} >update workout (no movements)</Button>
-          <Button sx={{ m: 1}} variant='contained' onClick={() => {Functions.deleteWorkout(updatingWorkout.id, setAuth, setPassDownUpdate)}} color="secondary">delete workout</Button>
+          <Button disabled={disable} sx={{ m: 1}} variant='contained' onClick={() => {Functions.updateOnlyWorkout(updatingWorkout, setAuth, setUpdate, setPassDownUpdate, setDisable, setAlert)}} >update workout excluding movements</Button>
+          <Button disabled={disable} sx={{ m: 1}} variant='contained' onClick={() => {Functions.deleteWorkout(updatingWorkout.id, setAuth, setPassDownUpdate, setDisable, setAlert)}} color="secondary">delete workout</Button>
         </Box>
       </Paper>
     

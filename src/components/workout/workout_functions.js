@@ -15,7 +15,7 @@ async function getMovementOptions(setMovements) {
     )
     let data = await response.json()
     if (response.ok) setMovements(data)
-    else alert(response.status+': '+ data.error)
+    else alert(data.error)
   }catch(e){
     console.log(e)
     alert(e.message)
@@ -31,7 +31,7 @@ async function getWorkoutsWithMovements(setWorkouts) {
     let data = await response.json()
     data.reverse()
     if (response.ok) setWorkouts(data)
-    else alert(response.status+': '+ data.error)
+    else alert(data.error)
   }catch(e){
     console.log(e)
     //alert(e.message)
@@ -39,7 +39,8 @@ async function getWorkoutsWithMovements(setWorkouts) {
 }
 
 
-async function createWorkout (newWorkout, movementArr, setUpdate, setAuth) {
+async function createWorkout (newWorkout, movementArr, setUpdate, setAuth, setDisable, setAlert) {
+  setDisable(true)
   try{
     let token = localStorage.getItem('jwtToken')
 
@@ -59,13 +60,13 @@ async function createWorkout (newWorkout, movementArr, setUpdate, setAuth) {
     )
     let data = await response.json()
     if (response.ok) {
-      alert('created successfully')
+      setAlert('created successfully')
       setUpdate(Date())
     }
-    else alert(response.status+': '+ data.error)
+    else setAlert(data.error)
   }catch(e){
-    console.log(e)
-    alert(e.message)
+    setAlert(e.message)
   }
+  setDisable(false)
 }
 

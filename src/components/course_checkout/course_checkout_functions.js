@@ -10,7 +10,8 @@ const Functions = {
 }
 export default Functions
 
-async function checkoutMemberById (course_id, user_id, enrollment, setUpdate, setAuth, calendarContext) {
+async function checkoutMemberById (course_id, user_id, enrollment, setUpdate, setAuth, calendarContext, setDisable, setAlert) {
+  setDisable(true)
   try {
     if(!await utilsFunctions.auth()) return setAuth(false)
     let token = localStorage.getItem('jwtToken')  // auth
@@ -24,19 +25,21 @@ async function checkoutMemberById (course_id, user_id, enrollment, setUpdate, se
       }
     )
     if (response.ok) {
-      alert('Checked out successfully')
+      setAlert('Checked out successfully')
       setUpdate(Date())
       calendarContext.setUpdate(!calendarContext.update)
     } else {
       let data = await response.json()
-      alert(response.status+': '+ data.error)
+      setAlert(data.error)
     }
   } catch (e) {
-    alert(e.message)
-  }  
+    setAlert(e.message)
+  }
+  setDisable(false)  
 }
 
-async function quitMemberById (course_id, user_id, enrollment, setUpdate, setAuth, calendarContext) {
+async function quitMemberById (course_id, user_id, enrollment, setUpdate, setAuth, calendarContext, setDisable, setAlert) {
+  setDisable(true)
   try {
     if(!await utilsFunctions.auth()) return setAuth(false)
     let token = localStorage.getItem('jwtToken')  // auth
@@ -50,19 +53,21 @@ async function quitMemberById (course_id, user_id, enrollment, setUpdate, setAut
       }
     )
     if (response.ok) {
-      alert('Quit successfully')
+      setAlert('Quit successfully')
       setUpdate(Date())
       calendarContext.setUpdate(!calendarContext.update)
     } else {
       let data = await response.json()
-      alert(response.status+': '+ data.error)
+      setAlert(data.error)
     }
   } catch (e) {
-    alert(e.message)
-  }  
+    setAlert(e.message)
+  }
+  setDisable(false)  
 }
 
-async function enrollMemberByEmail (course_id, email, setUpdate, setAuth, calendarContext) {
+async function enrollMemberByEmail (course_id, email, setUpdate, setAuth, calendarContext, setDisable, setAlert) {
+  setDisable(true)
   try {
     if(!await utilsFunctions.auth()) return setAuth(false)
     let token = localStorage.getItem('jwtToken')  // auth
@@ -76,19 +81,21 @@ async function enrollMemberByEmail (course_id, email, setUpdate, setAuth, calend
       }
     )
     if (response.ok) {
-      alert('Enrolled successfully')
+      setAlert('Enrolled successfully')
       setUpdate(Date())
       calendarContext.setUpdate(!calendarContext.update)
     } else {
       let data = await response.json()
-      alert(response.status+': '+ data.error)
+      setAlert(data.error)
     }
   } catch (e) {
-    alert(e.message)
-  }  
+    setAlert(e.message)
+  }
+  setDisable(false)  
 }
 
-async function enrollMemberByExistingUserId (course_id, user_id, setUpdate, setAuth, calendarContext) {
+async function enrollMemberByExistingUserId (course_id, user_id, setUpdate, setAuth, calendarContext, setDisable, setAlert) {
+  setDisable(true)
   try {
     if(!await utilsFunctions.auth()) return setAuth(false)
     let token = localStorage.getItem('jwtToken')  // auth
@@ -102,16 +109,17 @@ async function enrollMemberByExistingUserId (course_id, user_id, setUpdate, setA
       }
     )
     if (response.ok) {
-      alert('Enrolled successfully')
+      setAlert('Enrolled successfully')
       setUpdate(Date())
       calendarContext.setUpdate(!calendarContext.update)
     } else {
       let data = await response.json()
-      alert(response.status+': '+ data.error)
+      setAlert(data.error)
     }
   } catch (e) {
-    alert(e.message)
-  }  
+    setAlert(e.message)
+  }
+  setDisable(false)  
 }
 
 
@@ -124,7 +132,7 @@ async function getCourseEnrolledmembers(course_id, setMembers) {
     if (response.ok) {
       setMembers(data)
     } else {
-      alert(response.status+': '+ data.error)
+      alert(data.error)
     }
   } catch (e) {
     console.log(e.message)

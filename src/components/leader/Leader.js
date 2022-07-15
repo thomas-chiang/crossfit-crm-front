@@ -32,7 +32,7 @@ function Component({leader}) {
       <Box sx={{m:1}}>{performances[0]?.user_name}:</Box> 
       <Box sx={{m:1}}><Button variant="contained" size='small' onClick={()=>(handleClickOpen(performances[0].id))} >{(leader.score).toFixed(2)}</Button></Box>
       <Dialog fullWidth	maxWidth={'xl'} open={open && workoutId == performances[0].id} onClose={handleClose} sx={{ display: 'flex', justifyContent: 'center', height: 'auto' }}>
-        <Paper elevation={3} sx={{ p: 2, m: 2 }}>
+        <Paper elevation={5} sx={{ p: 2, m: 2 }}>
           <Box sx={{display: 'flex', justifyContent: 'right', mb: 1}}>
             <Typography variant="subtitle2" >Time: {moment(performances[0].start).local().format('YYYY/MM/DD H:mm A')} - {moment(performances[0].end).local().format('YYYY/MM/DD H:mm A')}</Typography>
           </Box>

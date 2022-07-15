@@ -14,7 +14,7 @@ async function getWorkouts(setWorkouts) {
     )
     let data = await response.json()
     if (response.ok) setWorkouts(data)
-    else console.log(response.status+': '+ data.error)
+    else console.log(data.error)
   }catch(e){
     console.log(e)
     //alert(e.message)
@@ -29,7 +29,7 @@ async function getWorkouts(setWorkouts) {
 //     )
 //     let data = await response.json()
 //     if (response.ok) setLeaderboards([...leaderboards, data])
-//     else console.log(response.status+': '+ data.error)
+//     else console.log(data.error)
 //   }catch(e){
 //     console.log(e)
 //     //alert(e.message)
@@ -61,7 +61,7 @@ async function getLeaderboardByWorkouts(selectedWorkouts, setLeaderboards) {
     //console.log(arr)
 
     if (response.ok) setLeaderboards(arr)
-    else console.log(response.status+': '+ data.error)
+    else console.log(data.error)
   }catch(e){
     console.log(e)
     //alert(e.message)
@@ -75,7 +75,7 @@ async function getWorkout (workout_id, setUpdatedWorkout) {
     )
     let data = await response.json()
     if (response.ok) setUpdatedWorkout(data)
-    else console.log(response.status+': '+ data.error)
+    else console.log(data.error)
   }catch(e){
     console.log(e)
   }  

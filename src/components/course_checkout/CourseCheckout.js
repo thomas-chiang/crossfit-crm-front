@@ -1,11 +1,12 @@
 import moment from 'moment'
-import { CalendarContext } from '../../utils/reactContexts'
+import { CalendarContext, AppContext } from '../../utils/reactContexts'
 import { useContext, useState, useEffect }  from 'react'
 import Functions from './course_checkout_functions'
 import  { Navigate } from 'react-router-dom' // auth handler
 import {Paper, Typography, Card, Button, Divider, Box, TextField} from '@mui/material'
 
 function Component({id, role}) {
+  const setAlert =  useContext(AppContext).setAlert
 
   const calendarContext = useContext(CalendarContext)
   let courseInfo = calendarContext.arr.find(item => item.id === id)
@@ -14,6 +15,7 @@ function Component({id, role}) {
   const [auth, setAuth] = useState(true) // auth handler
   const [members, setMembers] = useState([])
   const [email, setEmail] = useState('')
+  const [disable, setDisable] = useState(false)
 
   useEffect(() => {
     courseInfo = calendarContext.arr.find(item => item.id === id)
@@ -25,7 +27,7 @@ function Component({id, role}) {
   
   if (!auth) return <Navigate to='/login'/> // auth handler
   return (
-    <Paper elevation={3} sx={{ p: 2, mb: 2}}>
+    <Paper elevation={5} sx={{ p: 2, mb: 2}}>
       <Box sx={{display: 'flex', justifyContent: 'space-between',  alignItems: 'baseline'}}>
         <Typography sx={{ display: 'inline' }} variant="h5" >ENROLL & CHECKOUT </Typography>
         <Box sx={{display: 'inline-flex'}}>
@@ -51,13 +53,13 @@ function Component({id, role}) {
               {member.enrollment == 1 ?
               <> 
                 {role >= 3 ? 
-                  <Button sx={{ m: 1}} size='small' variant='contained' onClick={()=>{Functions.checkoutMemberById(id, member.id, member.enrollment, setUpdate, setAuth, calendarContext)}}>checkout</Button>
+                  <Button disabled={disable} sx={{ m: 1}} size='small' variant='contained' onClick={()=>{Functions.checkoutMemberById(id, member.id, member.enrollment, setUpdate, setAuth, calendarContext, setDisable, setAlert)}}>checkout</Button>
                 : <></>}
-                <Button sx={{ my: 1}} size='small' color='secondary' variant='contained' onClick={()=>{Functions.quitMemberById(id, member.id, member.enrollment, setUpdate, setAuth, calendarContext)}}>quit</Button>
+                <Button disabled={disable} sx={{ my: 1}} size='small' color='secondary' variant='contained' onClick={()=>{Functions.quitMemberById(id, member.id, member.enrollment, setUpdate, setAuth, calendarContext, setDisable, setAlert)}}>quit</Button>
               </>
               : 
               <>
-                <Button sx={{ my: 1, bottom: 0}} size='small' variant='contained' onClick={()=>{Functions.enrollMemberByExistingUserId(id, member.id, setUpdate, setAuth, calendarContext)}} >enroll</Button>
+                <Button disabled={disable} sx={{ my: 1, bottom: 0}} size='small' variant='contained' onClick={()=>{Functions.enrollMemberByExistingUserId(id, member.id, setUpdate, setAuth, calendarContext, setDisable, setAlert)}} >enroll</Button>
               </>}
               </>
             : <>
@@ -69,7 +71,7 @@ function Component({id, role}) {
         <Card sx={{ p: 1, mr: 2, my: 1, display: 'flex',flexDirection: 'column', justifyContent: 'space-between' }}>
           <TextField size='small' type='email' label="email" variant="outlined" value={email} onChange={e=>setEmail(e.target.value)}/>
           <Box sx={{display: 'flex', justifyContent: 'right'}}>
-            <Button sx={{ my: 1, bottom: 0}} size='small' variant='contained' onClick={()=>{Functions.enrollMemberByEmail(id, email, setUpdate, setAuth, calendarContext)}} >enroll</Button>
+            <Button disabled={disable} sx={{ my: 1, bottom: 0}} size='small' variant='contained' onClick={()=>{Functions.enrollMemberByEmail(id, email, setUpdate, setAuth, calendarContext, setDisable, setAlert)}} >enroll</Button>
           </Box>
         </Card>
       </Box>

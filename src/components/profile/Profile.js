@@ -1,8 +1,6 @@
 import "react-pro-sidebar/dist/css/styles.css";
 import PersonalInfo from '../personal_info/PersonalInfo'
 import Sidebar from '../sidebar/Sidebar'
-import Gym from '../gym/Gym'
-import Coach from '../coach/Coach'
 import Calendar from '../calendar/Calendar'
 import CalendarCoach from '../calendar_coach/CalendarCoach'
 import Movement from '../movement/Movement'
@@ -35,8 +33,6 @@ function Component() {
       {section === 'points' ?  <Points role={role}/> : <></>}
       {section === 'movement' ?  <Movement /> : <></>}
       {section === 'workout' ?  <Workout /> : <></>}
-      {section === 'gym' ?  <Gym /> : <></>}
-      {section === 'coach' ?  <Coach /> : <></>}
       {section === 'member' ?  <Member /> : <></>}
       {section === 'calendar' ?  <Calendar /> : <></>}
       {section === 'performance' ?  <CalendarCoach /> : <></>}

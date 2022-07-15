@@ -18,7 +18,7 @@ async function getUserProfile (setUser, setAuth, appContext) {
     if (response.ok) {
       setUser(data)
     } else {
-      console.log(response.status+': '+ data.error)
+      console.log(data.error)
       localStorage.removeItem('jwtToken')
       setAuth(false)
       appContext.setUpdate(!appContext.update)
@@ -45,7 +45,7 @@ async function getOwnedGyms(setOwnedGyms) {
     )
     let data = await response.json()
     if (response.ok) setOwnedGyms(data)
-    else console.log(response.status+': '+ data.error)
+    else console.log(data.error)
   }catch(e){
     console.log(e)
   }

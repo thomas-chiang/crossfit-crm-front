@@ -42,7 +42,7 @@ function Component() {
  
   return (
     <Box sx={{p: 3}} > 
-      <Paper elevation={3} >
+      <Paper elevation={5} >
         <Box sx={{display: 'flex', flexWrap: 'wrap', justifyContent: 'center', pt: 1}}>
           <Typography sx={{flexBasis: '100%', textAlign: 'center', fontWeight: 'bold', my: 1}} variant='h4'>Leaderboard</Typography>
           <Box sx={{ mx: 1, mb: 2, width: 1/2}}>
@@ -51,13 +51,13 @@ function Component() {
         </Box>
         <Box sx={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center',}}>
           {leaderboards.length > 0 ? leaderboards.map((workout, index) =>
-            <Paper elevation={3} key={index} sx={{ m: 1, mb: 3, p: 1, width: 3/10 }}>
+            <Paper elevation={5} key={index} sx={{ m: 1, mb: 3, p: 1, width: 3/10 }}>
 
               <Box sx={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', m: 1}}>
                 <Button variant='contained' onClick={()=>(handleClickOpen(workout?.id))}>{workout?.name}</Button>
               </Box>
               <Dialog fullWidth	maxWidth={'xl'} open={open && workoutId == workout?.id} onClose={handleClose} sx={{ display: 'flex', justifyContent: 'center', height: 'auto' }}>
-                <Paper elevation={3} sx={{ p: 2, m: 2 }}>
+                <Paper elevation={5} sx={{ p: 2, m: 2 }}>
                   <Box sx={{display: 'flex',   alignItems: 'center'}}>
                     <Typography sx={{mr: 1,  width: 1/3 }} variant="h5" > {workout.name}: </Typography>
                     <TextField disabled={true} sx={{mr:1, mt:1, width: 100}} size='small' type='number' label="round" variant="outlined" value={workout?.round || ''}/>

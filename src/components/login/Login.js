@@ -1,8 +1,8 @@
-import { useState, useContext } from 'react'
+import { useState, useContext, useEffect } from 'react'
 import Functions from './login_functions';
 import { AppContext } from '../../utils/reactContexts'
 import  { useNavigate } from 'react-router-dom'
-import {Paper, Typography, Card, Button, Box, Radio, TextField} from '@mui/material'
+import {Paper, Typography, Card, Button, Box, Radio, TextField, Alert} from '@mui/material'
 
 
 function Component() {
@@ -14,13 +14,43 @@ function Component() {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [disable, setDisable] = useState(false)
+  
 
-  const navigate = useNavigate();
+
+
+  const navigate = useNavigate()
+
+  const [alert, setAlert] = useState(null)
+  useEffect(() => {
+    const timeId = setTimeout(() => setAlert(null), 2000)
+    return () => clearTimeout(timeId)   
+  }, [alert]);
+
  
 
   return (
     <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', mt: 10}}>
-      <Paper elevation={3} sx={{ height: 'auto', width: 'auto', p: 5 }}>
+      {alert ? 
+        <Alert 
+          severity="info" variant="filled"
+          sx={{
+            position: 'fixed', 
+            top: 10, 
+            right: 0, 
+            left: 0, 
+            mx: 'auto', 
+            width: alert.length*10, 
+            display: 'flex', 
+            justifyContent: 'center',
+            backgroundColor: 'gray'
+          }}
+        >
+          {alert}
+        </Alert>
+      : <></>}
+      
+      <Paper elevation={5} sx={{ height: 'auto', width: 'auto', p: 5 }}>
         <form style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
           {signUp 
             ?
@@ -37,19 +67,19 @@ function Component() {
           }
           
           <Box sx={{display: 'flex', alignItems: 'center'}}> 
-            <Radio checked={role == 1} onChange={e => setRole(e.target.value)} value={1} name="role"/><Typography variant="button"> member </Typography>
-            <Radio checked={role == 2} onChange={e => setRole(e.target.value)} value={2} name="role"/><Typography variant="button"> coach </Typography>
+            <Radio checked={role == 1} onChange={e => setRole(e.target.value)} value={1} name="role"/><Typography variant="button" sx={{mr: 2}}> member </Typography>
+            <Radio checked={role == 2} onChange={e => setRole(e.target.value)} value={2} name="role"/><Typography variant="button" sx={{mr: 2}}> coach </Typography>
             <Radio checked={role == 3} onChange={e => setRole(e.target.value)} value={3} name="role"/><Typography variant="button"> gym owner </Typography>
           </Box>
           <TextField sx={{m: 1}} size='small' type='email' label='Email' variant='outlined' value={email} onChange={e => setEmail(e.target.value)}></TextField>
           <TextField sx={{m: 1}} size='small' type='password' autoComplete="on" label='Password' variant='outlined' value={password} onChange={e => setPassword(e.target.value)}></TextField>
         </form>
         <Box sx={{display: 'flex', justifyContent: 'center'}} >
-          <Button sx={{m: 1}} variant='contained' type="button"
+          <Button sx={{m: 1}} variant='contained' type="button" disabled={disable}
             onClick={()=>{
               signUp 
-              ? Functions.handleSignUp(role, name, email, password, gender, appContext, navigate)
-              : Functions.handleSignIn(role, email, password, appContext, navigate)
+              ? Functions.handleSignUp(role, name, email, password, gender, appContext, navigate, setDisable, setAlert)
+              : Functions.handleSignIn(role, email, password, appContext, navigate, setDisable, setAlert)
             }} >{signUp ? 'Sign up' : 'Sign in'}
           </Button>  
         </Box>
@@ -58,7 +88,6 @@ function Component() {
         </Box>
       </Paper>
     </Box>
-    
   )
 }
 

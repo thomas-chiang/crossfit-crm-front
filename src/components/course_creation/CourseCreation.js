@@ -1,4 +1,4 @@
-import { CalendarContext } from '../../utils/reactContexts' 
+import { CalendarContext, AppContext } from '../../utils/reactContexts' 
 import { useContext, useState, useEffect }  from 'react'
 import Functions from './course_creation_functions'
 import  { Navigate } from 'react-router-dom' // auth handler
@@ -8,7 +8,10 @@ import moment from 'moment'
 
 function Component({id ,courseFromCalendar, obj}) {
 
+  const setAlert =  useContext(AppContext).setAlert
+
   const [auth, setAuth] = useState(true) // auth
+  const [disable, setDisable] = useState(false)
 
   const calendarContext = useContext(CalendarContext)
   const courseInfo = calendarContext.arr.find(item => item.id === id)
@@ -66,7 +69,7 @@ function Component({id ,courseFromCalendar, obj}) {
   
   if (!auth) return <Navigate to='/login'/> // auth
   return (
-    <Paper elevation={3} sx={{ p: 2, mb: 2 }}>
+    <Paper elevation={5} sx={{ p: 2, mb: 2 }}>
       <Box sx={{display: 'flex', justifyContent: 'space-between',  alignItems: 'baseline', mb: 1}}>
         <Typography sx={{ display: 'inline' }} variant="h5" >CREATE COURSE</Typography>
         <Box sx={{display: 'inline-flex'}}>
@@ -88,7 +91,7 @@ function Component({id ,courseFromCalendar, obj}) {
       <Box sx={{mb: 1}}><Select isMulti value={selectedWorkouts} onChange={setSelectedWorkouts} options={workouts} placeholder={'Select workouts'} /></Box>   
       <Box sx={{display: 'flex', mb: 1}}><TextareaAutosize placeholder="note" minRows={3} style={{ width: "100%" }} value={course.note} onChange={e => setCourse({...course, note: e.target.value}) }/></Box>
       <Box sx={{display: 'flex', justifyContent: 'right'}}>
-        <Button sx={{mr:1}} variant='contained' onClick={()=>{ Functions.handleCreateButton(course, courseFromCalendar, calendarContext, setAuth)}}>Create</Button>
+        <Button disabled={disable} sx={{mr:1}} variant='contained' onClick={()=>{ Functions.handleCreateButton(course, courseFromCalendar, calendarContext, setAuth, setDisable, setAlert)}}>Create</Button>
         <Button color='secondary' variant='contained' onClick={()=>Functions.cancel(id, calendarContext)}>Cancel</Button>
       </Box>
     </Paper> 

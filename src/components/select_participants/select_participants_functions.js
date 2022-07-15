@@ -25,7 +25,7 @@ async function getOwnedGyms(setOwnedGyms) {
     )
     let data = await response.json()
     if (response.ok) setOwnedGyms(data)
-    else console.log(response.status+': '+ data.error)
+    else console.log(data.error)
   }catch(e){
     console.log(e)
   }
@@ -44,7 +44,7 @@ async function getUsersByGymAndRole (setSelectedGymUsers, gym_id, role) {
     )
     let data = await response.json()
     if (response.ok) setSelectedGymUsers(data)
-    else console.log(response.status+': '+ data.error)
+    else console.log(data.error)
   }catch(e){
     console.log(e)
   }
@@ -72,7 +72,7 @@ async function addMember(gym_id, email, setUpdate, setAuth) {
     )
     let data = await response.json()
     if (response.ok) return setUpdate(Date())
-    else alert(response.status+': '+ data.error)
+    else alert(data.error)
   }catch(e){
     alert(e)
   }
@@ -96,7 +96,7 @@ async function deleteUserByGym(user_id, gym_id, setUpdate, setAuth) {
     )
     let data = await response.json()
     if (response.ok) return setUpdate(Date())
-    else alert(response.status+': '+ data.error)
+    else alert(data.error)
   }catch(e){
     alert(e)
   }

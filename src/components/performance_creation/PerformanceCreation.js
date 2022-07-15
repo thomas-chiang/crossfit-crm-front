@@ -1,8 +1,9 @@
-import { useState, useEffect }  from 'react'
+import { useState, useEffect, useContext }  from 'react'
 import  { Navigate } from 'react-router-dom' // auth handler
 import Functions from './performance_creation_functions'
 import React from 'react'
 import { Typography,  Button, Box, TextField} from '@mui/material'
+import {  AppContext } from '../../utils/reactContexts'
 
 
 
@@ -62,6 +63,7 @@ export default Component;
 
 
 function CreatePerformance({course_id, user_id, workout_id, setUpdate, movement, workoutPerformance, workout_movement_id}) {
+  const setAlert =  useContext(AppContext).setAlert
 
   const [auth, setAuth] = useState(true) // auth handler  
   const [performance, setPerformance] = useState({
@@ -79,6 +81,8 @@ function CreatePerformance({course_id, user_id, workout_id, setUpdate, movement,
     rep: movement.rep || '',
     cal: movement.cal || '',
   })
+  const [disable, setDisable] = useState(false)
+
 
   useEffect(() => {
     setPerformance({
@@ -106,15 +110,15 @@ function CreatePerformance({course_id, user_id, workout_id, setUpdate, movement,
   if (!auth) return <Navigate to='/login'/> // auth handler
   return (
     <Box sx={{display: 'flex', alignItems: 'stretch'}}> 
-      <Typography sx={{ width: 1/5, display: 'flex', alignItems: 'center', justifyContent: 'right', mr: 1}}>{movement.name}</Typography>
+      <Typography sx={{ width: 1/3, display: 'flex', alignItems: 'center', justifyContent: 'right', mr: 1}}>{movement.name}</Typography>
       <TextField  sx={{mr:1, mt:1, width: 100}} size='small' type='number' label="kg" variant="outlined" value={performance.kg} onChange={e=>{setPerformance({...performance, kg: e.target.value})}}/>
       <TextField  sx={{mr:1, mt:1, width: 100}} size='small' type='number' label="rep" variant="outlined" value={performance.rep} onChange={e=>{setPerformance({...performance, rep: e.target.value})}}/>
       <TextField  sx={{mr:1, mt:1, width: 100}} size='small' type='number' label="meter" variant="outlined" value={performance.meter} onChange={e=>{setPerformance({...performance, meter: e.target.value})}}/>
       <TextField  sx={{mr:1, mt:1, width: 100}} size='small' type='number' label="cal" variant="outlined" value={performance.cal} onChange={e=>{setPerformance({...performance, cal: e.target.value})}}/>
      {/*  <TextField  sx={{mr:1, mt:1, width: 100}} size='small' type='number' label="sec" variant="outlined" value={performance.sec} onChange={e=>{setPerformance({...performance, sec: e.target.value})}}/> */}
-      <Button sx={{ mr: 1, mt:1, width: 200}} size='small' type=''variant="contained" 
-        onClick={()=>{Functions.createPerformance(performance, setAuth, setUpdate)}}
-        disabled={!workoutPerformance.round && !workoutPerformance.extra_count && !workoutPerformance.minute && !workoutPerformance.extra_sec}
+      <Button sx={{ mr: 1, mt:1, width: 250}} size='small' type=''variant="contained" 
+        onClick={()=>{Functions.createPerformance(performance, setAuth, setUpdate, setDisable, setAlert)}}
+        disabled={(!workoutPerformance.round && !workoutPerformance.extra_count && !workoutPerformance.minute && !workoutPerformance.extra_sec) || disable}
       >create performance</Button>
     </Box>
   );

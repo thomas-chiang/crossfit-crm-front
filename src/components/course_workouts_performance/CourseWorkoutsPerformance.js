@@ -26,10 +26,10 @@ function Component({
 
   return (
     <Box >
-      <Paper elevation={3} sx={{ p:2, my:1}}>
+      <Paper elevation={5} sx={{ p:2, my:1}}>
         <Select isMulti defaultValue={selectedWorkouts} onChange={setSelectedWorkouts} options={workouts} menuPortalTarget={document.body}  styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}/>
         {selectedWorkouts?.map((workout, index) =>
-          <Paper elevation={3} key={index} sx={{p:1, my: 1}}>
+          <Paper elevation={5} key={index} sx={{p:1, my: 1}}>
             < PerformanceCreation 
               setUpdate={setUpdate}
               course_id={course_id}
@@ -42,7 +42,7 @@ function Component({
 
       {performances.length > 0 
       ? 
-        <Paper elevation={3} sx={{ p:2, my:1}}>
+        <Paper elevation={5} sx={{ p:2, my:1}}>
         <Typography >Performances: </Typography>
         {performances.map((performance, index) =>
           <Box key={index}>

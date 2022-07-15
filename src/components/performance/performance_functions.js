@@ -14,7 +14,7 @@ async function getPerformanceWithMovementWorkoutName (performance, setUpdatedPer
     )
     let data = await response.json()
     if (response.ok) setUpdatedPerformance(data)
-    else alert(response.status+': '+ data.error)
+    else alert(data.error)
   }catch(e){
     alert(e.message)
   }
@@ -22,7 +22,8 @@ async function getPerformanceWithMovementWorkoutName (performance, setUpdatedPer
 
 
 
-async function deletePerformance(performance, setAuth, setUpdate) {
+async function deletePerformance(performance, setAuth, setUpdate, setDisable, setAlert) {
+  setDisable(true)
   try {
     if(!await utilsFunctions.auth()) return setAuth(false)
     
@@ -40,18 +41,20 @@ async function deletePerformance(performance, setAuth, setUpdate) {
     )
     if (response.ok) {
       setUpdate(Date())
-      alert('Deleted successfully')
+      setAlert('Deleted successfully')
     } else {
       let data = await response.json()
-      alert(response.status+': '+ data.error)
+      setAlert(data.error)
     }
   } catch (e) {
-    alert(e.message)
-  }  
+    setAlert(e.message)
+  }
+  setDisable(false)  
 }
 
 
-async function updatePerformance(performance, setAuth, setUpdate) {
+async function updatePerformance(performance, setAuth, setUpdate, setDisable, setAlert) {
+  setDisable(true)
   delete performance.workout_name
   try {
     if(!await utilsFunctions.auth()) return setAuth(false)
@@ -70,12 +73,13 @@ async function updatePerformance(performance, setAuth, setUpdate) {
     )
     if (response.ok) {
       setUpdate(Date())
-      alert('Updated successfully')
+      setAlert('Updated successfully')
     } else {
       let data = await response.json()
-      alert(response.status+': '+ data.error)
+      setAlert(data.error)
     }
   } catch (e) {
-    alert(e.message)
-  }  
+    setAlert(e.message)
+  }
+  setDisable(false)  
 }

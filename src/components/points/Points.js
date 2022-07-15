@@ -37,7 +37,7 @@ function Component({role}) {
 
 
   return (
-    <Paper elevation={3}  sx={{m: 3, display: 'flex', alignItems: 'stretch', width: '100%'}}>
+    <Paper elevation={5}  sx={{m: 3, display: 'flex', alignItems: 'stretch', width: '100%'}}>
       <Box sx={{ pb: role == 3 ? 8 : 2, width: '100%'}} >
 
         {role == 3 ? 
