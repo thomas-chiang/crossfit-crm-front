@@ -99,19 +99,19 @@ function Component() {
                   </Box>
             </Paper>
             {movementArr.map((movement, index)=> 
-              <Paper key={index} elevation={5} sx={{ m: 1, mb: 3, p: 1, width: 'auto' }}>
+              <Paper key={index} elevation={5} sx={{ m: 1, mb: 3, p: 1, width: 'auto', display: 'flex', flexDirection: 'column', alignItems: 'center',}}>
                 {movement.name}
                 { movement.demo_link ? 
-                  <Box sx={{flexBasis: '100%'}} >
+                  <Box sx={{ height: 100, width: 125, display: 'flex', alignItems: 'center', justifyContent: 'center', }} >
                       <CardMedia
-                        sx={{ mb: 0.5}}
+                        sx={{ flexGrow: 1}}
                         component="img"
-                        height="100"
+                        width="100"
                         image={`https://img.youtube.com/vi/${movement.youtube_id}/0.jpg`}
                       />
                   </Box>  
                   : 
-                  <Box sx={{border: '1px solid', borderRadius: '5px', textAlign: 'center', height: 100, flexBasis: '100%'}}>
+                  <Box sx={{ textAlign: 'center', height: 100, flexBasis: '100%'}}>
                     <Box sx={{m:1, fontWeight: 'bold'}}> Standard:</Box>
                     {workoutWithMovements?.round ? <Box sx={{m:1}}> {workoutWithMovements?.round} round(s)</Box> : <></> }
                     {workoutWithMovements?.extra_count ? <Box sx={{m:1}}> {workoutWithMovements?.extra_count} extra count(s)</Box> : <></> }
@@ -119,7 +119,9 @@ function Component() {
                     {workoutWithMovements?.extra_sec ? <Box sx={{m:1}}> {workoutWithMovements?.extra_sec} extra sec(s)</Box> : <></> }
                   </Box>
                 }
-                <AnalysisBar barData={movement.barData}/>
+                <Box >
+                  <AnalysisBar barData={movement.barData}/>
+                </Box> 
               </Paper>
             )}
           </>
