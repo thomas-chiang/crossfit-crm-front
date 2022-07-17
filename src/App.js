@@ -53,7 +53,8 @@ function App() {
             width: alert.length*10, 
             display: 'flex', 
             justifyContent: 'center',
-            backgroundColor: 'gray'
+            backgroundColor: 'gray',
+            zIndex: 10000
           }}
         >
           {alert}

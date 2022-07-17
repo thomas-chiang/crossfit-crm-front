@@ -25,7 +25,13 @@ export default function Aside({setSection, role}) {
           </> : <></>}
 
 
+          {role >= 3 
+          ? <>
+            <MenuItem onClick={() =>setSection('member') }>Manage Users</MenuItem>
+          </> : <></>}
           
+
+          <MenuItem onClick={() =>setSection('points') }>View Point Histories</MenuItem>
 
           {role >= 2 
           ? <>
@@ -41,13 +47,7 @@ export default function Aside({setSection, role}) {
             <MenuItem onClick={() =>setSection('calendar') }>Update Courses</MenuItem>
           </> : <></>}
 
-          {role >= 3 
-          ? <>
-            <MenuItem onClick={() =>setSection('member') }>Manage Users</MenuItem>
-          </> : <></>}
           
-
-          <MenuItem onClick={() =>setSection('points') }>View Point Histories</MenuItem>
                  
         </Menu>
       </SidebarContent>

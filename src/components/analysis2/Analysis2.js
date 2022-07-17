@@ -40,7 +40,7 @@ function Component() {
     if(selectedMember && selectedWorkout && distinctMovements) Functions.getPerformanceByWorkout(selectedMember.id, selectedWorkout.workout_id, distinctMovements, setMovementArr)
   },[distinctMovements]) 
 
-  console.log(distinctMovements)
+  console.log(movementArr)
 
  
   return (
@@ -64,7 +64,7 @@ function Component() {
           
           {movementArr ?
           <> 
-            <Paper elevation={5} sx={{  m: 1, mb: 3, p: 1, }}>
+            <Paper elevation={5} sx={{  m: 1, mb: 3, p: 1, display: 'flex', flexDirection: 'column'}}>
               <Box sx={{display: 'flex',   alignItems: 'center'}}>
                 <Box sx={{m:1, fontWeight: 'bold'}}> {workoutWithMovements?.name || ''}:</Box>
                 {workoutWithMovements?.round ? <Box sx={{m:1}}> {workoutWithMovements?.round} round(s)</Box> : <></> }
@@ -94,13 +94,31 @@ function Component() {
                     </Box>
                   </Box>
                   <Divider sx={{mt: 1}}/>
-              <Box sx={{flexGrow: 1, display: "flex", alignItems: 'center', mt:1}}>
-                <TextareaAutosize minRows={1.9} disabled={true} placeholder="workout note" style={{ width: "100%" }} value={workoutWithMovements?.note || ''} />
-              </Box>
+                  <Box sx={{ display: 'flex', flexDirection: 'column', flexGrow: 1}}>
+                    <TextareaAutosize disabled={true} placeholder="workout note" style={{ margin: 8, flexGrow: 1,  height: '100%' }} minRows={3} value={workoutWithMovements.note || ''} />
+                  </Box>
             </Paper>
             {movementArr.map((movement, index)=> 
               <Paper key={index} elevation={5} sx={{ m: 1, mb: 3, p: 1, width: 'auto' }}>
                 {movement.name}
+                { movement.demo_link ? 
+                  <Box sx={{flexBasis: '100%'}} >
+                      <CardMedia
+                        sx={{ mb: 0.5}}
+                        component="img"
+                        height="100"
+                        image={`https://img.youtube.com/vi/${movement.youtube_id}/0.jpg`}
+                      />
+                  </Box>  
+                  : 
+                  <Box sx={{border: '1px solid', borderRadius: '5px', textAlign: 'center', height: 100, flexBasis: '100%'}}>
+                    <Box sx={{m:1, fontWeight: 'bold'}}> Standard:</Box>
+                    {workoutWithMovements?.round ? <Box sx={{m:1}}> {workoutWithMovements?.round} round(s)</Box> : <></> }
+                    {workoutWithMovements?.extra_count ? <Box sx={{m:1}}> {workoutWithMovements?.extra_count} extra count(s)</Box> : <></> }
+                    {workoutWithMovements?.minute ? <Box sx={{m:1}}> {workoutWithMovements?.minute} minute(s)</Box> : <></> }
+                    {workoutWithMovements?.extra_sec ? <Box sx={{m:1}}> {workoutWithMovements?.extra_sec} extra sec(s)</Box> : <></> }
+                  </Box>
+                }
                 <AnalysisBar barData={movement.barData}/>
               </Paper>
             )}

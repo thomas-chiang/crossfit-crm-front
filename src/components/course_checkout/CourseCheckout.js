@@ -69,7 +69,7 @@ function Component({id, role}) {
               </>}
               </>
             : <>
-              <Button disabled={true} sx={{ m: 1}} size='small' variant='contained' >checked out</Button>
+              <Button disabled={true} sx={{ m: 1}} size='small' variant='contained' color='secondary' >checked out</Button>
             </>}
             
           </Box>

@@ -43,13 +43,13 @@ function Component() {
           <Link  style={linkStyle} to="/workout">WORKOUTS</Link>
         </ListItem>
         <ListItem  >
+          <Link style={{...linkStyle, width: 160, textAlign: 'center'}} to="/calendar">COURSE CALENDAR</Link>
+        </ListItem>
+        <ListItem  >
           <Link  style={linkStyle} to="/analysis">ANALYSIS</Link>
         </ListItem>
         <ListItem  >
           <Link  style={linkStyle} to="/leaderboard">LEADERBOARD</Link>
-        </ListItem>
-        <ListItem  >
-          <Link style={{...linkStyle, width: 160, textAlign: 'center'}} to="/calendar">COURSE CALENDAR</Link>
         </ListItem>
         { 
           user ? 
