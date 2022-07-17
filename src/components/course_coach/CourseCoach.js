@@ -29,10 +29,10 @@ function Component({id}) {
   return (
     <Paper elevation={5} sx={{ p: 2, mb: 2 }}>
       <Box sx={{display: 'flex', justifyContent: 'space-between',  alignItems: 'baseline'}}>
-        <Typography sx={{ display: 'inline' }} variant="h5" >RECORD PERFORMANCE </Typography>
+        <Typography sx={{ display: 'inline' }} variant="h5" >{courseInfo.title} </Typography>
         <Box sx={{display: 'inline-flex'}}>
-          <Typography  variant="subtitle2" >{courseInfo.title} </Typography>
-          <Divider orientation="vertical" flexItem sx={{ mx: 1 }}/>
+          {/* <Typography  variant="subtitle2" >{courseInfo.title} </Typography>
+          <Divider orientation="vertical" flexItem sx={{ mx: 1 }}/> */}
           <Typography  variant="subtitle2" >Coaches: </Typography> 
           {courseInfo.coaches?.map((coach, index) => <Typography  key={index} variant="subtitle2">&nbsp;<i>{coach.name}{index !== courseInfo.coaches.length -1 ? ',' : ''}</i></Typography> )}
           <Divider orientation="vertical" flexItem sx={{ mx: 1 }}/>

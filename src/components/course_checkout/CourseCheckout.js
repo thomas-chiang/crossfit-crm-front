@@ -4,6 +4,8 @@ import { useContext, useState, useEffect }  from 'react'
 import Functions from './course_checkout_functions'
 import  { Navigate } from 'react-router-dom' // auth handler
 import {Paper, Typography, Card, Button, Divider, Box, TextField} from '@mui/material'
+import UserPoints from '../user_points/UserPoints'
+
 
 function Component({id, role}) {
   const setAlert =  useContext(AppContext).setAlert
@@ -29,10 +31,10 @@ function Component({id, role}) {
   return (
     <Paper elevation={5} sx={{ p: 2, mb: 2}}>
       <Box sx={{display: 'flex', justifyContent: 'space-between',  alignItems: 'baseline'}}>
-        <Typography sx={{ display: 'inline' }} variant="h5" >ENROLL & CHECKOUT </Typography>
+        <Typography sx={{ display: 'inline' }} variant="h5" >{courseInfo.title} </Typography>
         <Box sx={{display: 'inline-flex'}}>
-          <Typography  variant="subtitle2" >{courseInfo.title} </Typography>
-          <Divider orientation="vertical" flexItem sx={{ mx: 1 }}/>
+          {/* <Typography  variant="subtitle2" >{courseInfo.title} </Typography>
+          <Divider orientation="vertical" flexItem sx={{ mx: 1 }}/> */}
           <Typography  variant="subtitle2" >Coaches: </Typography> 
           {courseInfo.coaches?.map((coach, index) => <Typography key={index} variant="subtitle2">&nbsp;<i>{coach.name}{index !== courseInfo.coaches.length -1 ? ',' : ''}</i></Typography> )}
           <Divider orientation="vertical" flexItem sx={{ mx: 1 }}/>
@@ -44,8 +46,12 @@ function Component({id, role}) {
         </Box> 
       </Box> 
       <Box sx={{display: 'flex', alignItems: 'stretch', flexWrap: 'wrap'}}>
-        {members.map((member, index) => <Card key={index} sx={{ p: 1, mr: 2, my: 1 }}>
-          <Typography sx={{ m: 1}} variant="subtitle1" >{member.name}</Typography>
+        {members.map((member, index) => 
+        <Card key={index} sx={{ p: 1, mr: 2, my: 1 }}>
+          <Box sx={{ display: 'flex', justifyContent: 'space-between'}}>
+            <Typography sx={{ m: 1}} variant="subtitle1" >{member.name}</Typography>
+            <UserPoints member={member} /> 
+          </Box> 
           <Typography sx={{ m: 1}} variant="subtitle1" >Status: <i>{member.enrollment == 1 ? 'enrolled' : member.enrollment > 1 ? 'waiting' : 'canceled'}</i></Typography>
           <Box sx={{display: 'flex', justifyContent: 'right'}}>
             {member.checkout === 0 

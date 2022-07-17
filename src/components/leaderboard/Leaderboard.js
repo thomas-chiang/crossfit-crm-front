@@ -51,7 +51,7 @@ function Component() {
       <Paper elevation={5} >
         <Box sx={{display: 'flex', flexWrap: 'wrap', justifyContent: 'center', pt: 1}}>
           <Typography sx={{flexBasis: '100%', textAlign: 'center', fontWeight: 'bold', my: 1}} variant='h4'>Leaderboard</Typography>
-          <Box sx={{ mx: 1, mb: 2, width: 1/2}}>
+          <Box sx={{ mx: 1, mb: 2, width: 800}}>
             <Select isMulti placeholder={'Select workouts'} defaultValue={selectedWorkouts} onChange={setSelectedWorkouts} options={workouts}/>
           </Box>
         </Box>
@@ -60,7 +60,9 @@ function Component() {
             <Paper elevation={5} key={index} sx={{ m: 1, mb: 3, p: 1, width: 3/10 }}>
 
               <Box sx={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', m: 1}}>
-                <Button variant='contained' onClick={()=>(handleClickOpen(workout?.id))}>{workout?.name}</Button>
+                <Button variant='contained' onClick={()=>(handleClickOpen(workout?.id))} sx={{textTransform: 'none'}}>
+                  {workout?.name} - Detailed Information
+                </Button>
               </Box>
               <Dialog fullWidth	maxWidth={'xl'} open={open && workoutId == workout?.id} onClose={handleClose} sx={{ display: 'flex', justifyContent: 'center', height: 'auto' }}>
                 <Paper elevation={5} sx={{ p: 2, m: 2 }}>
@@ -93,7 +95,7 @@ function Component() {
                   </Box>
                   <Divider sx={{mt: 1}}/>
                   <Box sx={{flexGrow: 1, display: "flex", alignItems: 'center', mt:1}}>
-                    <TextareaAutosize minRows={1.9} disabled={true} placeholder="note" style={{ width: "100%" }} value={workout?.note || ''} />
+                    <TextareaAutosize minRows={1.9} disabled={true} placeholder="workout note" style={{ width: "100%" }} value={workout?.note || ''} />
                   </Box>
                   <Divider sx={{mt: 1}}/>
                   {workout.leaders.length > 0 ? 
@@ -101,7 +103,7 @@ function Component() {
 
                   <Box sx={{display: "flex", /* flexDirection: 'column' flexWrap: 'wrap', alignItems: 'center' */}}> 
                     {/* <Box sx={{mt: 1, mr: 1, width: 1}}>Top 10:</Box> */}
-                    <Button variant='contained' onClick={()=>setShow(true)} sx={{mt: 1, mr: 1}}>Top 10</Button>
+                    <Button variant='contained' onClick={()=>setShow(!show)} sx={{mt: 1, mr: 1, display: 'flex', height: 82, width: 95}}>Top 10 Athletes</Button>
                     {show ? 
                       workout.leaders.map((leader, index)=> 
                           <Leader leader={leader} key={index} workoutWithMovements={workoutWithMovements} workout={workout} />

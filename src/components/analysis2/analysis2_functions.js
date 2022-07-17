@@ -8,9 +8,25 @@ const Functions = {
   getUserWorkouts,
   getDistinctWorkoutMovements,
   getPerformanceByWorkoutMovement,
-  getPerformanceByWorkout
+  getPerformanceByWorkout,
+  getWorkoutsWithMovements
 }
 export default Functions
+
+
+
+async function getWorkoutsWithMovements (workout_id, setWorkoutWithMovements) {
+  try{
+    const response = await fetch (
+      process.env.REACT_APP_API_URL+`workout/workout/${workout_id}`,
+    )
+    let data = await response.json()
+    if (response.ok) setWorkoutWithMovements(data)
+    else console.log(data.error)
+  }catch(e){
+    console.log(e)
+  }  
+}
 
 
 async function getMovements(setMovements) {
@@ -77,7 +93,7 @@ async function getPerformanceByMovement(user_id, movement_id, setLineDate) {
       process.env.REACT_APP_API_URL+`performance/movement?user_id=${user_id}&movement_id=${movement_id}`
     )
     let data = await response.json()
-    if (response.ok) setLineDate(generateLineData(data))
+    if (response.ok) setLineDate(generateBarData(data))
     else alert(data.error)
   }catch(e){
     console.log(e)
@@ -93,7 +109,7 @@ async function getPerformanceByWorkoutMovement (user_id, workout_id ,movement_id
       process.env.REACT_APP_API_URL+`performance/workoutmovement?user_id=${user_id}&workout_id=${workout_id}&movement_id=${movement_id}`
     )
     let data = await response.json()
-    if (response.ok) setLineDate(generateLineData(data))
+    if (response.ok) setLineDate(generateBarData(data))
     else alert(data.error)
   }catch(e){
     console.log(e)
@@ -126,10 +142,10 @@ async function getUsersByRole(role_level, setCoaches) {
 
 
 
-async function getPerformanceByWorkout (user_id, workout_id, workoutMovements, setMovementArr) {
+async function getPerformanceByWorkout (user_id, workout_id, distinctMovements, setMovementArr) {
   try{
     let reqQuery = ''
-    for (let movement of workoutMovements) {
+    for (let movement of distinctMovements) {
       reqQuery += `movement_ids=${movement.movement_id}&`
     }
     const response = await fetch (
@@ -139,13 +155,15 @@ async function getPerformanceByWorkout (user_id, workout_id, workoutMovements, s
 
     let minLength = data[0].length
     let minIndex = 0
+    let updatedDistinctMovements = []
+    for (let movement of distinctMovements) updatedDistinctMovements.push(movement)
     if (response.ok) {
-      for (let [index, movmemnt] of workoutMovements.entries()) {
+      for (let [index, movmemnt] of updatedDistinctMovements.entries()) {
 
         minLength = Math.min(data[index].length, minLength)
         if(data[minIndex].length > minLength) minIndex = index
 
-        movmemnt.barData = generateLineData(data[index])
+        movmemnt.barData = generateBarData(data[index])
       }
 
       let round = {
@@ -153,11 +171,11 @@ async function getPerformanceByWorkout (user_id, workout_id, workoutMovements, s
         barData: generateRoundData(data[minIndex])
       }
 
-      workoutMovements.unshift(round)
-      console.log(minLength)
-      console.log(minIndex)
+      updatedDistinctMovements.unshift(round)
+      //console.log(minLength)
+      //console.log(minIndex)
 
-      setMovementArr(workoutMovements)
+      setMovementArr(updatedDistinctMovements)
     } else alert(data.error)
     
   }catch(e){
@@ -183,7 +201,7 @@ function generateRoundData (data) {
     },
   ]
   for (let item of data) {
-    labels.push(`${moment(item.start).local().format('YYYY/MM/DD')}`)
+    labels.push(`${moment(item.start).local().format('YY/MM/DD')}`)
     datasets[0].data.push(item.round === 0 ? null : item.round)
     datasets[1].data.push(item.minute === 0 ? null : item.minute)
   }
@@ -193,7 +211,7 @@ function generateRoundData (data) {
 
 
 
-function generateLineData (data) {
+function generateBarData (data) {
   let labels = []
   let datasets = [
     {
@@ -222,7 +240,7 @@ function generateLineData (data) {
     },
   ]
   for (let item of data) {
-    labels.push(`${moment(item.start).local().format('YYYY/MM/DD')}`)
+    labels.push(`${moment(item.start).local().format('YY/MM/DD')}`)
     if(item.kg > 0) datasets[0].data.push(item.kg === 0 ? null : item.kg)
     if(item.rep > 0) datasets[1].data.push(item.rep === 0 ? null : item.rep)
     if(item.meter > 0) datasets[2].data.push(item.meter === 0 ? null : item.meter)
@@ -236,6 +254,6 @@ function generateLineData (data) {
   
   datasets = updatedDatasets
 
-  let lineData = {labels, datasets}
-  return lineData
+  let barData = {labels, datasets}
+  return barData
 }

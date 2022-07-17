@@ -56,7 +56,7 @@ function Component({workout, movementOptions, passDownUpdate, setPassDownUpdate}
 
   if (!auth) return <Navigate to='/login'/> // auth handler
   return (
-    <Paper elevation={5} sx={{ p: 1, m: 1 }}>
+    <Paper elevation={5} sx={{ p: 1, m: 1, display: 'flex', flexDirection: 'column'}}>
       <Box sx={{ display: 'flex', alignItems: 'center'}}>
         <Box sx={{m:1, fontWeight: 'bold'}}> {updatingWorkout.name || ''}:</Box>
         {updatingWorkout.round ? <Box sx={{m:1}}> {updatingWorkout.round} round(s)</Box> : <></> }
@@ -89,8 +89,8 @@ function Component({workout, movementOptions, passDownUpdate, setPassDownUpdate}
         </Box>
       </Box>
       <Divider/>
-      <Box sx={{ display: 'flex'}}>
-          <TextareaAutosize disabled={true} placeholder="note" style={{ margin: 8, flexGrow: 1}} minRows={3} value={updatingWorkout.note || ''} onChange={e => setUpdatingWorkout({...updatingWorkout, note: e.target.value})}/>
+      <Box sx={{ display: 'flex', flexDirection: 'column', flexGrow: 1}}>
+        <TextareaAutosize disabled={true} placeholder="workout note" style={{ margin: 8, flexGrow: 1,  height: '100%' }} minRows={3} value={updatingWorkout.note || ''} onChange={e => setUpdatingWorkout({...updatingWorkout, note: e.target.value})}/>
       </Box>
     </Paper>
     

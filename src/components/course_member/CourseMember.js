@@ -4,6 +4,8 @@ import { useContext, useState, useEffect }  from 'react'
 import Functions from './course_member_functions'
 import  { Navigate } from 'react-router-dom' // auth handler
 import {Paper, Typography, Card, Button, Divider, Box, CardMedia, TextareaAutosize, Dialog} from '@mui/material'
+import CourseWorkout from '../course_workout/CourseWorkout'
+import UserPoints from '../user_points/UserPoints'
 
 
 function Component({id}) {
@@ -15,6 +17,13 @@ function Component({id}) {
   const [auth, setAuth] = useState(true) // auth handler
   const [disable, setDisable] = useState(false)
   const [distinctMovements, setDistinctMovements] = useState([])
+  const [user, setUser] = useState(null)
+
+  useEffect(() => {
+    Functions.getUser(setUser)
+  },[])
+
+  
 
   useEffect(() => {
     courseInfo = calendarContext.arr.find(item => item.id === id)
@@ -36,6 +45,10 @@ function Component({id}) {
     Functions.getDistinctWorkoutMovements(workoutId, setDistinctMovements)
   },[workoutId])
 
+  let isExpired = new Date().getTime() > new Date(courseInfo.start).getTime()
+
+  console.log(user)
+  console.log(courseInfo.members)
 
   if (!auth) return <Navigate to='/login'/> // auth handler
   return (
@@ -53,9 +66,11 @@ function Component({id}) {
           <Typography  variant="subtitle2" >Point: <i>{courseInfo.point}</i></Typography>
         </Box> 
       </Box>
-      <Box sx={{display: 'flex', alignItems: 'center', flexWrap: 'wrap', my: 1}}>
-        {courseInfo.workouts?.map((workout, index) => <Box key={index}>
-          <Button variant="contained" sx={{ mr:1}}  onClick={()=>(handleClickOpen(workout.id))} > {workout.name}</Button>
+      <Box sx={{display: 'flex', alignItems: 'stretch', flexWrap: 'wrap', my: 1}}>
+        {courseInfo.workouts?.map((workout, index) => 
+        <Box key={index}>
+          <CourseWorkout workout={workout} />    
+          {/* <Button variant="contained" sx={{ mr:1}}  onClick={()=>(handleClickOpen(workout.id))} > {workout.name}</Button>
           <Dialog fullWidth	maxWidth={'xl'} open={open && workoutId == workout.id} onClose={handleClose} sx={{ display: 'flex', justifyContent: 'center', height: 'auto' }}>
             <Paper elevation={5} sx={{ p: 2, m: 2 }}>
               <Box sx={{display: 'flex',   alignItems: 'center'}}>
@@ -87,38 +102,33 @@ function Component({id}) {
                     </Box>
                   </Box>
                   <Divider sx={{mt: 1}}/>
-              {/* {workoutWithMovements?.movements.map((movement, index)=>
-              <Box key={index} sx={{display: 'flex', alignItems: 'stretch'}}> 
-                <Box sx={{m:1, width: 150, textAlign: 'end'}}>{movement.name}:</Box>
-                {movement.kg ? <Box sx={{m:1}}>{movement.kg} kg(s)</Box> : <></>}
-                {movement.rep ? <Box sx={{m:1}}>{movement.rep} rep(s)</Box> : <></>}
-                {movement.meter ? <Box sx={{m:1}}>{movement.meter} meter(s)</Box> : <></>}
-                {movement.cal ? <Box sx={{m:1}}>{movement.cal} cal(s)</Box> : <></>}  
-              </Box>
-              )} */}
               <Box sx={{flexGrow: 1, display: "flex", alignItems: 'center', mt:1}}>
-                <TextareaAutosize minRows={1.9} disabled={true} placeholder="note" style={{ width: "100%" }} value={workout.note || ''} />
+                <TextareaAutosize minRows={1.9} disabled={true} placeholder="workout note" style={{ width: "100%" }} value={workout.note || ''} />
               </Box>
               <Box sx={{display: 'flex', justifyContent: 'right', mt:1}}>
                 <Button color='secondary' variant='contained' onClick={handleClose}>Cancel</Button>
               </Box>
             </Paper>
-          </Dialog>
+          </Dialog> */}
         </Box> )}
-        <Box sx={{flexGrow: 1, display: "flex", alignItems: 'center'}}>
-          <TextareaAutosize minRows={1.9} disabled={true} placeholder="note" style={{ width: "100%" }} value={courseInfo.note} />
+        <Box sx={{flexGrow: 1, display: "flex", alignItems: 'center', mt: 1, mb: 2}}>
+          <TextareaAutosize minRows={1.9} disabled={true} placeholder="course note" style={{ width: "100%", height: '100%' }} value={courseInfo.note} />
         </Box>
       </Box>
       <Box sx={{display: 'flex', alignItems: 'stretch', flexWrap: 'wrap'}}>
-        {courseInfo.members?.map((member, index) => <Card key={index} sx={{ p: 1, mr: 1, mt: 1 }}>
-          <Typography sx={{ m: 1}} variant="subtitle1" >{member.name}</Typography>
+        {courseInfo.members?.map((member, index) => 
+        <Card key={index} sx={{ p: 1, mr: 1, mt: 1 }}>
+          <Box sx={{ display: 'flex', justifyContent: 'space-between'}}>
+            <Typography sx={{ m: 1}} variant="subtitle1" >{member.name}</Typography>
+            {user?.id == member?.id ? <UserPoints member={member} /> : <></> }
+          </Box> 
           <Typography sx={{ m: 1}} variant="subtitle1" >Status:<i> {member.enrollment == 1 ? 'enrolled' : member.enrollment > 1 ? 'waiting' : 'canceled'}</i></Typography>
         </Card>      
         )}
       </Box>
       <Box sx={{display: 'flex', justifyContent: 'right', mt: 1}}>
-        <Button disabled={disable} sx={{mr:1}} variant='contained' onClick={()=>Functions.handleEnrollButton(id, calendarContext, setAuth, setDisable, setAlert)}>Enroll</Button>
-        <Button disabled={disable} sx={{mr:1}} color='secondary' variant='contained' onClick={()=>Functions.handleQuitButton(id, calendarContext, setAuth, setDisable, setAlert)}>Quit</Button>
+        <Button disabled={disable || isExpired} sx={{mr:1}} variant='contained' onClick={()=>Functions.handleEnrollButton(id, calendarContext, setAuth, setDisable, setAlert)}>Enroll</Button>
+        <Button disabled={disable || isExpired} sx={{mr:1}} color='secondary' variant='contained' onClick={()=>Functions.handleQuitButton(id, calendarContext, setAuth, setDisable, setAlert)}>Quit</Button>
         <Button color='secondary' variant='contained' onClick={()=>Functions.handleCancelButton(id, calendarContext)}>Cancel</Button>
       </Box>
     </Paper> 

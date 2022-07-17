@@ -71,7 +71,7 @@ function Component() {
 
   if (!auth) return <Navigate to='/login'/> // auth handler
   return (
-    <Box sx={{m: 3,mb: 0, display: 'flex', flexWrap: 'wrap', alignItems: 'start'}}>
+    <Box sx={{m: 3,mb: 0, display: 'flex', flexWrap: 'wrap', alignItems: 'stretch'}}>
       {workouts.map((workout, index)=>
         <PublicWorkout key={index} movementOptions={movementOptions} workout={workout} setPassDownUpdate={setPassDownUpdate} passDownUpdate={passDownUpdate}/>
       )}

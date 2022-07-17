@@ -64,6 +64,7 @@ function Component () {
       <CalendarContext.Provider value={contextValue}>
           {arr.length > 0 ? arr.map((courseFromCalendar, index)=> <CourseCreation key={index} obj={obj} id={courseFromCalendar.id} courseFromCalendar={courseFromCalendar} />) : <></>}
           {/* {newCalendarEvent ? <CourseCreation setUpdateCalendar={setUpdateCalendar}/> : <></>} */} 
+        <Box sx={{cursor: 'pointer'}}>
         <FullCalendar
           dayMaxEventRows= {5}
           eventMaxStack= {5}
@@ -92,7 +93,8 @@ function Component () {
           allDaySlot={false}
           eventDisplay={'block'}
           height= {'auto'}
-        />     
+        />
+        </Box>     
       </CalendarContext.Provider>
       </Paper>  
     </Box> 

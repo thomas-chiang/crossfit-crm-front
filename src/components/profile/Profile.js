@@ -25,7 +25,7 @@ function Component() {
   })
 
   return (
-    <Box sx={{display: 'flex', minHeight: '86.2vh'}}>
+    <Box sx={{display: 'flex', position:'sticky', minHeight: '86vh'}}>
       <Box >
         <Sidebar setSection={setSection} role={role}/>
       </Box>

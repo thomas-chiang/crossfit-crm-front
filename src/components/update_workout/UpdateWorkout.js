@@ -80,7 +80,7 @@ function Component({workout, movementOptions, passDownUpdate, setPassDownUpdate}
           <Button sx={{ m: 1}} size='small' disabled={!selectedMovement || disable} onClick={()=>{Functions.addWorkoutMovement(newWorkoutMovement, setAuth, setUpdate, setPassDownUpdate, setDisable, setAlert)}} variant="contained" > add movement</Button> 
         </Box>
         <Box sx={{ display: 'flex'}}>
-           <TextareaAutosize placeholder="note" style={{ margin: 8, flexGrow: 1}} minRows={3} value={updatingWorkout.note || ''} onChange={e => setUpdatingWorkout({...updatingWorkout, note: e.target.value})}/>
+           <TextareaAutosize placeholder="workout note" style={{ margin: 8, flexGrow: 1}} minRows={3} value={updatingWorkout.note || ''} onChange={e => setUpdatingWorkout({...updatingWorkout, note: e.target.value})}/>
         </Box>
         <Box sx={{display: 'flex', justifyContent: 'right'}}>
           <Button disabled={disable} sx={{ m: 1}} variant='contained' onClick={() => {Functions.updateOnlyWorkout(updatingWorkout, setAuth, setUpdate, setPassDownUpdate, setDisable, setAlert)}} >update workout excluding movements</Button>

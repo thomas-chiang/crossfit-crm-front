@@ -71,7 +71,7 @@ export const options = {
 
 export default function App({barData}) {
   return (
-    <div style={{height: 400}}>
+    <div style={{height: 400, width: Math.max(barData.labels.length * 80, 100)}}>
       <Bar 
         // options={options} 
         data={barData} 

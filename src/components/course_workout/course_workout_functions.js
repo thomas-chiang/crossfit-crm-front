@@ -5,34 +5,9 @@ const Functions = {
   handleQuitButton,
   handleCancelButton,
   getWorkout,
-  getDistinctWorkoutMovements,
-  getUser
+  getDistinctWorkoutMovements
 }
 export default Functions
-
-
-async function getUser (setUser) { 
-  try{
-    let token = localStorage.getItem('jwtToken')
-    let response = await fetch(
-      process.env.REACT_APP_API_URL+'token',
-      {
-        headers: {'Authorization': `Bearer ${token}`}
-      }
-    )
-    let data = await response.json()
-    if (response.ok) {
-      data.value = data.id
-      data.label = data.name
-      setUser(data)
-    } else {
-      console.log(data.error)
-      localStorage.removeItem('jwtToken')
-    }
-  } catch(e){
-    console.log(e.message)
-  }
-}
 
 async function getDistinctWorkoutMovements(workout_id, setWorkoutMovements) {
   try{

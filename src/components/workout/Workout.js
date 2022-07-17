@@ -130,7 +130,7 @@ function Component() {
           <Button sx={{ m: 1}} size='small' disabled={!selectedMovement} onClick={()=>{setMovementArr([...movementArr, { ...movementDetail, movement_id: selectedMovement.id, name: selectedMovement.name}])}} variant="contained" >add movement</Button> 
         </Box>
         <Box sx={{ display: 'flex'}}>
-           <TextareaAutosize placeholder="note" style={{ margin: 8, flexGrow: 1}} minRows={3} value={newWorkout.note} onChange={e => setNewWorkout({...newWorkout, note: e.target.value})}/>
+           <TextareaAutosize placeholder="workout note" style={{ margin: 8, flexGrow: 1}} minRows={3} value={newWorkout.note} onChange={e => setNewWorkout({...newWorkout, note: e.target.value})}/>
         </Box>
         <Box sx={{display: 'flex', justifyContent: 'right'}}>
           <Button sx={{ m: 1}} variant='contained' disabled={movementArr.length == 0 || disable } onClick={() => Functions.createWorkout(newWorkout, movementArr, setUpdate, setAuth, setDisable, setAlert)} >create workout</Button>

@@ -26,17 +26,16 @@ function Component() {
         color: 'white', 
         justifyContent: 'space-between',
         alignItems: 'center', 
-        height: '9.75vh',
-        padding: 2
+        height: '14vh',
       }}
     >
       <Box  >
         <Link style={linkStyle} to="/">
-          <Typography variant="h3" sx={{ fontWeight: 'bold', textDecoration: 'none'}}>CrossFit CRM</Typography>
+          <Typography variant="h3" sx={{ fontWeight: 'bold', textDecoration: 'none', mx: 2}}>CrossFit CRM</Typography>
         </Link>
       </Box>
       
-      <List sx={{display: 'flex',}}>
+      <List sx={{display: 'flex', mx: 2}}>
         <ListItem  >
           <Link  style={linkStyle} to="/movement">MOVEMENTS</Link>
         </ListItem>
@@ -44,10 +43,10 @@ function Component() {
           <Link  style={linkStyle} to="/workout">WORKOUTS</Link>
         </ListItem>
         <ListItem  >
-          <Link  style={linkStyle} to="/leaderboard">LEADERBOARD</Link>
+          <Link  style={linkStyle} to="/analysis">ANALYSIS</Link>
         </ListItem>
         <ListItem  >
-          <Link  style={linkStyle} to="/analysis">ANALYSIS</Link>
+          <Link  style={linkStyle} to="/leaderboard">LEADERBOARD</Link>
         </ListItem>
         <ListItem  >
           <Link style={{...linkStyle, width: 160, textAlign: 'center'}} to="/calendar">COURSE CALENDAR</Link>

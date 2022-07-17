@@ -72,7 +72,7 @@ function Component({id}) {
         <Box sx={{ flexGrow: 2}}><Select isMulti value={selectedCoaches} onChange={setSelectedCoaches} options={coaches} placeholder={'Select coaches'} /></Box>
       </Box>
       <Box sx={{mb: 1}}><Select isMulti value={selectedWorkouts} onChange={setSelectedWorkouts} options={workouts} placeholder={'Select workouts'} /></Box>   
-      <Box sx={{display: 'flex', mb: 1}}><TextareaAutosize placeholder="note" minRows={3} style={{ width: "100%" }} value={course.note} onChange={e => setCourse({...course, note: e.target.value}) }/></Box>
+      <Box sx={{display: 'flex', mb: 1}}><TextareaAutosize placeholder="course note" minRows={3} style={{ width: "100%" }} value={course.note} onChange={e => setCourse({...course, note: e.target.value}) }/></Box>
       <Box sx={{display: 'flex', justifyContent: 'right'}}>
         <Button disabled={disable} sx={{mr:1}} variant='contained' onClick={()=>Functions.handleUpdateButton(course, calendarContext, setAuth, setDisable, setAlert)}>update</Button>
         <Button disabled={disable} sx={{mr:1}} color='secondary' variant='contained' onClick={()=>Functions.handleDeleteButton(id, calendarContext, setAuth, setDisable, setAlert)}>Delete</Button>
