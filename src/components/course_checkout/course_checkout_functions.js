@@ -6,9 +6,71 @@ const Functions = {
   enrollMemberByEmail,
   quitMemberById,
   checkoutMemberById,
-  enrollMemberByExistingUserId
+  enrollMemberByExistingUserId,
+  uncheckoutMemberById,
+  removeMemberById
 }
 export default Functions
+
+
+async function removeMemberById (course_id, user_id, enrollment, setUpdate, setAuth, calendarContext, setDisable, setAlert) {
+  setDisable(true)
+  try {
+    if(!await utilsFunctions.auth()) return setAuth(false)
+    let token = localStorage.getItem('jwtToken')  // auth
+    const response = await fetch (
+      process.env.REACT_APP_API_URL+`course/removebycoach/?course_id=${course_id}&user_id=${user_id}&enrollment=${enrollment}`,
+      {
+        method: "DELETE",
+        headers: {
+          'Authorization': `Bearer ${token}` // auth
+        }
+      }
+    )
+    if (response.ok) {
+      setAlert('Quit successfully')
+      setUpdate(Date())
+      calendarContext.setUpdate(!calendarContext.update)
+    } else {
+      let data = await response.json()
+      setAlert(data.error)
+    }
+  } catch (e) {
+    setAlert(e.message)
+  }
+  setDisable(false)  
+}
+
+
+async function uncheckoutMemberById (course_id, user_id, enrollment, setUpdate, setAuth, calendarContext, setDisable, setAlert) {
+  setDisable(true)
+  try {
+    if(!await utilsFunctions.auth()) return setAuth(false)
+    let token = localStorage.getItem('jwtToken')  // auth
+    const response = await fetch (
+      process.env.REACT_APP_API_URL+`course/uncheckbycoach/?course_id=${course_id}&user_id=${user_id}&enrollment=${enrollment}`,
+      {
+        method: "PUT",
+        headers: {
+          'Authorization': `Bearer ${token}` // auth
+        }
+      }
+    )
+    if (response.ok) {
+      setAlert('Unchecked successfully')
+      setUpdate(Date())
+      calendarContext.setUpdate(!calendarContext.update)
+    } else {
+      let data = await response.json()
+      setAlert(data.error)
+    }
+  } catch (e) {
+    setAlert(e.message)
+  }
+  setDisable(false)  
+}
+
+
 
 async function checkoutMemberById (course_id, user_id, enrollment, setUpdate, setAuth, calendarContext, setDisable, setAlert) {
   setDisable(true)

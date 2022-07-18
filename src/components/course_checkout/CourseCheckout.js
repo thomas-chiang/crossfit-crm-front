@@ -69,9 +69,9 @@ function Component({id, role}) {
               </>}
               </>
             : <>
-              <Button disabled={true} sx={{ m: 1}} size='small' variant='contained' color='secondary' >checked out</Button>
+              <Button sx={{ m: 1}} size='small' variant='contained' color='secondary' onClick={()=>{Functions.uncheckoutMemberById(id, member.id, member.enrollment, setUpdate, setAuth, calendarContext, setDisable, setAlert)}}>uncheck</Button>
             </>}
-            
+            <Button disabled={disable} sx={{ ml: 1 , my: 1}} size='small' color='secondary' variant='contained' onClick={()=>{Functions.removeMemberById(id, member.id, member.enrollment, setUpdate, setAuth, calendarContext, setDisable, setAlert)}}>remove</Button>
           </Box>
         </Card>)}
         <Card sx={{ p: 1, mr: 2, my: 1, display: 'flex',flexDirection: 'column', justifyContent: 'space-between' }}>

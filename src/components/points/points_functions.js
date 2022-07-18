@@ -1,10 +1,40 @@
+import utilsFunctions from '../../utils/functions'
 const Functions = {
   getUsersByRole,
   getUser,
-  getPointsByUser
+  getPointsByUser,
+  deletePointById
 }
 export default Functions
 
+async function deletePointById (id, setUpdate, setAuth, setDisable, setAlert) {
+  //console.log(id)
+  setDisable(true)
+  try{
+    let token = localStorage.getItem('jwtToken')
+
+    if(!await utilsFunctions.auth()) return setAuth(false)
+
+    const response = await fetch (
+      process.env.REACT_APP_API_URL+`user/point/${id}`,
+      {
+        method: 'DELETE',
+        headers: { 
+          'Authorization': `Bearer ${token}`
+        }
+      }
+    )
+    let data = await response.json()
+    if (response.ok) {
+      setAlert('deleted point successfully')
+      setUpdate(Date())
+    }
+    else setAlert(data.error)
+  }catch(e){
+    setAlert(e.message)
+  }
+  setDisable(false)
+}
 
 
 async function getPointsByUser(user_id, setPoints) {

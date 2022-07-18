@@ -1,11 +1,14 @@
-import { useState, useEffect }  from 'react'
+import { useState, useEffect, useContext }  from 'react'
 import  { Navigate } from 'react-router-dom' // auth handler
 import Functions from './movement_functions'
 import {Card, Button, Box, TextField, Paper, CardMedia} from '@mui/material'
+import { AppContext } from '../../utils/reactContexts'
+
 
 
 function Component() {
  
+  const setAlert =  useContext(AppContext).setAlert
   const [update, setUpdate] = useState(Date())
   const [auth, setAuth] = useState(true) // auth
   const [movements, setMovements] = useState([])
@@ -33,7 +36,7 @@ function Component() {
           <TextField size='small' label="Youtube link" variant="outlined" value={newMovement.demo_link} sx={{m:1, flexBasis: '100%'}} onChange={e=>setNewMovement({...newMovement, demo_link: e.target.value})}/>
         </Box>   
         <Box sx={{display: 'flex',  justifyContent: 'right', flexBasis: '100%', alignItems: 'end', mt: 1,}}>
-          <Button disabled={disable} sx={{ m: 1, bottom: 0}} size='small' variant='contained' onClick={()=>{Functions.createMovement(newMovement, setUpdate, setAuth, setDisable)}} >create</Button>
+          <Button disabled={disable} sx={{ m: 1, bottom: 0}} size='small' variant='contained' onClick={()=>{Functions.createMovement(newMovement, setUpdate, setAuth, setDisable, setAlert)}} >create</Button>
         </Box>
       </Paper>
       {movements.map((movement, index)=> 
@@ -47,6 +50,7 @@ export default Component;
 
 function MovementBox({id, movement, setUpdate, setAuth}) {
 
+  const setAlert =  useContext(AppContext).setAlert
   const [updateingMovement, setUpdateingMovement] = useState({
     name: movement.name,
     demo_link: movement.demo_link,
@@ -97,8 +101,8 @@ function MovementBox({id, movement, setUpdate, setAuth}) {
       </Box>  
       : <></>}
       <Box sx={{display: 'flex',  justifyContent: 'right', flexBasis: '100%', alignItems: 'end', mt: 1,}} >
-        <Button disabled={disable} sx={{ mr: 1, mb: 1, bottom: 0}} size='small' variant='contained' onClick={()=>Functions.updateMovement(updateingMovement, setUpdate, setAuth, setDisable)} >update</Button>
-        <Button disabled={disable} sx={{ mr: 1, mb: 1, bottom: 0}} size='small' variant='contained' onClick={()=>Functions.deleteMovement(id, setUpdate, setAuth, setDisable)} color='secondary'>delete</Button>
+        <Button disabled={disable} sx={{ mr: 1, mb: 1, bottom: 0}} size='small' variant='contained' onClick={()=>Functions.updateMovement(updateingMovement, setUpdate, setAuth, setDisable, setAlert)} >update</Button>
+        <Button disabled={disable} sx={{ mr: 1, mb: 1, bottom: 0}} size='small' variant='contained' onClick={()=>Functions.deleteMovement(id, setUpdate, setAuth, setDisable, setAlert)} color='secondary'>delete</Button>
       </Box>
     </Paper>
   )

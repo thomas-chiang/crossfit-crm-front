@@ -22,7 +22,7 @@ async function getMovements(setMovements) {
   }
 }
 
-async function createMovement (newMovement, setUpdate, setAuth, setDisable) {
+async function createMovement (newMovement, setUpdate, setAuth, setDisable, setAlert) {
   setDisable(true)
   try{
     let token = localStorage.getItem('jwtToken')
@@ -42,17 +42,17 @@ async function createMovement (newMovement, setUpdate, setAuth, setDisable) {
     )
     let data = await response.json()
     if (response.ok) {
-      alert('created successfully')
+      setAlert('created successfully')
       setUpdate(Date())
     }
-    else alert(data.error)
+    else setAlert(data.error)
   }catch(e){
-    alert(e.message)
+    setAlert(e.message)
   }
   setDisable(false)
 }
 
-async function updateMovement (updateingMovement, setUpdate, setAuth, setDisable) {
+async function updateMovement (updateingMovement, setUpdate, setAuth, setDisable, setAlert) {
   setDisable(true)
   try{
     let token = localStorage.getItem('jwtToken')
@@ -72,17 +72,17 @@ async function updateMovement (updateingMovement, setUpdate, setAuth, setDisable
     )
     let data = await response.json()
     if (response.ok) {
-      alert('updated successfully')
+      setAlert('updated successfully')
       setUpdate(Date())
     }
-    else alert(data.error)
+    else setAlert(data.error)
   }catch(e){
-    alert(e.message)
+    setAlert(e.message)
   }
   setDisable(false)
 }
 
-async function deleteMovement (id, setUpdate, setAuth, setDisable) {
+async function deleteMovement (id, setUpdate, setAuth, setDisable, setAlert) {
   setDisable(true)
   try{
     let token = localStorage.getItem('jwtToken')
@@ -100,12 +100,12 @@ async function deleteMovement (id, setUpdate, setAuth, setDisable) {
     )
     let data = await response.json()
     if (response.ok) {
-      alert('deleted successfully')
+      setAlert('deleted successfully')
       setUpdate(Date())
     }
-    else alert(data.error)
+    else setAlert(data.error)
   }catch(e){
-    alert(e.message)
+    setAlert(e.message)
   }
   setDisable(false)
 }
