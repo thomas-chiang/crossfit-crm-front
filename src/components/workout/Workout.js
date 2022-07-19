@@ -4,7 +4,7 @@ import Functions from './workout_functions'
 import Select from 'react-select';
 import { AppContext } from '../../utils/reactContexts'
 import UpdateWorkout from '../update_workout/UpdateWorkout'
-import {Paper, Button, Box, TextField, TextareaAutosize, Alert, Typography} from '@mui/material'
+import {Paper, Button, Box, TextField, TextareaAutosize, Alert, Typography, CardMedia} from '@mui/material'
 
 
 
@@ -83,7 +83,15 @@ function Component() {
           movementArr.length > 0 
           ? 
           movementArr.map((movement, index) =>
-            <Box key={index} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'start'}}>
+            <Box key={index} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'start', m: 1, ml: 2}}>
+              <Box sx={{ width: 80, display: 'flex', alignItems: 'center', justifyContent: 'center', }} >
+                <CardMedia
+                  sx={{ flexGrow: 1, borderRadius: 2}}
+                  component="img"
+                  width="50"
+                  image={`https://img.youtube.com/vi/${movement.youtube_id}/0.jpg`}
+                />
+              </Box>
               <Box sx={{m:1, ml: 2}}>{movement.name}:</Box>
               {movement.kg ? <Box sx={{m:1}}>{movement.kg} kg(s)</Box>: <></>}
               {movement.rep ? <Box sx={{m:1}}>{movement.rep} rep(s)</Box>: <></>}
@@ -102,7 +110,7 @@ function Component() {
           <TextField sx={{m:1, width: 100}} size='small' type='number' label="rep" variant="outlined" value={movementDetail.rep} onChange={e => setMovementDetail({...movementDetail, rep: e.target.value})} />
           <TextField sx={{m:1, width: 100}} size='small' type='number' label="meter" variant="outlined" value={movementDetail.meter} onChange={e => setMovementDetail({...movementDetail, meter: e.target.value})}/>
           <TextField sx={{m:1, width: 100}} size='small' type='number' label="cal" variant="outlined" value={movementDetail.cal} onChange={e => setMovementDetail({...movementDetail, cal: e.target.value})}/>
-          <Button sx={{ m: 1}} size='small' disabled={!selectedMovement} onClick={()=>{setMovementArr([...movementArr, { ...movementDetail, movement_id: selectedMovement.id, name: selectedMovement.name}])}} variant="contained" >add movement</Button> 
+          <Button sx={{ m: 1}} size='small' disabled={!selectedMovement} onClick={()=>{setMovementArr([...movementArr, { ...movementDetail, movement_id: selectedMovement.id, name: selectedMovement.name, youtube_id: selectedMovement.youtube_id}])}} variant="contained" >add movement</Button> 
         </Box>
         <Box sx={{ display: 'flex'}}>
            <TextareaAutosize placeholder="workout note" style={{ margin: 8, flexGrow: 1}} minRows={3} value={newWorkout.note} onChange={e => setNewWorkout({...newWorkout, note: e.target.value})}/>

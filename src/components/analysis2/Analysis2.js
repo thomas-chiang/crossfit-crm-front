@@ -104,7 +104,7 @@ function Component() {
                 { movement.demo_link ? 
                   <Box sx={{ height: 100, width: 125, display: 'flex', alignItems: 'center', justifyContent: 'center', }} >
                       <CardMedia
-                        sx={{ flexGrow: 1}}
+                        sx={{ flexGrow: 1,  borderRadius: 2}}
                         component="img"
                         width="100"
                         image={`https://img.youtube.com/vi/${movement.youtube_id}/0.jpg`}
