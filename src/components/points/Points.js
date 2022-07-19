@@ -46,8 +46,13 @@ function Component({role}) {
     { field: 'unchecked_point', headerName: 'Point for upcoming courses (+/-)', width: 250, type: 'number' },
     { field: 'course_title', headerName: 'Course Title', width: 200 },
     { field: 'course_time', headerName: 'Course Time', width: 200 },
+  ];
+
+  const gymOwnerColumns = [
+    ...columns,
     {
       field: 'actions',
+      headerName: 'Delete',
       type: 'actions',
       width: 80,
       getActions: (params) => [
@@ -60,7 +65,7 @@ function Component({role}) {
         />
       ],
     },
-  ];
+  ]
 
 
 
@@ -75,7 +80,7 @@ function Component({role}) {
         </Box>
         : <></>}
 
-        <DataGrid rows={points} columns={columns} sx={{ m: 1}} components={{ Toolbar: GridToolbar }}/>  
+        <DataGrid rows={points} columns={role == 3 ? gymOwnerColumns : columns} sx={{ m: 1}} components={{ Toolbar: GridToolbar }}/>  
       </Box>
       
     </Paper>

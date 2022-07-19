@@ -57,7 +57,7 @@ function MovementBox({id, movement, setUpdate, setAuth}) {
 
   return (
     <Paper elevation={5} sx={{ m: 1,  display: 'flex', flexDirection: 'column', justifyContent: 'space-between'}}>
-      <Box sx={{ml: 1}}>
+      <Box sx={{mx: 1}}>
         <Typography variant="h6">{updateingMovement.name}</Typography>
       </Box>
     

@@ -24,14 +24,16 @@ export default function Aside({setSection, role}) {
             <MenuItem onClick={() =>setSection('enroll and checkout') }>{role == 2 ? 'Enroll Users' : "Enroll & Checkout Users"}</MenuItem>
           </> : <></>}
 
+          
 
           {role >= 3 
           ? <>
             <MenuItem onClick={() =>setSection('member') }>Manage Users</MenuItem>
           </> : <></>}
-          
+
 
           <MenuItem onClick={() =>setSection('points') }>View Point Histories</MenuItem>
+
 
           {role >= 2 
           ? <>

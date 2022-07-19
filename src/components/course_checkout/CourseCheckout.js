@@ -55,7 +55,8 @@ function Component({id, role}) {
           <Typography sx={{ m: 1}} variant="subtitle1" >Status: <i>{member.enrollment == 1 ? 'enrolled' : member.enrollment > 1 ? 'waiting' : 'canceled'}</i></Typography>
           <Box sx={{display: 'flex', justifyContent: 'right'}}>
             {member.checkout === 0 
-            ? <> 
+            ? 
+            <> 
               {member.enrollment == 1 ?
               <> 
                 {role >= 3 ? 
@@ -68,10 +69,15 @@ function Component({id, role}) {
                 <Button disabled={disable} sx={{ my: 1, bottom: 0}} size='small' variant='contained' onClick={()=>{Functions.enrollMemberByExistingUserId(id, member.id, setUpdate, setAuth, calendarContext, setDisable, setAlert)}} >enroll</Button>
               </>}
               </>
-            : <>
-              <Button sx={{ m: 1}} size='small' variant='contained' color='secondary' onClick={()=>{Functions.uncheckoutMemberById(id, member.id, member.enrollment, setUpdate, setAuth, calendarContext, setDisable, setAlert)}}>uncheck</Button>
+            : 
+            <>
+              {role >= 3 ?
+                  <Button disabled={disable} sx={{ m: 1}} size='small' variant='contained' color='secondary' onClick={()=>{Functions.uncheckoutMemberById(id, member.id, member.enrollment, setUpdate, setAuth, calendarContext, setDisable, setAlert)}}>uncheck</Button>
+              : <></>}
             </>}
-            <Button disabled={disable} sx={{ ml: 1 , my: 1}} size='small' color='secondary' variant='contained' onClick={()=>{Functions.removeMemberById(id, member.id, member.enrollment, setUpdate, setAuth, calendarContext, setDisable, setAlert)}}>remove</Button>
+            {role >= 3 ?
+              <Button disabled={disable} sx={{ ml: 1 , my: 1}} size='small' color='secondary' variant='contained' onClick={()=>{Functions.removeMemberById(id, member.id, member.enrollment, setUpdate, setAuth, calendarContext, setDisable, setAlert)}}>remove</Button> 
+            : <></>}
           </Box>
         </Card>)}
         <Card sx={{ p: 1, mr: 2, my: 1, display: 'flex',flexDirection: 'column', justifyContent: 'space-between' }}>

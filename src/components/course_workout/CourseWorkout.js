@@ -50,9 +50,6 @@ function Component({workout}) {
                   </Box>
                 </Box>
                 <Divider sx={{mt: 1}}/>
-            {/* <Box sx={{flexGrow: 1, display: "flex", alignItems: 'center', mt:1}}>
-              <TextareaAutosize minRows={1.9} disabled={true} placeholder="note" style={{ width: "100%" }} value={workout.note || ''} />
-            </Box> */}
           </Paper>
   )
 }
