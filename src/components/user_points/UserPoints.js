@@ -5,15 +5,13 @@ import {Paper, Typography} from '@mui/material'
 
 
 
-function Component({member}) {
+function Component({member, update}) {
 
   const [points, setPoints] = useState(null)
-
-  console.log(member)
  
   useEffect(() => {
     Functions.getSumPointsByUser(member.id, setPoints)
-  },[member.enrollment, member?.checkout])
+  },[member, update])
   
   return (
     <Paper elevation={3} sx={{textAlign: 'center', p:1}} >

@@ -18,8 +18,7 @@ async function handleSignUp (role, name, email, password, gender, appContext, na
           name,
           email,
           password,
-          gender,
-          provider: 'native'
+          gender        
         })
       }
     )

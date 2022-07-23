@@ -40,7 +40,7 @@ function Component() {
     if(selectedMember && selectedWorkout && distinctMovements) Functions.getPerformanceByWorkout(selectedMember.id, selectedWorkout.workout_id, distinctMovements, setMovementArr)
   },[distinctMovements]) 
 
-  console.log(movementArr)
+  // console.log(movementArr)
 
  
   return (

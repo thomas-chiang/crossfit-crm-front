@@ -50,7 +50,7 @@ function App() {
             right: 0, 
             left: 0, 
             mx: 'auto', 
-            width: alert.length*10, 
+            width: Math.max(alert.length*10, 150), 
             display: 'flex', 
             justifyContent: 'center',
             backgroundColor: 'gray',

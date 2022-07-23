@@ -84,7 +84,7 @@ function MemberBox({member, setUpdate, setAuth}) {
            <i style={{color:'green'}}> - {member.point_to_be_deducted ? member.point_to_be_deducted : 0}</i>
         </Paper>  
       </Box>
-      <Box sx={{display: 'flex', alignItems:'center', mt: 1}}>
+      <Box sx={{display: 'flex', alignItems:'center', mt: 1, mx: 2}}>
         <Box sx={{ width: 120, mr: 1, my: 2}}>
           <Select 
             menuPortalTarget={document.body}  styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
@@ -100,14 +100,14 @@ function MemberBox({member, setUpdate, setAuth}) {
         
         <Button disabled={member.role == 3 || disable } sx={{ height: 38, width: 80}} variant="contained" size='small' onClick={()=>Functions.updateRole(member.id, selectedRole.role, setUpdate, setAuth, setDisable, setAlert)}>update</Button>
       </Box>
-      <ThemeProvider theme={theme}>
-        <Box sx={{display: 'flex', alignItems:'center', mt: 1}}>
+      <ThemeProvider theme={theme} >
+        <Box sx={{display: 'flex', alignItems:'center', mt: 1, mx: 2}}>
           <TextField sx={{ width: 120, mr: 1}} type='number' label="Point added" size='small' variant="outlined" value={addingPoint} onChange={e=>setAddingPoint(e.target.value)}/>
           
           <Button disabled={disable} color='neutral' sx={{ height: 40, width: 80}}variant="contained" size='small' onClick={()=>Functions.insertPoint(member.id, addingPoint, setUpdate, setAuth, 'add', setDisable, setAlert)}>add</Button>
           
         </Box>
-        <Box sx={{display: 'flex', alignItems:'center', mt: 1}}>
+        <Box sx={{display: 'flex', alignItems:'center', mt: 1, mx: 2}}>
           <TextField sx={{ width: 120, mr: 1}} type='number' label="Point deducted" size='small' variant="outlined" value={deductingPoint} onChange={e=>setDeductingPointPoint(e.target.value)}/>
           <Button disabled={disable} color='neutral' sx={{ height: 40, width: 80}}variant="contained" size='small' onClick={()=>Functions.insertPoint(member.id, -deductingPoint,setUpdate, setAuth, 'deduct', setDisable, setAlert)}>deduct</Button>
         </Box>

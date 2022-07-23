@@ -50,7 +50,7 @@ function Component({id, role}) {
         <Card key={index} sx={{ p: 1, mr: 2, my: 1 }}>
           <Box sx={{ display: 'flex', justifyContent: 'space-between'}}>
             <Typography sx={{ m: 1}} variant="subtitle1" >{member.name}</Typography>
-            <UserPoints member={member} /> 
+            <UserPoints member={member} update={update} /> 
           </Box> 
           <Typography sx={{ m: 1}} variant="subtitle1" >Status: <i>{member.enrollment == 1 ? 'enrolled' : member.enrollment > 1 ? 'waiting' : 'canceled'}</i></Typography>
           <Box sx={{display: 'flex', justifyContent: 'right'}}>

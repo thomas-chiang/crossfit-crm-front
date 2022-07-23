@@ -28,7 +28,7 @@ async function removeMemberById (course_id, user_id, enrollment, setUpdate, setA
       }
     )
     if (response.ok) {
-      setAlert('Quit successfully')
+      setAlert('Removed successfully')
       setUpdate(Date())
       calendarContext.setUpdate(!calendarContext.update)
     } else {
@@ -148,6 +148,7 @@ async function enrollMemberByEmail (course_id, email, setUpdate, setAuth, calend
       calendarContext.setUpdate(!calendarContext.update)
     } else {
       let data = await response.json()
+      setUpdate(Date())
       setAlert(data.error)
     }
   } catch (e) {
@@ -176,6 +177,7 @@ async function enrollMemberByExistingUserId (course_id, user_id, setUpdate, setA
       calendarContext.setUpdate(!calendarContext.update)
     } else {
       let data = await response.json()
+      setUpdate(Date())
       setAlert(data.error)
     }
   } catch (e) {
