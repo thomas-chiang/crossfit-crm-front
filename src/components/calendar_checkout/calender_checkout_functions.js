@@ -1,25 +1,25 @@
 const Functions = {
   getCourses,
   updateArr
-}
+};
 
-export default Functions
+export default Functions;
 
 async function getCourses(setCalendarEvents) {
-  const response = await fetch (process.env.REACT_APP_API_URL+'course')
-  let data = await response.json()
-  setCalendarEvents(data)
+  const response = await fetch(process.env.REACT_APP_API_URL + "course");
+  let data = await response.json();
+  setCalendarEvents(data);
 }
 
 function updateArr(calendarEvents, arr, setArr) {
-  let newArr = []
+  let newArr = [];
   for (let i = 0; i < arr.length; i++) {
-    let selectedCourseId = arr[i].id
+    let selectedCourseId = arr[i].id;
     for (let event of calendarEvents) {
-      if(event.id == selectedCourseId) newArr.push(event) // ==
-      continue
+      if (event.id == selectedCourseId) newArr.push(event); // ==
+      continue;
     }
   }
-  
-  setArr(newArr)
+
+  setArr(newArr);
 }

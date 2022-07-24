@@ -1,52 +1,41 @@
 const Functions = {
   getUserData,
   auth
-}
-export default Functions
+};
+export default Functions;
 
-async function getUserData () { 
-  try{
-    let token = localStorage.getItem('jwtToken')
-    let response = await fetch(
-      process.env.REACT_APP_API_URL+'user/profile',
-      {
-        headers: {'Authorization': `Bearer ${token}`}
-      }
-    )
-    let data = await response.json()
+async function getUserData() {
+  try {
+    let token = localStorage.getItem("jwtToken");
+    let response = await fetch(process.env.REACT_APP_API_URL + "user/profile", {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+    let data = await response.json();
     if (response.ok) {
-      return data
+      return data;
     } else {
-      console.log(data.error)
-      localStorage.removeItem('jwtToken')
+      console.log(data.error);
+      localStorage.removeItem("jwtToken");
     }
-  } catch(e){
-    alert(e.message)
+  } catch (e) {
+    alert(e.message);
   }
 }
 
-async function auth () { 
-  try{
-    let token = localStorage.getItem('jwtToken')
-    let response = await fetch(
-      process.env.REACT_APP_API_URL+'token',
-      {
-        headers: {'Authorization': `Bearer ${token}`}
-      }
-    )
-    let data = await response.json()
+async function auth() {
+  try {
+    let token = localStorage.getItem("jwtToken");
+    let response = await fetch(process.env.REACT_APP_API_URL + "token", {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+    let data = await response.json();
     if (response.ok) {
-      return true
+      return true;
     } else {
-      console.log(data.error)
-      localStorage.removeItem('jwtToken')
+      console.log(data.error);
+      localStorage.removeItem("jwtToken");
     }
-  } catch(e){
-    alert(e.message)
+  } catch (e) {
+    alert(e.message);
   }
-}
-
-async function authAndUpdate (update, setUpdate, setAuth) {
-  setUpdate(!update)
-  if(!await auth()) return setAuth(false)
 }
